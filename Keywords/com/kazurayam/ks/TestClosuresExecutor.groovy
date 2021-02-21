@@ -12,13 +12,13 @@ import java.util.concurrent.TimeUnit
  * @author kazurayam
  */
 public class TestClosuresExecutor {
-	
+
 	List<Callable<String>> callableTasks
-	
+
 	public TestClosuresExecutor() {
 		this.callableTasks = new ArrayList<Callable<String>>()
 	}
-	
+
 	void addClosure(Closure closure) {
 		Callable<String> callableTask = {
 			TimeUnit.MILLISECONDS.sleep(300)
@@ -27,16 +27,16 @@ public class TestClosuresExecutor {
 		}
 		this.callableTasks.add(callableTask)
 	}
-	
+
 	void execute() {
 		int size = callableTasks.size()
 		if (size < 1) {
 			throw new IllegalStateException("should add one or more Callable objects")
 		}
 		ExecutorService executorService = Executors.newFixedThreadPool(size)
-		
+
 		List<Future<String>> futures = executorService.invokeAll(callableTasks)
-		
+
 		for (ft in futures) {
 			String result = null
 			try {
@@ -50,7 +50,7 @@ public class TestClosuresExecutor {
 				e.printStackTrace()
 			}
 		}
-		
+
 		executorService.shutdown()
 		try {
 			if (!executorService.awaitTermination(800, TimeUnit.MILLISECONDS)) {
