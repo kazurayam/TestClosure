@@ -1,0 +1,5 @@
+import static com.kazurayam.junit4ks.JUnitCustomKeywords.runWithJUnitRunner
+
+import com.kazurayam.ks.browserwindow.TilingBrowserWindowManagerTest
+
+runWithJUnitRunner(TilingBrowserWindowManagerTest.class)

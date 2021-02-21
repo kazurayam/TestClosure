@@ -1,4 +1,4 @@
-package com.kazurayam.ks
+package com.kazurayam.ks.browserwindow
 
 import static org.junit.Assert.*
 
@@ -10,14 +10,16 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 
-@RunWith(JUnit4.class)
-class TilesManagerTest {
+import com.kazurayam.ks.browserwindow.TilingBrowserWindowManager
 
-	TilesManager tm
+@RunWith(JUnit4.class)
+class TilingBrowserWindowManagerTest {
+
+	TilingBrowserWindowManager tm
 
 	@Before
 	void setup() {
-		tm = new TilesManager(4, new Dimension(1000, 800))
+		tm = new TilingBrowserWindowManager(4, new Dimension(1000, 800))
 	}
 
 	@Test
