@@ -23,10 +23,40 @@ class TilesManagerTest {
 	@Test
 	void testTile0() {
 		Point loc = tm.getLocationOf(0)
-		assertTrue(10 == loc.x)
-		assertTrue(10 == loc.y)
+		assertTrue("loc.x should be 0", 0 == loc.x)
+		assertTrue("loc.y should be 0", 0 == loc.y)
 		Dimension dim = tm.getDimensionOf(0)
-		assertTrue(800 == dim.width)
-		assertTrue(600 == dim.height)
+		assertTrue("dim.width should be 500", 500 == dim.width)
+		assertTrue("dim.height should be 400", 400 == dim.height)
+	}
+
+	@Test
+	void testTile1() {
+		Point loc = tm.getLocationOf(1)
+		assertTrue(500 == loc.x)
+		assertTrue(0 == loc.y)
+		Dimension dim = tm.getDimensionOf(1)
+		assertTrue(500 == dim.width)
+		assertTrue(400 == dim.height)
+	}
+
+	@Test
+	void testTile2() {
+		Point loc = tm.getLocationOf(2)
+		assertTrue(0 == loc.x)
+		assertTrue(400 == loc.y)
+		Dimension dim = tm.getDimensionOf(2)
+		assertTrue(500 == dim.width)
+		assertTrue(400 == dim.height)
+	}
+
+	@Test
+	void testTile3() {
+		Point loc = tm.getLocationOf(3)
+		assertTrue(500 == loc.x)
+		assertTrue(400 == loc.y)
+		Dimension dim = tm.getDimensionOf(3)
+		assertTrue(500 == dim.width)
+		assertTrue(400 == dim.height)
 	}
 }
