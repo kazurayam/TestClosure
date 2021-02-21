@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestCaseEntity>
    <description></description>
-   <name>demonstrateTilesManager</name>
+   <name>demoTestClosuresExecutor</name>
    <tag></tag>
    <comment></comment>
-   <testCaseGuid>40a477f3-15cb-437e-b3fa-b9b7760a66d0</testCaseGuid>
+   <testCaseGuid>604eb5b8-283b-4b42-9e7c-311d96a7ac67</testCaseGuid>
 </TestCaseEntity>

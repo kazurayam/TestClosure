@@ -6,8 +6,12 @@ import java.awt.Toolkit
 
 public class TilingBrowserWindowManager implements BrowserWindowManager {
 
-	private int numberOfTiles
-	private Dimension tileDimension
+	private final int numberOfTiles
+	private final int numberOfRows
+	private final int numberOfColumns
+	private final Dimension tileDimension
+
+	private final Point basePoint = new Point(10, 10)
 
 	TilingBrowserWindowManager(int numberOfTiles) {
 		this(numberOfTiles, Toolkit.getDefaultToolkit().getScreenSize())
@@ -15,16 +19,24 @@ public class TilingBrowserWindowManager implements BrowserWindowManager {
 
 	TilingBrowserWindowManager(int numberOfTiles, Dimension physicalScreenSize) {
 		this.numberOfTiles = numberOfTiles
+		Dimension virtualScreenSize = new Dimension(
+			(int)(physicalScreenSize.width - basePoint.x * 2),
+			(int)(physicalScreenSize.height - basePoint.y * 2)
+			)
 		if (numberOfTiles < 1) {
 			throw new IllegalArgumentException("numberOfTiles(${numberOfTiles}) must be > 0")
 		} else if (numberOfTiles == 1) {
-			this.tileDimension = physicalScreenSize   // full-screen
+			this.numberOfRows = 1
+			this.numberOfColumns = 1
+			this.tileDimension = virtualScreenSize		
 		} else {
 			// Tiles in 2 columns
-			int tileWidth = Math.floor(physicalScreenSize.width / 2)
+			this.numberOfRows = Math.ceil(numberOfTiles / 2)
+			this.numberOfColumns = 2
+			int tileWidth = Math.floor(virtualScreenSize.width / 2)
 			int rows = Math.ceil(numberOfTiles / 2)
-			int tileHight = Math.floor(physicalScreenSize.height / rows )
-			tileDimension = new Dimension(tileWidth, tileHight)
+			int tileHight = Math.floor(virtualScreenSize.height / rows )
+			this.tileDimension = new Dimension(tileWidth, tileHight)
 		}
 	}
 
@@ -32,17 +44,42 @@ public class TilingBrowserWindowManager implements BrowserWindowManager {
 		return numberOfTiles
 	}
 
+	int getNumberOfRows() {
+		return numberOfRows
+	}
+	
+	int getNumberOfColumns() {
+		return numberOfColumns
+	}
+	
+	Point getBasePoint() {
+		return basePoint
+	}
+	
 	Dimension getTileDimension() {
 		return tileDimension
 	}
 
+	@Override
 	Point getLocationOf(int tileIndex) {
-		return new Point(10, 10)
+		validateTileIndex(tileIndex)
+		int x = basePoint.x + (tileIndex % 2) * tileDimension.width
+		int y = basePoint.y + Math.floor(tileIndex / 2) * tileDimension.height
+		return new Point(x, y)
 	}
 
+	@Override
 	Dimension getDimensionOf(int tileIndex) {
-		int width = 800
-		int height = 600
-		return new Dimension(width, height)
+		validateTileIndex(tileIndex)
+		return tileDimension
+	}
+	
+	private validateTileIndex(int tileIndex) {
+		if (tileIndex < 0) {
+			throw new IllegalArgumentException("tileIndex must be >= 0")
+		}
+		if (tileIndex >= this.numberOfTiles) {
+			throw new IllegalArgumentException("tileIndex must be less than numberOfTiles(${numberOfTiles})")
+		}
 	}
 }
