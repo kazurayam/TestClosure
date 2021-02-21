@@ -4,7 +4,7 @@ import java.awt.Dimension
 import java.awt.Point
 import java.awt.Toolkit
 
-public class TilingLayoutManager implements BrowserWindowLayoutManager {
+public class TilingLayoutManager implements BrowserWindowsLayoutManager {
 
 	private final int numberOfTiles
 	private final int numberOfRows

@@ -6,6 +6,7 @@
    <UUID>9eb8e58d-1482-42e3-8e2a-5a234aef66d0</UUID>
    <migratedVersion>5.9.0</migratedVersion>
    <pageLoadTimeout>0</pageLoadTimeout>
+   <projectFileLocation>/Users/kazuakiurayama/katalon-workspace/TestClosuresExecutorInKatalonStudio/TestClosuresExecutorInKatalonStudio.prj</projectFileLocation>
    <sourceContent>
       <sourceFolderList>
          <sourceFolderConfiguration>

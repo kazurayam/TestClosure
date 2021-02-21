@@ -1,17 +1,18 @@
+import java.awt.Dimension
+import java.awt.Point
+
 import org.openqa.selenium.Keys
+import org.openqa.selenium.Point as SelPoint
 
 import com.kazurayam.ks.TestClosuresExecutor
-import com.kazurayam.ks.browserwindow.BrowserWindowLayoutManager
+import com.kazurayam.ks.browserwindow.BrowserWindowsLayoutManager
 import com.kazurayam.ks.browserwindow.TilingLayoutManager
 import com.kms.katalon.core.testobject.ConditionType
 import com.kms.katalon.core.testobject.TestObject
-import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import com.kms.katalon.core.webui.driver.DriverFactory
-import java.awt.Point
-import java.awt.Dimension
-import org.openqa.selenium.Point as SelPoint
+import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 
-def manageLayout = { BrowserWindowLayoutManager layout, int tileIndex ->
+def manageLayout = { BrowserWindowsLayoutManager layout, int tileIndex ->
 	Point pos = layout.getPosition(tileIndex)
 	Dimension dim = layout.getDimension(tileIndex)
 	WebUI.setViewPortSize((int)dim.width, (int)dim.height)
@@ -19,7 +20,7 @@ def manageLayout = { BrowserWindowLayoutManager layout, int tileIndex ->
 	DriverFactory.getWebDriver().manage().window().setPosition(windowPosition)
 }
 
-BrowserWindowLayoutManager layout = new TilingLayoutManager(3)
+BrowserWindowsLayoutManager layout = new TilingLayoutManager(3)
 
 List<Closure> closures = new ArrayList<Closure>()
 
@@ -63,5 +64,3 @@ closures.add({
 TestClosuresExecutor executor = new TestClosuresExecutor()
 executor.addClosures(closures)
 executor.execute()
-
-
