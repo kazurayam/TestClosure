@@ -23,16 +23,16 @@ import java.awt.Dimension
 import java.awt.Toolkit
 import java.awt.Point
 
-public class TileManager {
+public class TilesManager {
 
 	private int numberOfTiles
 	private Dimension physicalScreenSize
 
-	TileManager(int numberOfTiles) {
-		this(numberOfTiles, Toolkit.getDefaultToolkit().getScreenSize())	
+	TilesManager(int numberOfTiles) {
+		this(numberOfTiles, Toolkit.getDefaultToolkit().getScreenSize())
 	}
-	
-	TileManager(int numberOfTiles, Dimension physicalScreenSize) {
+
+	TilesManager(int numberOfTiles, Dimension physicalScreenSize) {
 		if (numberOfTiles < 1) {
 			throw new IllegalArgumentException("numberOfTiles(${numberOfTiles}) must be > 0")
 		}

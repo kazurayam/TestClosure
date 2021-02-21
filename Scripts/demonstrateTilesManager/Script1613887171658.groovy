@@ -1,9 +1,9 @@
 import java.awt.Dimension
 import java.awt.Point
 
-import com.kazurayam.ks.TileManager
+import com.kazurayam.ks.TilesManager
 
-TileManager tm = new TileManager(4, new Dimension(1000, 800))
+TilesManager tm = new TilesManager(4, new Dimension(1000, 800))
 
 Point loc0 = tm.getLocationOf(0)
 Dimension dim0 = tm.getDimensionOf(0)
