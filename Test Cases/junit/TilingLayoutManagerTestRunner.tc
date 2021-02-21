@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestCaseEntity>
    <description></description>
-   <name>demoTestClosuresExecutor</name>
+   <name>TilingLayoutManagerTestRunner</name>
    <tag></tag>
    <comment></comment>
-   <testCaseGuid>604eb5b8-283b-4b42-9e7c-311d96a7ac67</testCaseGuid>
+   <testCaseGuid>ef40e1f6-020a-4f44-9997-90a643008f50</testCaseGuid>
 </TestCaseEntity>

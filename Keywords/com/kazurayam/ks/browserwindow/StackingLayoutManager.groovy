@@ -3,17 +3,17 @@ package com.kazurayam.ks.browserwindow
 import java.awt.Point
 import java.awt.Dimension
 
-public class StackingBrowserWindowManager implements BrowserWindowManager {
+public class StackingLayoutManager implements BrowserWindowLayoutManager {
 
-	StackingBrowserWindowManager() {}
-	
+	StackingLayoutManager() {}
+
 	@Override
-	Point getLocationOf(int tileIndex) {
+	Point getPosition(int tileIndex) {
 		return new Point(10, 10)
 	}
 
 	@Override
-	Dimension getDimensionOf(int tileIndex) {
+	Dimension getDimension(int tileIndex) {
 		int width = 800
 		int height = 600
 		return new Dimension(width, height)

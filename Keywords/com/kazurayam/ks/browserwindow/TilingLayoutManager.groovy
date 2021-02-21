@@ -4,7 +4,7 @@ import java.awt.Dimension
 import java.awt.Point
 import java.awt.Toolkit
 
-public class TilingBrowserWindowManager implements BrowserWindowManager {
+public class TilingLayoutManager implements BrowserWindowLayoutManager {
 
 	private final int numberOfTiles
 	private final int numberOfRows
@@ -13,22 +13,22 @@ public class TilingBrowserWindowManager implements BrowserWindowManager {
 
 	private final Point basePoint = new Point(10, 10)
 
-	TilingBrowserWindowManager(int numberOfTiles) {
+	TilingLayoutManager(int numberOfTiles) {
 		this(numberOfTiles, Toolkit.getDefaultToolkit().getScreenSize())
 	}
 
-	TilingBrowserWindowManager(int numberOfTiles, Dimension physicalScreenSize) {
+	TilingLayoutManager(int numberOfTiles, Dimension physicalScreenSize) {
 		this.numberOfTiles = numberOfTiles
 		Dimension virtualScreenSize = new Dimension(
-			(int)(physicalScreenSize.width - basePoint.x * 2),
-			(int)(physicalScreenSize.height - basePoint.y * 2)
-			)
+				(int)(physicalScreenSize.width - basePoint.x * 2),
+				(int)(physicalScreenSize.height - basePoint.y * 2)
+				)
 		if (numberOfTiles < 1) {
 			throw new IllegalArgumentException("numberOfTiles(${numberOfTiles}) must be > 0")
 		} else if (numberOfTiles == 1) {
 			this.numberOfRows = 1
 			this.numberOfColumns = 1
-			this.tileDimension = virtualScreenSize		
+			this.tileDimension = virtualScreenSize
 		} else {
 			// Tiles in 2 columns
 			this.numberOfRows = Math.ceil(numberOfTiles / 2)
@@ -47,21 +47,21 @@ public class TilingBrowserWindowManager implements BrowserWindowManager {
 	int getNumberOfRows() {
 		return numberOfRows
 	}
-	
+
 	int getNumberOfColumns() {
 		return numberOfColumns
 	}
-	
+
 	Point getBasePoint() {
 		return basePoint
 	}
-	
+
 	Dimension getTileDimension() {
 		return tileDimension
 	}
 
 	@Override
-	Point getLocationOf(int tileIndex) {
+	Point getPosition(int tileIndex) {
 		validateTileIndex(tileIndex)
 		int x = basePoint.x + (tileIndex % 2) * tileDimension.width
 		int y = basePoint.y + Math.floor(tileIndex / 2) * tileDimension.height
@@ -69,11 +69,11 @@ public class TilingBrowserWindowManager implements BrowserWindowManager {
 	}
 
 	@Override
-	Dimension getDimensionOf(int tileIndex) {
+	Dimension getDimension(int tileIndex) {
 		validateTileIndex(tileIndex)
 		return tileDimension
 	}
-	
+
 	private validateTileIndex(int tileIndex) {
 		if (tileIndex < 0) {
 			throw new IllegalArgumentException("tileIndex must be >= 0")
