@@ -5,27 +5,27 @@ import com.kms.katalon.core.testobject.ConditionType
 import com.kms.katalon.core.testobject.TestObject
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 
-TestClosuresExecutor executor = new TestClosuresExecutor()
+List<Closure> closures = new ArrayList<Closure>()
 
-executor.addClosure({
+closures.add({
 	String url = 'http://demoaut.katalon.com/'
 	WebUI.openBrowser('')
 	WebUI.navigateToUrl(url)
 	WebUI.comment("processed ${url}")
 	WebUI.delay(10)
 	WebUI.closeBrowser()
-})
+	})
 
-executor.addClosure({
+closures.add({
 	String url = 'https://forum.katalon.com/'
 	WebUI.openBrowser('')
 	WebUI.navigateToUrl(url)
 	WebUI.comment("processed ${url}")
 	WebUI.delay(10)
 	WebUI.closeBrowser()
-})
+	})
 
-executor.addClosure({
+closures.add({
 	String url = 'https://duckduckgo.com/'
 	WebUI.openBrowser('')
 	WebUI.navigateToUrl(url)
@@ -39,8 +39,10 @@ executor.addClosure({
 	String title = WebUI.getWindowTitle()
 	WebUI.verifyMatch(title, "katalon at DuckDuckGo", true)
 	WebUI.closeBrowser()
-})
-
+	})
+	
+TestClosuresExecutor executor = new TestClosuresExecutor()
+executor.addClosures(closures)
 executor.execute()
 
 

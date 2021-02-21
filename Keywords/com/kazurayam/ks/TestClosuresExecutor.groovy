@@ -13,12 +13,20 @@ import java.util.concurrent.TimeUnit
  */
 public class TestClosuresExecutor {
 
+	private static int MAX_THREADS = 8
+	
 	List<Callable<String>> callableTasks
 
 	public TestClosuresExecutor() {
 		this.callableTasks = new ArrayList<Callable<String>>()
 	}
 
+	void addClosures(List<Closure> closures) {
+		closures.each { cls ->
+			this.addClosure(cls)
+		}	
+	}
+	
 	void addClosure(Closure closure) {
 		Callable<String> callableTask = {
 			TimeUnit.MILLISECONDS.sleep(300)
@@ -33,7 +41,10 @@ public class TestClosuresExecutor {
 		if (size < 1) {
 			throw new IllegalStateException("should add one or more Callable objects")
 		}
-		ExecutorService executorService = Executors.newFixedThreadPool(size)
+
+		// create Thread pool
+		ExecutorService executorService = Executors.newFixedThreadPool(
+			(size > MAX_THREADS) ?  MAX_THREADS : size)
 
 		List<Future<String>> futures = executorService.invokeAll(callableTasks)
 
