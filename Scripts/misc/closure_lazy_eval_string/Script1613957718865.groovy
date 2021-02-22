@@ -17,56 +17,20 @@ import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
 import internal.GlobalVariable as GlobalVariable
 import org.openqa.selenium.Keys as Keys
 
-def printWelcome = {
-	println "Welcome to Closures!"
-}
-printWelcome()
+/**
+ * https://www.baeldung.com/groovy-closures
+ */
+def name = "Samwell"
+def welcomeMsg = "Welcome! $name"   // GStrings are usually evaluated and interpolated at the time of creation
+assert welcomeMsg == "Welcome! Samwell"
 
-def print = { name ->
-	println name
-}
-print("Ramen")
+name = "Tarly"
+assert welcomeMsg != "Welcome! Tarly"
 
-print.call("Udon")
 
-def greet = {
-	return "Hello, ${it}!"
-}
-println greet("バナナ")
+def fullName = "Tarly Samson"
+def greetStr = "Hello! ${-> fullName}"
+assert greetStr == "Hello! Tarly Samson"
 
-def multiply = { x, y ->
-	return x * y
-}
-n = multiply(2, 4)
-print n
-assert n == 8
-
-def calculate = { int x, int y, String operation ->
-	def result = 0
-	switch(operation) {
-		case "ADD":
-			result = x + y
-			break
-		case "SUB":
-			result = x - y
-			break
-		case "MUL":
-			result = x * y
-			break
-		case "DIV":
-			result = x / y
-			break
-	}
-	return result
-}
-assert calculate(12, 4, "ADD") == 16
-assert calculate(43, 8, "DIV") == 5.375
-println calculate(43, 8, "DIV")
-
-def addAll = { int... args ->
-	return args.sum()
-}
-n = addAll(12, 10, 14)
-assert n == 36
-println n
-
+fullName = "Jon Smith"
+assert greetStr == "Hello! Jon Smith"
