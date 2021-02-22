@@ -7,15 +7,7 @@ public class StackingLayoutManager implements BrowserWindowsLayoutManager {
 
 	private final int numberOfWindows
 	private final Dimension windowDimension
-	private final Dimension disposition = new Dimension(100, 80)
-
-	StackingLayoutManager(int numberOfWindows) {
-		this(numberOfWindows, new Dimension(1024, 768))
-	}
-	StackingLayoutManager(int numberOfWindows, Dimension windowDimension) {
-		this.numberOfWindows = numberOfWindows
-		this.windowDimension = windowDimension
-	}
+	private final Dimension disposition
 
 	int getNumberOfWindows() {
 		return numberOfWindows
@@ -50,4 +42,46 @@ public class StackingLayoutManager implements BrowserWindowsLayoutManager {
 			throw new IllegalArgumentException("windowIndex=${windowIndex}, must be less than numberOfWindows")
 		}
 	}
+	
+	/**
+	 * Builder by Effective Java
+	 */
+	public static class Builder {
+		// Required parameters
+		private final int numberOfWindows
+		
+		// Optional parameters - initialized to default values
+		private Dimension windowDimension = new Dimension(1024, 768)
+		private Dimension disposition = new Dimension(100, 80)
+		
+		public Builder(int numberOfWindows) {
+			this.numberOfWindows = numberOfWindows
+		}
+		
+		public Builder windowDimension(Dimension windowDimension) {
+			this.windowDimension = windowDimension
+			return this
+		}
+		
+		public Builder disposition(Dimension disposition) {
+			this.disposition = disposition
+			return this
+		}
+		
+		StackingLayoutManager build() {
+			return new StackingLayoutManager(this)
+		}
+	}
+	
+	StackingLayoutManager(int numberOfWindows, Dimension windowDimension) {
+		this.numberOfWindows = numberOfWindows
+		this.windowDimension = windowDimension
+	}
+	
+	private StackingLayoutManager(Builder builder) {
+		numberOfWindows = builder.numberOfWindows
+		windowDimension = builder.windowDimension
+		disposition     = builder.disposition
+	}
+
 }

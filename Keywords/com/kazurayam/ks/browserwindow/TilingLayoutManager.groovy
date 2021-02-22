@@ -10,7 +10,7 @@ public class TilingLayoutManager implements BrowserWindowsLayoutManager {
 	private final int numberOfRows
 	private final int numberOfColumns
 	private final Dimension tileDimension
-	private final Point basePoint = new Point(10, 10)
+	private final Point basePoint
 
 	int getNumberOfTiles() {
 		return numberOfTiles
@@ -54,32 +54,32 @@ public class TilingLayoutManager implements BrowserWindowsLayoutManager {
 			throw new IllegalArgumentException("tileIndex must be less than numberOfTiles(${numberOfTiles})")
 		}
 	}
-	
+
 	/**
-	 * 
+	 * Builder by Effective Java
 	 */
 	public static class Builder {
 		// Required parameters
 		private final int numberOfTiles
-		
+
 		// Optional parameters - initialized to default values
 		private Dimension physicalScreenSize = Toolkit.getDefaultToolkit().getScreenSize()
 		private Point basePoint = new Point(10, 10)
-		
+
 		public Builder(int numberOfTiles) {
 			this.numberOfTiles = numberOfTiles
 		}
-		
+
 		public Builder physicalScreenSize(Dimension physicalScreenSize) {
 			this.physicalScreenSize = physicalScreenSize
-			return this	
+			return this
 		}
-		
+
 		public Builder basePoint(Point basePoint) {
 			this.basePoint = basePoint
 			return this
 		}
-	
+
 		TilingLayoutManager build() {
 			return new TilingLayoutManager(this)
 		}
@@ -89,9 +89,9 @@ public class TilingLayoutManager implements BrowserWindowsLayoutManager {
 		numberOfTiles = builder.numberOfTiles
 		//
 		Dimension virtualScreenSize = new Dimension(
-			(int)(builder.physicalScreenSize.width - builder.basePoint.x * 2),
-			(int)(builder.physicalScreenSize.height - builder.basePoint.y * 2)
-			)
+				(int)(builder.physicalScreenSize.width - builder.basePoint.x * 2),
+				(int)(builder.physicalScreenSize.height - builder.basePoint.y * 2)
+				)
 		if (builder.numberOfTiles < 1) {
 			throw new IllegalArgumentException("numberOfTiles(${numberOfTiles}) must be > 0")
 		} else if (builder.numberOfTiles == 1) {
@@ -107,5 +107,6 @@ public class TilingLayoutManager implements BrowserWindowsLayoutManager {
 			int tileHight = Math.floor(virtualScreenSize.height / rows )
 			tileDimension = new Dimension(tileWidth, tileHight)
 		}
+		basePoint = builder.basePoint
 	}
 }

@@ -21,7 +21,7 @@ def manageLayout = { BrowserWindowsLayoutManager layout, int tileIndex ->
 	DriverFactory.getWebDriver().manage().window().setPosition(windowPosition)
 }
 
-BrowserWindowsLayoutManager layout = new TilingLayoutManager(3)
+BrowserWindowsLayoutManager layout = new TilingLayoutManager.Builder(3).build()
 
 TestClosuresExecutor executor = new TestClosuresExecutor()
 
