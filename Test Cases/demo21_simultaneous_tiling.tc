@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestCaseEntity>
    <description></description>
-   <name>demo3_stacking</name>
+   <name>demo21_simultaneous_tiling</name>
    <tag></tag>
    <comment></comment>
-   <testCaseGuid>98e70b24-c7c5-4a36-9d45-cf91aa54b404</testCaseGuid>
+   <testCaseGuid>604eb5b8-283b-4b42-9e7c-311d96a7ac67</testCaseGuid>
 </TestCaseEntity>

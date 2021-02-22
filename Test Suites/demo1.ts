@@ -15,6 +15,6 @@
       <guid>80b385f0-f769-47fb-808d-0d7ca5cd0064</guid>
       <isReuseDriver>false</isReuseDriver>
       <isRun>true</isRun>
-      <testCaseId>Test Cases/demo2_tiling</testCaseId>
+      <testCaseId>Test Cases/demo21_simultaneous_tiling</testCaseId>
    </testCaseLink>
 </TestSuiteEntity>

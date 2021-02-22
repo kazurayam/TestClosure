@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestCaseEntity>
    <description></description>
-   <name>createClosures</name>
+   <name>demo12_sequential_tiling</name>
    <tag></tag>
    <comment></comment>
-   <testCaseGuid>9bfae542-fa31-40f9-8385-48b258035572</testCaseGuid>
+   <testCaseGuid>5b348109-1369-4e7e-b055-4c198703a8fb</testCaseGuid>
 </TestCaseEntity>
