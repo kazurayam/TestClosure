@@ -17,3 +17,9 @@ import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
 import internal.GlobalVariable as GlobalVariable
 import org.openqa.selenium.Keys as Keys
 
+import misc.builder.NutritionFacts
+
+NutritionFacts cocaCola = 
+	new NutritionFacts.Builder(240, 8).calories(100).sodium(35).carbohydrate(27).build()
+
+assert cocaCola.getCalories() == 100

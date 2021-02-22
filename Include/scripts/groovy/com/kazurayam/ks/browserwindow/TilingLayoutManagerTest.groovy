@@ -20,7 +20,7 @@ class TilingLayoutManagerTest {
 
 	@Before
 	void setup() {
-		lm = new TilingLayoutManager(4, new Dimension(1020, 820))
+		lm = new TilingLayoutManager.Builder(4).physicalScreenSize(new Dimension(1020, 820)).build()
 	}
 
 	@Test
