@@ -1,9 +1,10 @@
 package com.kazurayam.ks.browserwindow
 
-import java.awt.Point
-import java.awt.Dimension
+import org.openqa.selenium.Dimension as Dimension
+import org.openqa.selenium.Point as Point
 
-public class StackingLayoutManager extends LayoutManagerBase implements BrowserWindowsLayoutManager {
+
+public class StackingLayoutManager extends BrowserWindowsLayoutManager {
 
 	private final Dimension windowDimension
 	private final Dimension disposition
@@ -30,7 +31,7 @@ public class StackingLayoutManager extends LayoutManagerBase implements BrowserW
 	 */
 	public static class Builder {
 		// Required parameters
-		
+
 		// Optional parameters - initialized to default values
 		private Dimension windowDimension = new Dimension(1024, 768)
 		private Dimension disposition = new Dimension(100, 80)

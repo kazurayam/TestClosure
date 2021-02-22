@@ -1,13 +1,23 @@
 package com.kazurayam.ks.browserwindow
 
-import java.awt.Point
-import java.awt.Dimension
+import org.openqa.selenium.Dimension as Dimension
+import org.openqa.selenium.Point as Point
 
-interface BrowserWindowsLayoutManager {
+abstract class BrowserWindowsLayoutManager {
 
-	Point getWindowPosition(int range, int index)
+	abstract Point getWindowPosition(int range, int index)
 
-	Dimension getWindowDimension(int range, int index)
+	abstract Dimension getWindowDimension(int range, int index)
 	
-	
+	protected void validateIndex(int numOfWindows, int index) {
+		if (numOfWindows <= 0) {
+			throw new IllegalArgumentException("numOfWaindows must not be <= 0")
+		}
+		if (index < 0) {
+			throw new IllegalArgumentException("index must not be < 0")
+		}
+		if (numOfWindows <= index) {
+			throw new IllegalArgumentException("index=${index} must not be larger than or equal to numberOfTWindows=${numOfWindows})")
+		}
+	}
 }

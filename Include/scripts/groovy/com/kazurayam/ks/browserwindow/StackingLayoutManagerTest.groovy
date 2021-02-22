@@ -2,8 +2,8 @@ package com.kazurayam.ks.browserwindow
 
 import static org.junit.Assert.*
 
-import java.awt.Dimension
-import java.awt.Point
+import org.openqa.selenium.Dimension as Dimension
+import org.openqa.selenium.Point as Point
 
 import org.junit.Before
 import org.junit.Test
@@ -15,7 +15,7 @@ public class StackingLayoutManagerTest {
 
 	StackingLayoutManager lm
 	int NUM_OF_WINDOWS = 3
-	
+
 	@Before
 	void setup() {
 		lm = new StackingLayoutManager.Builder().windowDimension(new Dimension(1280, 1024)).build()

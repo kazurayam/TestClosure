@@ -1,10 +1,11 @@
 package com.kazurayam.ks.browserwindow
 
-import java.awt.Dimension
-import java.awt.Point
+import org.openqa.selenium.Dimension as Dimension
+import org.openqa.selenium.Point as Point
+
 import java.awt.Toolkit
 
-public class TilingLayoutManager extends LayoutManagerBase implements BrowserWindowsLayoutManager {
+public class TilingLayoutManager extends BrowserWindowsLayoutManager {
 
 	protected final Dimension virtualScreenSize
 	protected final Point basePoint
@@ -49,7 +50,8 @@ public class TilingLayoutManager extends LayoutManagerBase implements BrowserWin
 		// Required parameters
 
 		// Optional parameters - initialized to default values
-		private Dimension physicalScreenSize = Toolkit.getDefaultToolkit().getScreenSize()
+		private java.awt.Dimension ss = Toolkit.getDefaultToolkit().getScreenSize()
+		private Dimension physicalScreenSize = new Dimension((int)ss.width, (int)ss.height)
 		private Point basePoint = new Point(10, 10)
 
 		public Builder() {}
@@ -71,8 +73,8 @@ public class TilingLayoutManager extends LayoutManagerBase implements BrowserWin
 
 	private TilingLayoutManager(Builder builder) {
 		virtualScreenSize = new Dimension(
-				(int)(builder.physicalScreenSize.width - builder.basePoint.x * 2),
-				(int)(builder.physicalScreenSize.height - builder.basePoint.y * 2)
+				builder.physicalScreenSize.width - builder.basePoint.x * 2,
+				builder.physicalScreenSize.height - builder.basePoint.y * 2
 				)
 		basePoint = builder.basePoint
 	}
