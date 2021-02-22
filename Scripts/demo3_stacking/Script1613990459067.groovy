@@ -7,9 +7,9 @@ import com.kazurayam.ks.browserwindow.StackingLayoutManager
 import com.kms.katalon.core.webui.driver.DriverFactory
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 
-def manageLayout = { BrowserWindowsLayoutManager layout, int numOfWindows, int index ->
-	Point pos = layout.getWindowPosition(numOfWindows, index)
-	Dimension dim = layout.getWindowDimension(numOfWindows, index)
+def manageLayout = { BrowserWindowsLayoutManager layout, int capacity, int index ->
+	Point pos = layout.getWindowPosition(capacity, index)
+	Dimension dim = layout.getWindowDimension(capacity, index)
 	WebUI.setViewPortSize(dim.width, dim.height)
 	Point windowPosition = new Point(pos.x, pos.y)
 	DriverFactory.getWebDriver().manage().window().setPosition(windowPosition)

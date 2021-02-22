@@ -14,15 +14,15 @@ public class StackingLayoutManager extends BrowserWindowsLayoutManager {
 	}
 
 	@Override
-	Point getWindowPosition(int numOfWindows, int index) {
-		validateIndex(numOfWindows, index)
+	Point getWindowPosition(int capacity, int index) {
+		validateIndex(capacity, index)
 		int x = disposition.width * index
 		int y = disposition.height * index
 		return new Point(x, y)
 	}
 
 	@Override
-	Dimension getWindowDimension(int numOfWindows, int index) {
+	Dimension getWindowDimension(int capacity, int index) {
 		return windowDimension
 	}
 
