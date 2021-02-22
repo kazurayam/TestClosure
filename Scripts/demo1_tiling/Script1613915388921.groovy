@@ -13,22 +13,22 @@ import com.kms.katalon.core.testobject.TestObject
 import com.kms.katalon.core.webui.driver.DriverFactory
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 
-def manageLayout = { BrowserWindowsLayoutManager layout, int tileIndex ->
-	Point pos = layout.getPosition(tileIndex)
-	Dimension dim = layout.getDimension(tileIndex)
+def manageLayout = { BrowserWindowsLayoutManager layout, int numOfWindows, int tileIndex ->
+	Point pos = layout.getWindowPosition(numOfWindows, tileIndex)
+	Dimension dim = layout.getWindowDimension(numOfWindows, tileIndex)
 	WebUI.setViewPortSize((int)dim.width, (int)dim.height)
 	SelPoint windowPosition = new SelPoint((int)pos.x, (int)pos.y)
 	DriverFactory.getWebDriver().manage().window().setPosition(windowPosition)
 }
 
-BrowserWindowsLayoutManager layout = new TilingLayoutManager.Builder(3).build()
+BrowserWindowsLayoutManager layout = new TilingLayoutManager.Builder().build()
 
 TestClosuresExecutor executor = new TestClosuresExecutor()
 
 executor.addClosure({
 	String url = 'http://demoaut.katalon.com/'
 	WebUI.openBrowser('')
-	manageLayout.call(layout, 0)
+	manageLayout.call(layout, 4, 0)
 	WebUI.navigateToUrl(url)
 	WebUI.waitForPageLoad(5)
 	WebUI.comment("processing ${url}")
@@ -51,7 +51,7 @@ executor.addClosure({
 executor.addClosure({
 	String url = 'https://forum.katalon.com/'
 	WebUI.openBrowser('')
-	manageLayout.call(layout, 1)
+	manageLayout.call(layout, 4, 1)
 	WebUI.navigateToUrl(url)
 	WebUI.comment("processing ${url}")
 	TestObject tObj = newTestObjectXPath("//a[contains(.,'How To Help Us Help You')]")
@@ -63,7 +63,7 @@ executor.addClosure({
 executor.addClosure({
 	String url = 'https://duckduckgo.com/'
 	WebUI.openBrowser('')
-	manageLayout.call(layout, 2)
+	manageLayout.call(layout, 4, 2)
 	WebUI.navigateToUrl(url)
 	WebUI.comment("processing ${url}")
 	TestObject searchText = newTestObjectXPath("//input[@id='search_form_input_homepage']")

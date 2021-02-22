@@ -14,28 +14,25 @@ import org.junit.runners.JUnit4
 public class StackingLayoutManagerTest {
 
 	StackingLayoutManager lm
-
+	int NUM_OF_WINDOWS = 3
+	
 	@Before
 	void setup() {
-		lm = new StackingLayoutManager.Builder(4).windowDimension(new Dimension(1280, 1024)).build()
+		lm = new StackingLayoutManager.Builder().windowDimension(new Dimension(1280, 1024)).build()
 	}
 
-	@Test
-	void test_getNumberOfWindows() {
-		assertTrue("expected 4 windows", lm.getNumberOfWindows() == 4)
-	}
 
 	@Test
 	void test_getWindowDimension() {
-		assertTrue("width=${lm.getWindowDimension().width}, expected 1280",
-				lm.getWindowDimension().width == 1280)
-		assertTrue("height=${lm.getWindowDimension().height}, epected 1024",
-				lm.getWindowDimension().height == 1024)
+		assertTrue("width=${lm.getWindowDimension(NUM_OF_WINDOWS,0).width}, expected 1280",
+				lm.getWindowDimension(NUM_OF_WINDOWS, 0).width == 1280)
+		assertTrue("height=${lm.getWindowDimension(NUM_OF_WINDOWS, 0).height}, epected 1024",
+				lm.getWindowDimension(NUM_OF_WINDOWS, 0).height == 1024)
 	}
 
 	@Test
 	void testWindow0() {
-		Point pos = lm.getPosition(0)
+		Point pos = lm.getWindowPosition(NUM_OF_WINDOWS, 0)
 		assertTrue("pos.x=${pos.x}, expected to be equal to ${lm.getDisposition().width * 0}",
 				pos.x == lm.getDisposition().width * 0)
 		assertTrue("pos.y=${pos.y}, expected to be equal to ${lm.getDisposition().height * 0}",
@@ -44,7 +41,7 @@ public class StackingLayoutManagerTest {
 
 	@Test
 	void testWindow1() {
-		Point pos = lm.getPosition(1)
+		Point pos = lm.getWindowPosition(NUM_OF_WINDOWS, 1)
 		assertTrue("pos.x=${pos.x}, expected to be equal to ${lm.getDisposition().width * 1}",
 				pos.x == lm.getDisposition().width * 1)
 		assertTrue("pos.y=${pos.y}, expected to be equal to ${lm.getDisposition().height * 1}",
@@ -53,7 +50,7 @@ public class StackingLayoutManagerTest {
 
 	@Test
 	void testWindow2() {
-		Point pos = lm.getPosition(2)
+		Point pos = lm.getWindowPosition(NUM_OF_WINDOWS, 2)
 		assertTrue("pos.x=${pos.x}, expected to be equal to ${lm.getDisposition().width * 2}",
 				pos.x == lm.getDisposition().width * 2)
 		assertTrue("pos.y=${pos.y}, expected to be equal to ${lm.getDisposition().height * 2}",

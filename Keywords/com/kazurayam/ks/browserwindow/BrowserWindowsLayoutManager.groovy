@@ -5,7 +5,9 @@ import java.awt.Dimension
 
 interface BrowserWindowsLayoutManager {
 
-	Point getPosition(int tileIndex)
+	Point getWindowPosition(int range, int index)
 
-	Dimension getDimension(int tileIndex)
+	Dimension getWindowDimension(int range, int index)
+	
+	
 }

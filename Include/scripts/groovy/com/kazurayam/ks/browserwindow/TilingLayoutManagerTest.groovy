@@ -17,39 +17,39 @@ import com.kazurayam.ks.browserwindow.TilingLayoutManager
 class TilingLayoutManagerTest {
 
 	TilingLayoutManager lm
+	int NUM_OF_WINDOWS = 4
 
 	@Before
 	void setup() {
-		lm = new TilingLayoutManager.Builder(4).physicalScreenSize(new Dimension(1020, 820)).build()
+		lm = new TilingLayoutManager.Builder().physicalScreenSize(new Dimension(1020, 820)).build()
 	}
 
 	@Test
-	void test_getNumberOfTiles() {
-		assertTrue("expected 4 tiles", lm.getNumberOfTiles() == 4)
+	void test_getVirtualScreenSize() {
+		Dimension virtualScreenSize = lm.getVirtualScreenSize()
+		assertTrue(virtualScreenSize.width == 1000)
+		assertTrue(virtualScreenSize.height == 800)
 	}
 
 	@Test
-	void test_getNumberOfRows() {
-		assertTrue("expected 2 rows but got ${lm.getNumberOfRows()}", lm.getNumberOfRows() == 2)
+	void test_getBasePoint() {
+		Point basePoint = lm.getBasePoint()
+		assertTrue(basePoint.x == 10)
+		assertTrue(basePoint.y == 10)
 	}
 
 	@Test
-	void test_getNumberOfColumns() {
-		assertTrue("expected 2 columns", lm.getNumberOfColumns() == 2)
-	}
-
-	@Test
-	void test_getTileDimension() {
-		Dimension tileDimension = lm.getTileDimension()
+	void test_getWindowDimension() {
+		Dimension tileDimension = lm.getWindowDimension(NUM_OF_WINDOWS, 0)
 		assertTrue("expected width == 500", tileDimension.width == 500)
 		assertTrue("expected height == 400", tileDimension.height == 400)
 	}
 
 	@Test
-	void testTile0() {
+	void testWindow0() {
 		Point basePoint = lm.getBasePoint()
-		Point loc = lm.getPosition(0)
-		Dimension dim = lm.getDimension(0)
+		Point loc = lm.getWindowPosition(NUM_OF_WINDOWS, 0)
+		Dimension dim = lm.getWindowDimension(NUM_OF_WINDOWS, 0)
 		Point expectedLoc = new Point((int)basePoint.x, (int)basePoint.y)
 		assertTrue("loc.x=${loc.x}, expected to be ${expectedLoc.x}", expectedLoc.x == loc.x)
 		assertTrue("loc.y=${loc.y}, expected to be ${expectedLoc.y}", expectedLoc.y == loc.y)
@@ -58,10 +58,10 @@ class TilingLayoutManagerTest {
 	}
 
 	@Test
-	void testTile1() {
+	void testWindow1() {
 		Point basePoint = lm.getBasePoint()
-		Point loc = lm.getPosition(1)
-		Dimension dim = lm.getDimension(1)
+		Point loc = lm.getWindowPosition(NUM_OF_WINDOWS, 1)
+		Dimension dim = lm.getWindowDimension(NUM_OF_WINDOWS, 1)
 		Point expectedLoc = new Point((int)basePoint.x + (int)dim.width, (int)basePoint.y)
 		assertTrue("loc.x=${loc.x}, expected to be ${expectedLoc.x}", expectedLoc.x == loc.x)
 		assertTrue("loc.y=${loc.y}, expected to be ${expectedLoc.y}", expectedLoc.y == loc.y)
@@ -70,10 +70,10 @@ class TilingLayoutManagerTest {
 	}
 
 	@Test
-	void testTile2() {
+	void testWindow2() {
 		Point basePoint = lm.getBasePoint()
-		Point loc = lm.getPosition(2)
-		Dimension dim = lm.getDimension(2)
+		Point loc = lm.getWindowPosition(NUM_OF_WINDOWS, 2)
+		Dimension dim = lm.getWindowDimension(NUM_OF_WINDOWS, 2)
 		Point expectedLoc = new Point((int)basePoint.x, (int)basePoint.y + (int)dim.height)
 		assertTrue("loc.x=${loc.x}, expected to be ${expectedLoc.x}", expectedLoc.x == loc.x)
 		assertTrue("loc.y=${loc.y}, expected to be ${expectedLoc.y}", expectedLoc.y == loc.y)
