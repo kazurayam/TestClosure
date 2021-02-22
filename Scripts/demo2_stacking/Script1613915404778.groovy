@@ -22,9 +22,9 @@ def manageLayout = { BrowserWindowsLayoutManager layout, int tileIndex ->
 
 BrowserWindowsLayoutManager layout = new StackingLayoutManager(3, new Dimension(1024, 500))
 
-List<Closure> closures = new ArrayList<Closure>()
+TestClosuresExecutor executor = new TestClosuresExecutor()
 
-closures.add({
+executor.addClosure({
 	String url = 'http://demoaut.katalon.com/'
 	WebUI.openBrowser('')
 	manageLayout.call(layout, 0)
@@ -34,7 +34,7 @@ closures.add({
 	WebUI.closeBrowser()
 	})
 
-closures.add({
+executor.addClosure({
 	String url = 'https://forum.katalon.com/'
 	WebUI.openBrowser('')
 	manageLayout.call(layout, 1)
@@ -44,7 +44,7 @@ closures.add({
 	WebUI.closeBrowser()
 	})
 
-closures.add({
+executor.addClosure({
 	String url = 'https://duckduckgo.com/'
 	WebUI.openBrowser('')
 	manageLayout.call(layout, 2)
@@ -54,6 +54,4 @@ closures.add({
 	WebUI.closeBrowser()
 	})
 	
-TestClosuresExecutor executor = new TestClosuresExecutor()
-executor.addClosures(closures)
 executor.execute()
