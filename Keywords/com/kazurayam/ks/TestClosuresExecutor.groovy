@@ -35,7 +35,7 @@ public class TestClosuresExecutor {
 		Dimension dim = layout.getWindowDimension(capacity, index)
 		driver.manage().window().setSize(dim)
 	}
-	
+
 	public TestClosuresExecutor(BrowserWindowsLayoutManager layoutManager) {
 		this.layoutManager = layoutManager
 		this.callableTasks = new ArrayList<Callable<String>>()
