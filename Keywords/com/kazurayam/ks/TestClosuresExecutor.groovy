@@ -6,6 +6,13 @@ import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import java.util.concurrent.Future
 import java.util.concurrent.TimeUnit
+import com.kms.katalon.core.webui.driver.DriverFactory
+
+import com.kazurayam.ks.browserwindow.BrowserWindowsLayoutManager
+import org.openqa.selenium.WebDriver
+import org.openqa.selenium.Dimension
+import org.openqa.selenium.Point
+import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 
 /**
  * 
@@ -13,17 +20,55 @@ import java.util.concurrent.TimeUnit
  */
 public class TestClosuresExecutor {
 
-	private static int MAX_THREADS = 6
+	private static final int MAX_THREADS = 6
 
-	List<Callable<String>> callableTasks
+	private final BrowserWindowsLayoutManager layoutManager
+	private int capacity
+	private List<Callable<String>> callableTasks
 
-	public TestClosuresExecutor() {
+	def manageLayout = { BrowserWindowsLayoutManager layout, int capacity, int index ->
+		WebDriver driver = DriverFactory.getWebDriver()
+		// move the browser window to this position (x,y)
+		Point pos = layout.getWindowPosition(capacity, index)
+		driver.manage().window().setPosition(pos)
+		// resize the browser window to thiis dimension (width, height)
+		Dimension dim = layout.getWindowDimension(capacity, index)
+		driver.manage().window().setSize(dim)
+	}
+	
+	public TestClosuresExecutor(BrowserWindowsLayoutManager layoutManager) {
+		this.layoutManager = layoutManager
 		this.callableTasks = new ArrayList<Callable<String>>()
 	}
 
-	void addClosure(Closure closure) {
+	public void addAllClosures(List<Closure> closures) {
+		capacity = (closures.size() > MAX_THREADS) ? MAX_THREADS : closures.size()
+		for (int i = 0; i < closures.size(); i++) {
+			this.addClosure(closures.get(i), i)
+		}
+	}
+
+	private void addClosure(Closure closure, int index) {
+		println "given index is ${index}"
 		Callable<String> callableTask = {
 			TimeUnit.MILLISECONDS.sleep(300)
+			//
+			WebUI.metaClass.'static'.invokeMethod = { String name, args ->
+				def result
+				try {
+					result = delegate.metaClass.getMetaMethod(name, args).invoke(delegate, args)
+				} catch (Exception e) {
+					System.out.println("Handling exception for method \'$name\'")
+				}
+				// modify WebUI.openBrowser() method
+				if (name == "openBrowser") {
+					// move and resize the browser window
+					println "passed capacity is ${capacity}, passed index is ${index}"
+					manageLayout.call(layoutManager, capacity, index)
+				}
+				return result
+			}
+			//
 			closure.call()
 			return "Task's execution"
 		}

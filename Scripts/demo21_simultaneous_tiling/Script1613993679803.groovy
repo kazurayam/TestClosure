@@ -1,32 +1,21 @@
-import org.openqa.selenium.Dimension
 import org.openqa.selenium.Keys
-import org.openqa.selenium.Point
 
 import com.kazurayam.ks.TestClosuresExecutor
-import com.kazurayam.ks.browserwindow.BrowserWindowsLayoutManager
 import com.kazurayam.ks.browserwindow.TilingLayoutManager
 import com.kms.katalon.core.model.FailureHandling
 import com.kms.katalon.core.testobject.ConditionType
 import com.kms.katalon.core.testobject.TestObject
-import com.kms.katalon.core.webui.driver.DriverFactory
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 
-def manageLayout = { BrowserWindowsLayoutManager layout, int capacity, int index ->
-	Point pos = layout.getWindowPosition(capacity, index)
-	Dimension dim = layout.getWindowDimension(capacity, index)
-	WebUI.setViewPortSize(dim.width, dim.height)
-	Point windowPosition = new Point(pos.x, pos.y)
-	DriverFactory.getWebDriver().manage().window().setPosition(windowPosition)
-}
 
-BrowserWindowsLayoutManager layout = new TilingLayoutManager.Builder().build()
+TestClosuresExecutor executor = 
+	new TestClosuresExecutor(new TilingLayoutManager.Builder().build())
 
-TestClosuresExecutor executor = new TestClosuresExecutor()
+List<Closure> closures = new ArrayList<Closure>()
 
-executor.addClosure({
+closures.add({
 	String url = 'http://demoaut.katalon.com/'
 	WebUI.openBrowser('')
-	manageLayout.call(layout, 4, 0)
 	WebUI.navigateToUrl(url)
 	WebUI.waitForPageLoad(5)
 	WebUI.comment("processing ${url}")
@@ -46,10 +35,9 @@ executor.addClosure({
 	WebUI.closeBrowser()
 	})
 
-executor.addClosure({
+closures.add({
 	String url = 'https://forum.katalon.com/'
 	WebUI.openBrowser('')
-	manageLayout.call(layout, 4, 1)
 	WebUI.navigateToUrl(url)
 	WebUI.comment("processing ${url}")
 	TestObject tObj = newTestObjectXPath("//a[contains(.,'How To Help Us Help You')]")
@@ -58,10 +46,9 @@ executor.addClosure({
 	WebUI.closeBrowser()
 	})
 
-executor.addClosure({
+closures.add({
 	String url = 'https://duckduckgo.com/'
 	WebUI.openBrowser('')
-	manageLayout.call(layout, 4, 2)
 	WebUI.navigateToUrl(url)
 	WebUI.comment("processing ${url}")
 	TestObject searchText = newTestObjectXPath("//input[@id='search_form_input_homepage']")
@@ -74,6 +61,8 @@ executor.addClosure({
 	WebUI.delay(3)
 	WebUI.closeBrowser()
 	})
+
+executor.addAllClosures(closures)
 	
 executor.execute()
 

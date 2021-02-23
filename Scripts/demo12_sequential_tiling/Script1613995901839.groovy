@@ -36,9 +36,7 @@ for (int i = 0; i < closures.size(); i++) {
 		}
 		// modify WebUI.openBrowser() method 
 		if (name == "openBrowser") {
-			//Point pos = layoutManager.getWindowPosition(closures.size(), i)
-			//Dimension dim = layoutManager.getWindowDimension(closures.size(), i)
-			//println "window pos=(${pos.x},${pos.y}), width=${dim.width}, height=${dim.height}"
+			// move and resize the browser window
 			manageLayout.call(layoutManager, closures.size(), i)
 		}
 		return result
