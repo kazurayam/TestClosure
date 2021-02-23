@@ -17,6 +17,6 @@ import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
 import internal.GlobalVariable as GlobalVariable
 import org.openqa.selenium.Keys as Keys
 
-List<Closure> closures = WebUI.callTestCase(findTestCase("demo/createFixture"), [:])
+List<Closure> closures = WebUI.callTestCase(findTestCase("demo/createPlainFixture"), [:])
 
 closures.get(1).call()
