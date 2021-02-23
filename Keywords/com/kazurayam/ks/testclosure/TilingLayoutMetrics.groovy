@@ -1,11 +1,11 @@
-package com.kazurayam.ks.browserwindow
+package com.kazurayam.ks.testclosure
 
 import org.openqa.selenium.Dimension as Dimension
 import org.openqa.selenium.Point as Point
 
 import java.awt.Toolkit
 
-public class TilingLayoutManager extends BrowserWindowsLayoutManager {
+public class TilingLayoutMetrics extends BrowserWindowsLayoutMetrics {
 
 	protected final Dimension virtualScreenSize
 	protected final Point basePoint
@@ -64,12 +64,12 @@ public class TilingLayoutManager extends BrowserWindowsLayoutManager {
 			return this
 		}
 
-		TilingLayoutManager build() {
-			return new TilingLayoutManager(this)
+		TilingLayoutMetrics build() {
+			return new TilingLayoutMetrics(this)
 		}
 	}
 
-	private TilingLayoutManager(Builder builder) {
+	private TilingLayoutMetrics(Builder builder) {
 		virtualScreenSize = new Dimension(
 				builder.physicalScreenSize.width - builder.basePoint.x * 2,
 				builder.physicalScreenSize.height - builder.basePoint.y * 2

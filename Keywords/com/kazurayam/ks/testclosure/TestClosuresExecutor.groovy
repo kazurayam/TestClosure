@@ -1,4 +1,4 @@
-package com.kazurayam.ks
+package com.kazurayam.ks.testclosure
 
 import java.util.concurrent.Callable
 import java.util.concurrent.ExecutionException
@@ -8,7 +8,6 @@ import java.util.concurrent.Future
 import java.util.concurrent.TimeUnit
 import com.kms.katalon.core.webui.driver.DriverFactory
 
-import com.kazurayam.ks.browserwindow.BrowserWindowsLayoutManager
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.Dimension
 import org.openqa.selenium.Point
@@ -22,11 +21,11 @@ public class TestClosuresExecutor {
 
 	private static final int MAX_THREADS = 6
 
-	private final BrowserWindowsLayoutManager layoutManager
+	private final BrowserWindowsLayoutMetrics layoutManager
 	private int capacity
 	private List<Callable<String>> callableTasks
 
-	def manageLayout = { BrowserWindowsLayoutManager layout, int capacity, int index ->
+	def manageLayout = { BrowserWindowsLayoutMetrics layout, int capacity, int index ->
 		WebDriver driver = DriverFactory.getWebDriver()
 		// move the browser window to this position (x,y)
 		Point pos = layout.getWindowPosition(capacity, index)
@@ -36,7 +35,7 @@ public class TestClosuresExecutor {
 		driver.manage().window().setSize(dim)
 	}
 
-	public TestClosuresExecutor(BrowserWindowsLayoutManager layoutManager) {
+	public TestClosuresExecutor(BrowserWindowsLayoutMetrics layoutManager) {
 		this.layoutManager = layoutManager
 		this.callableTasks = new ArrayList<Callable<String>>()
 	}

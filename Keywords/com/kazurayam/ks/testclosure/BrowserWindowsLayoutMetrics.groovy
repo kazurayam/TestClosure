@@ -1,9 +1,9 @@
-package com.kazurayam.ks.browserwindow
+package com.kazurayam.ks.testclosure
 
 import org.openqa.selenium.Dimension as Dimension
 import org.openqa.selenium.Point as Point
 
-abstract class BrowserWindowsLayoutManager {
+abstract class BrowserWindowsLayoutMetrics {
 
 	abstract Point getWindowPosition(int capacity, int index)
 

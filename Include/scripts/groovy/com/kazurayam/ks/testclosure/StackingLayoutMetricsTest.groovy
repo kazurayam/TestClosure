@@ -1,4 +1,4 @@
-package com.kazurayam.ks.browserwindow
+package com.kazurayam.ks.testclosure
 
 import static org.junit.Assert.*
 
@@ -11,14 +11,14 @@ import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 
 @RunWith(JUnit4.class)
-public class StackingLayoutManagerTest {
+public class StackingLayoutMetricsTest {
 
-	StackingLayoutManager lm
+	StackingLayoutMetrics lm
 	int NUM_OF_WINDOWS = 3
 
 	@Before
 	void setup() {
-		lm = new StackingLayoutManager.Builder().windowDimension(new Dimension(1280, 1024)).build()
+		lm = new StackingLayoutMetrics.Builder().windowDimension(new Dimension(1280, 1024)).build()
 	}
 
 

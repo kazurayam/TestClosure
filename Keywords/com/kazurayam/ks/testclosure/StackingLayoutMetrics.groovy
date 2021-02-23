@@ -1,10 +1,10 @@
-package com.kazurayam.ks.browserwindow
+package com.kazurayam.ks.testclosure
 
 import org.openqa.selenium.Dimension as Dimension
 import org.openqa.selenium.Point as Point
 
 
-public class StackingLayoutManager extends BrowserWindowsLayoutManager {
+public class StackingLayoutMetrics extends BrowserWindowsLayoutMetrics {
 
 	private final Dimension windowDimension
 	private final Dimension disposition
@@ -49,13 +49,13 @@ public class StackingLayoutManager extends BrowserWindowsLayoutManager {
 			return this
 		}
 
-		StackingLayoutManager build() {
-			return new StackingLayoutManager(this)
+		StackingLayoutMetrics build() {
+			return new StackingLayoutMetrics(this)
 		}
 	}
 
 
-	private StackingLayoutManager(Builder builder) {
+	private StackingLayoutMetrics(Builder builder) {
 		windowDimension = builder.windowDimension
 		disposition     = builder.disposition
 	}

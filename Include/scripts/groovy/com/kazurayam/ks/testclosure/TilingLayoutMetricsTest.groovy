@@ -1,4 +1,4 @@
-package com.kazurayam.ks.browserwindow
+package com.kazurayam.ks.testclosure
 
 import static org.junit.Assert.*
 
@@ -11,17 +11,15 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 
-import com.kazurayam.ks.browserwindow.TilingLayoutManager
-
 @RunWith(JUnit4.class)
-class TilingLayoutManagerTest {
+class TilingLayoutMetricsTest {
 
-	TilingLayoutManager lm
+	TilingLayoutMetrics lm
 	int NUM_OF_WINDOWS = 4
 
 	@Before
 	void setup() {
-		lm = new TilingLayoutManager.Builder().physicalScreenSize(new Dimension(1020, 820)).build()
+		lm = new TilingLayoutMetrics.Builder().physicalScreenSize(new Dimension(1020, 820)).build()
 	}
 
 	@Test
