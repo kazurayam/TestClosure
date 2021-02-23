@@ -18,11 +18,12 @@ import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
  */
 public class TestClosure implements Callable<String> {
 
+	private final Closure closure
+	private final List<Object> parameters
+
 	private WindowLayoutMetrics metrics
 	private WindowLocation location
-	private Closure closure
-	private List<Object> parameters
-
+	
 	/**
 	 * Constructor
 	 * 
@@ -30,20 +31,29 @@ public class TestClosure implements Callable<String> {
 	 * @param index
 	 * @param closure
 	 */
-	public TestClosure(WindowLayoutMetrics metrics, WindowLocation location, Closure closure, List<Object> parameters) {
-		Objects.requireNonNull(metrics)
-		Objects.requireNonNull(location)
+	public TestClosure(Closure closure, List<Object> parameters) {
 		Objects.requireNonNull(closure)
 		Objects.requireNonNull(parameters)
-		this.metrics = metrics
-		this.location = location
 		this.closure = closure
 		this.parameters = parameters
+	}
+	
+	public void setWindowLayoutMetrics(WindowLayoutMetrics metrics) {
+		Objects.requireNonNull(metrics)
+		this.metrics = metrics
+	}
+	
+	public void setWindowLocation(WindowLocation location) {
+		Objects.requireNonNull(location)
+		this.location = location
 	}
 
 	@Override
 	public String call() throws Exception {
-		def args = [ metrics, location ]
+		Objects.requireNonNull(metrics)
+		Objects.requireNonNull(location)
+		//
+		def args = [metrics, location]
 		args.addAll(parameters)
 		closure.call(args)
 		return "done"

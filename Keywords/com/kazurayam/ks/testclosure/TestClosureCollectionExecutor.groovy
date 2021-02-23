@@ -38,18 +38,18 @@ public class TestClosureCollectionExecutor {
 		this.testClosures = new ArrayList<TestClosure>()
 	}
 
-	public void addAllClosures(List<Closure> closures) {
-		capacity = (closures.size() > MAX_THREADS) ? MAX_THREADS : closures.size()
-		for (int i = 0; i < closures.size(); i++) {
-			this.addClosure(closures.get(i), i)
+	public void addAllClosures(List<TestClosure> tclosures) {
+		capacity = (tclosures.size() > MAX_THREADS) ? MAX_THREADS : tclosures.size()
+		for (int i = 0; i < tclosures.size(); i++) {
+			this.addClosure(tclosures.get(i), i)
 		}
 	}
 
-	private void addClosure(Closure closure, int index) {
-		WindowLocation location = new WindowLocation(capacity, index)
-		TestClosure testClosure =
-				new TestClosure(metrics, location, closure, new ArrayList<Object>())
-		this.testClosures.add(testClosure)
+	private void addClosure(TestClosure tclosure, int index) {
+		Objects.requireNonNull(tclosure)
+		tclosure.setWindowLayoutMetrics(metrics)
+		tclosure.setWindowLocation(new WindowLocation(capacity, index))
+		this.testClosures.add(tclosure)
 	}
 
 	void execute() {

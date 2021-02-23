@@ -8,7 +8,7 @@ import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 
 WindowLayoutMetrics metrics = new TilingLayoutMetrics.Builder().build()
 
-List<Closure> closures = WebUI.callTestCase(findTestCase("demo/createManagedFixture"), [:])
+List<Closure> closures = WebUI.callTestCase(findTestCase("demo/createDemoTestClosures"), [:])
 
 for (int i = 0; i < closures.size(); i++) {
 	WindowLocation location = new WindowLocation(closures.size(), i)

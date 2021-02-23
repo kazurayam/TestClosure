@@ -1,5 +1,6 @@
 import org.openqa.selenium.Keys
 
+import com.kazurayam.ks.testclosure.TestClosure
 import com.kazurayam.ks.windowlayout.BrowserWindowLayoutKeyword as BrowserWindow
 import com.kazurayam.ks.windowlayout.WindowLayoutMetrics
 import com.kazurayam.ks.windowlayout.WindowLocation
@@ -29,10 +30,10 @@ TestObject newTestObjectCSS(String cssSelector) {
 /*
  * the container of Closures to return
  */
-List<Closure> closures = new ArrayList<Closure>()
+List<TestClosure> tclosures = new ArrayList<TestClosure>()
 
 // construct closures
-closures.add({ WindowLayoutMetrics metrics, WindowLocation location ->
+tclosures.add(new TestClosure({ WindowLayoutMetrics metrics, WindowLocation location ->
 	String url = 'http://demoaut.katalon.com/'
 	WebUI.openBrowser('')
 	//
@@ -55,9 +56,10 @@ closures.add({ WindowLayoutMetrics metrics, WindowLocation location ->
 	WebUI.waitForElementPresent(btnBookAppointment, 3, FailureHandling.STOP_ON_FAILURE)
 	WebUI.delay(1)
 	WebUI.closeBrowser()
-})
+	}, [])
+)
 
-closures.add({ WindowLayoutMetrics metrics, WindowLocation location ->
+tclosures.add(new TestClosure({ WindowLayoutMetrics metrics, WindowLocation location ->
 	String url = 'https://forum.katalon.com/'
 	WebUI.openBrowser('')
 	//
@@ -70,9 +72,10 @@ closures.add({ WindowLayoutMetrics metrics, WindowLocation location ->
 	WebUI.scrollToElement(tObj, 5)
 	WebUI.delay(1)
 	WebUI.closeBrowser()
-})
+	}, [])
+)
 
-closures.add({ WindowLayoutMetrics metrics, WindowLocation location ->
+tclosures.add(new TestClosure({ WindowLayoutMetrics metrics, WindowLocation location ->
 	String url = 'https://duckduckgo.com/'
 	WebUI.openBrowser('')
 	//
@@ -89,7 +92,8 @@ closures.add({ WindowLayoutMetrics metrics, WindowLocation location ->
 	WebUI.verifyMatch(title, "katalon at DuckDuckGo", true)
 	WebUI.delay(1)
 	WebUI.closeBrowser()
-})
+	}, [])
+)
 
 // Here you are
-return closures
+return tclosures

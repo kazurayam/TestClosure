@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestCaseEntity>
    <description></description>
-   <name>createManagedFixture</name>
+   <name>createPlainClosures</name>
    <tag></tag>
    <comment></comment>
-   <testCaseGuid>f15bbe7a-a422-4cbf-9213-f46f4a45dfbf</testCaseGuid>
+   <testCaseGuid>cc85bdf2-a925-4770-8442-0e2e626b9bc9</testCaseGuid>
 </TestCaseEntity>
