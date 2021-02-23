@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Project>
    <description></description>
-   <name>TestClosuresExecutorInKatalonStudio</name>
+   <name>TestClosure</name>
    <tag></tag>
    <UUID>9eb8e58d-1482-42e3-8e2a-5a234aef66d0</UUID>
    <migratedVersion>5.9.0</migratedVersion>
    <pageLoadTimeout>0</pageLoadTimeout>
-   <projectFileLocation>/Users/kazuakiurayama/katalon-workspace/TestClosuresExecutorInKatalonStudio/TestClosuresExecutorInKatalonStudio.prj</projectFileLocation>
+   <projectFileLocation>/Users/kazuakiurayama/katalon-workspace/TestClosure/TestClosure.prj</projectFileLocation>
    <sourceContent>
       <sourceFolderList>
          <sourceFolderConfiguration>
