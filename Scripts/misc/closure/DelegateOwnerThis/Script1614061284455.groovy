@@ -17,6 +17,23 @@ import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
 import internal.GlobalVariable as GlobalVariable
 import org.openqa.selenium.Keys as Keys
 
-List<Closure> closures = WebUI.callTestCase(findTestCase("demo/createFixture"), [:])
+class Test {
+	Closure a = {
+		println "Ordinary Closure"
+		println "  this:     ${this.class.name}"
+		println "  owner:    ${owner.class.name}"
+		println "  delegate: ${delegate.class.name}"
+	
+		// nested Closure
+		// this will be executed automatically when a is executed
+		{ ->
+			println "Nested innner Closure"
+			println "  this:     ${this.class.name}"
+			println "  owner:    ${owner.class.name}"
+			println "  delegate: ${delegate.class.name}"
+		}()
+	}
+}
 
-closures.get(1).call()
+def test = new Test()
+test.a()

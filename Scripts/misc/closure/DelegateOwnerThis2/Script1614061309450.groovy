@@ -17,6 +17,40 @@ import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
 import internal.GlobalVariable as GlobalVariable
 import org.openqa.selenium.Keys as Keys
 
-List<Closure> closures = WebUI.callTestCase(findTestCase("demo/createFixture"), [:])
+/**
+ * https://qiita.com/saba1024/items/b57c412961e1a2779881
+ */
+class Test2 {
+	String abc = "abc in Test2"
+	def exec(Closure a) {
+		a()
+	}
+}
 
-closures.get(1).call()
+class Hoge {
+	static void main() {
+		String abc = "ConsoleScript"
+		def test2 = new Test2()
+		
+		Closure cls1 = { ->
+			println "this:         ${this.class.name}"
+			println "owner:        ${owner.class.name}"
+			println "delegate:     ${delegate.class.name}"
+			println "abc:          ${abc}"
+			return abc
+		}
+		assert test2.exec(cls1) == "ConsoleScript"
+		
+		Closure cls2 = { ->
+			println "this:         ${this.class.name}"
+			println "owner:        ${owner.class.name}"
+			println "delegate:     ${delegate.class.name}"
+			println "delegate.abc: ${delegate.abc}"
+			return delegate.abc
+		}
+		cls2.delegate = test2
+		assert test2.exec( cls2 ) == "abc in Test2"
+	}
+}
+
+Hoge.main()

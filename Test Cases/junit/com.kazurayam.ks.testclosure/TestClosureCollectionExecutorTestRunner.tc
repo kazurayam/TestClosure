@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestCaseEntity>
    <description></description>
-   <name>createTestClosures</name>
+   <name>TestClosureCollectionExecutorTestRunner</name>
    <tag></tag>
    <comment></comment>
-   <testCaseGuid>cc85bdf2-a925-4770-8442-0e2e626b9bc9</testCaseGuid>
+   <testCaseGuid>a9762ee2-c51c-47d0-b887-b2c597491f91</testCaseGuid>
 </TestCaseEntity>

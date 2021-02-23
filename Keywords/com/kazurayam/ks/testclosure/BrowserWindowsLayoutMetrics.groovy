@@ -9,7 +9,7 @@ abstract class BrowserWindowsLayoutMetrics {
 
 	abstract Dimension getWindowDimension(int capacity, int index)
 
-	protected void validateIndex(int capacity, int index) {
+	protected static void validateIndex(int capacity, int index) {
 		if (capacity <= 0) {
 			throw new IllegalArgumentException("capacity must not be <= 0")
 		}
