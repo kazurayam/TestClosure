@@ -6,7 +6,7 @@ import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 
 TestClosureCollectionExecutor executor = new TestClosureCollectionExecutor()
 
-List<Closure> closures = WebUI.callTestCase(findTestCase("demo/createPlainFixture"), [:])
+List<Closure> closures = WebUI.callTestCase(findTestCase("demo/createManagedFixture"), [:])
 
 executor.addAllClosures(closures)
 	
