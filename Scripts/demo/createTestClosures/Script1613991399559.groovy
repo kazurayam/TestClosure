@@ -47,7 +47,7 @@ closures.add({
 	WebUI.click(btnLogin)
 	TestObject btnBookAppointment = newTestObjectCSS("#btn-book-appointment")
 	WebUI.waitForElementPresent(btnBookAppointment, 3, FailureHandling.STOP_ON_FAILURE)
-	WebUI.delay(3)
+	WebUI.delay(1)
 	WebUI.closeBrowser()
 })
 
@@ -56,9 +56,10 @@ closures.add({
 	WebUI.openBrowser('')
 	WebUI.navigateToUrl(url)
 	WebUI.comment("processing ${url}")
-	TestObject tObj = newTestObjectXPath("//a[contains(.,'How To Help Us Help You')]")
-	WebUI.scrollToElement(tObj, 3)
-	WebUI.delay(5)
+	TestObject tObj = newTestObjectXPath("//a[contains(text(),'How To Help Us Help You')]")
+	WebUI.verifyElementPresent(tObj, 5)
+	WebUI.scrollToElement(tObj, 5)
+	WebUI.delay(1)
 	WebUI.closeBrowser()
 })
 
@@ -74,7 +75,7 @@ closures.add({
 	WebUI.waitForPageLoad(5)
 	String title = WebUI.getWindowTitle()
 	WebUI.verifyMatch(title, "katalon at DuckDuckGo", true)
-	WebUI.delay(3)
+	WebUI.delay(1)
 	WebUI.closeBrowser()
 })
 

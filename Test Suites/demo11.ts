@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestSuiteEntity>
    <description></description>
-   <name>demo1</name>
+   <name>demo11</name>
    <tag></tag>
    <isRerun>false</isRerun>
    <mailRecipient></mailRecipient>
@@ -12,9 +12,9 @@
    <rerunImmediately>false</rerunImmediately>
    <testSuiteGuid>df09f80d-86c4-4398-9fca-b728de1c727c</testSuiteGuid>
    <testCaseLink>
-      <guid>80b385f0-f769-47fb-808d-0d7ca5cd0064</guid>
+      <guid>83750774-5049-4f3c-88aa-6c8e62946d45</guid>
       <isReuseDriver>false</isReuseDriver>
       <isRun>true</isRun>
-      <testCaseId>Test Cases/demo21_simultaneous_tiling</testCaseId>
+      <testCaseId>Test Cases/demo/demo11_sequential_unmanaged</testCaseId>
    </testCaseLink>
 </TestSuiteEntity>

@@ -23,7 +23,7 @@ def manageLayout = { BrowserWindowsLayoutManager layout, int capacity, int index
 }
 
 
-List<Closure> closures = WebUI.callTestCase(findTestCase("createTestClosures"), [:])
+List<Closure> closures = WebUI.callTestCase(findTestCase("demo/createTestClosures"), [:])
 
 for (int i = 0; i < closures.size(); i++) {
 	
