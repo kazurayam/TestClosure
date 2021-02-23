@@ -7,6 +7,8 @@ import org.openqa.selenium.Dimension
 import org.openqa.selenium.Point
 import org.openqa.selenium.WebDriver
 
+import com.kazurayam.ks.windowlayout.WindowLayoutMetrics
+import com.kazurayam.ks.windowlayout.WindowLocation
 import com.kms.katalon.core.webui.driver.DriverFactory
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 
@@ -16,28 +18,24 @@ import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
  */
 public class TestClosure implements Callable<String> {
 
-	private BrowserWindowsLayoutMetrics layoutMetrics
-	private int capacity
-	private int index
+	private WindowLayoutMetrics layoutMetrics
+	private WindowLocation windowLocation
 	private Closure closure
 	private List<Object> parameters
-	
+
 	/*
 	 * 
 	 */
-	private static final Closure manageLayout = { BrowserWindowsLayoutMetrics layout, int capacity, int index ->
-		
-		println "[TestClosure.manageLayout] capacity=${capacity}, index=${index}"
-		
+	private static final Closure manageLayout = { WindowLayoutMetrics layout, WindowLocation windowLocation ->
 		WebDriver driver = DriverFactory.getWebDriver()
 		// move the browser window to this position (x,y)
-		Point pos = layout.getWindowPosition(capacity, index)
+		Point pos = layout.getWindowPosition(windowLocation)
 		driver.manage().window().setPosition(pos)
 		// resize the browser window to this dimension (width, height)
-		Dimension dim = layout.getWindowDimension(capacity, index)
+		Dimension dim = layout.getWindowDimension(windowLocation)
 		driver.manage().window().setSize(dim)
 	}
-	
+
 	/**
 	 * Constructor
 	 * 
@@ -45,15 +43,12 @@ public class TestClosure implements Callable<String> {
 	 * @param index
 	 * @param closure
 	 */
-	public TestClosure(BrowserWindowsLayoutMetrics layoutMetrics,
-			int capacity, int index, Closure closure, List<Object> parameters) {
+	public TestClosure(WindowLayoutMetrics layoutMetrics, WindowLocation windowLocation, Closure closure, List<Object> parameters) {
 		Objects.requireNonNull(layoutMetrics)
-		BrowserWindowsLayoutMetrics.validateIndex(capacity, index)
 		Objects.requireNonNull(closure)
 		Objects.requireNonNull(parameters)
 		this.layoutMetrics = layoutMetrics
-		this.capacity = capacity
-		this.index = index
+		this.windowLocation = windowLocation
 		this.closure = closure
 		this.parameters = parameters
 	}
@@ -76,11 +71,11 @@ public class TestClosure implements Callable<String> {
 			}
 			// do magic soon after WebUI.openBrowser() is done
 			if (name == 'openBrowser') {
-				manageLayout.call(owner.layoutMetrics, owner.capacity, owner.index)
+				manageLayout.call(owner.layoutMetrics, owner.windowLocation)
 			}
 			return result
 		}
-		closure.call()
+		closure.call(parameters)
 		return "Task' execution"
 	}
 }

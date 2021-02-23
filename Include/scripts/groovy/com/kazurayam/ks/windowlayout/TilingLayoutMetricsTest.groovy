@@ -1,9 +1,12 @@
-package com.kazurayam.ks.testclosure
+package com.kazurayam.ks.windowlayout
 
 import static org.junit.Assert.*
 
 import org.openqa.selenium.Dimension as Dimension
-import org.openqa.selenium.Point as Point
+import org.openqa.selenium.Point
+
+import com.kazurayam.ks.windowlayout.TilingLayoutMetrics
+import com.kazurayam.ks.windowlayout.WindowLocation
 
 import org.junit.Before
 import org.junit.Ignore
@@ -38,7 +41,8 @@ class TilingLayoutMetricsTest {
 
 	@Test
 	void test_getWindowDimension() {
-		Dimension tileDimension = lm.getWindowDimension(NUM_OF_WINDOWS, 0)
+		WindowLocation windowLocation = new WindowLocation(NUM_OF_WINDOWS, 0)
+		Dimension tileDimension = lm.getWindowDimension(windowLocation)
 		assertTrue("expected width == 500", tileDimension.width == 500)
 		assertTrue("expected height == 400", tileDimension.height == 400)
 	}
@@ -46,8 +50,9 @@ class TilingLayoutMetricsTest {
 	@Test
 	void testWindow0() {
 		Point basePoint = lm.getBasePoint()
-		Point loc = lm.getWindowPosition(NUM_OF_WINDOWS, 0)
-		Dimension dim = lm.getWindowDimension(NUM_OF_WINDOWS, 0)
+		WindowLocation windowLocation = new WindowLocation(NUM_OF_WINDOWS, 0)
+		Point loc = lm.getWindowPosition(windowLocation)
+		Dimension dim = lm.getWindowDimension(windowLocation)
 		Point expectedLoc = new Point((int)basePoint.x, (int)basePoint.y)
 		assertTrue("loc.x=${loc.x}, expected to be ${expectedLoc.x}", expectedLoc.x == loc.x)
 		assertTrue("loc.y=${loc.y}, expected to be ${expectedLoc.y}", expectedLoc.y == loc.y)
@@ -58,8 +63,9 @@ class TilingLayoutMetricsTest {
 	@Test
 	void testWindow1() {
 		Point basePoint = lm.getBasePoint()
-		Point loc = lm.getWindowPosition(NUM_OF_WINDOWS, 1)
-		Dimension dim = lm.getWindowDimension(NUM_OF_WINDOWS, 1)
+		WindowLocation windowLocation = new WindowLocation(NUM_OF_WINDOWS, 1)
+		Point loc = lm.getWindowPosition(windowLocation)
+		Dimension dim = lm.getWindowDimension(windowLocation)
 		Point expectedLoc = new Point((int)basePoint.x + (int)dim.width, (int)basePoint.y)
 		assertTrue("loc.x=${loc.x}, expected to be ${expectedLoc.x}", expectedLoc.x == loc.x)
 		assertTrue("loc.y=${loc.y}, expected to be ${expectedLoc.y}", expectedLoc.y == loc.y)
@@ -70,8 +76,9 @@ class TilingLayoutMetricsTest {
 	@Test
 	void testWindow2() {
 		Point basePoint = lm.getBasePoint()
-		Point loc = lm.getWindowPosition(NUM_OF_WINDOWS, 2)
-		Dimension dim = lm.getWindowDimension(NUM_OF_WINDOWS, 2)
+		WindowLocation windowLocation = new WindowLocation(NUM_OF_WINDOWS, 2)
+		Point loc = lm.getWindowPosition(windowLocation)
+		Dimension dim = lm.getWindowDimension(windowLocation)
 		Point expectedLoc = new Point((int)basePoint.x, (int)basePoint.y + (int)dim.height)
 		assertTrue("loc.x=${loc.x}, expected to be ${expectedLoc.x}", expectedLoc.x == loc.x)
 		assertTrue("loc.y=${loc.y}, expected to be ${expectedLoc.y}", expectedLoc.y == loc.y)

@@ -11,6 +11,8 @@ import org.openqa.selenium.Dimension
 import org.openqa.selenium.Point
 import org.openqa.selenium.WebDriver
 
+import com.kazurayam.ks.windowlayout.TilingLayoutMetrics
+import com.kazurayam.ks.windowlayout.WindowLayoutMetrics
 import com.kms.katalon.core.webui.driver.DriverFactory
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 
@@ -23,14 +25,14 @@ public class TestClosureCollectionExecutor {
 	private static final int MAX_THREADS = 6
 
 	private int capacity
-	private static BrowserWindowsLayoutMetrics layoutMetrics
+	private static WindowLayoutMetrics layoutMetrics
 	private List<TestClosure> testClosures
-	
+
 	public TestClosureCollectionExecutor() {
 		this(new TilingLayoutMetrics.Builder().build())
 	}
 
-	public TestClosureCollectionExecutor(BrowserWindowsLayoutMetrics layoutMetrics) {
+	public TestClosureCollectionExecutor(WindowLayoutMetrics layoutMetrics) {
 		this.layoutMetrics = layoutMetrics
 		this.testClosures = new ArrayList<TestClosure>()
 	}
@@ -44,8 +46,8 @@ public class TestClosureCollectionExecutor {
 
 	private void addClosure(Closure closure, int index) {
 		//println "[TestClosureCollectionExecutor.addClosure] capacity=${capacity}, index=${index}"
-		TestClosure testClosure = 
-			new TestClosure(layoutMetrics, capacity, index, closure, new ArrayList<Object>())
+		TestClosure testClosure =
+				new TestClosure(layoutMetrics, capacity, index, closure, new ArrayList<Object>())
 		this.testClosures.add(testClosure)
 	}
 

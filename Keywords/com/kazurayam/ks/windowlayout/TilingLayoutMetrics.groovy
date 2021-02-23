@@ -1,11 +1,11 @@
-package com.kazurayam.ks.testclosure
+package com.kazurayam.ks.windowlayout
 
 import org.openqa.selenium.Dimension as Dimension
-import org.openqa.selenium.Point as Point
+import org.openqa.selenium.Point
 
 import java.awt.Toolkit
 
-public class TilingLayoutMetrics extends BrowserWindowsLayoutMetrics {
+public class TilingLayoutMetrics extends WindowLayoutMetrics {
 
 	protected final Dimension virtualScreenSize
 	protected final Point basePoint
@@ -19,24 +19,22 @@ public class TilingLayoutMetrics extends BrowserWindowsLayoutMetrics {
 	}
 
 	@Override
-	Dimension getWindowDimension(int capacity, int index) {
-		validateIndex(capacity, index)
-		if (capacity == 1) {
+	Dimension getWindowDimension(WindowLocation windowLocation) {
+		if (windowLocation.size == 1) {
 			return virtualScreenSize
 		} else {
 			// Tiles in 2 columns
 			int width = Math.floor(virtualScreenSize.width / 2)
-			int rows = Math.ceil(capacity / 2)
+			int rows = Math.ceil(windowLocation.size / 2)
 			int height = Math.floor(virtualScreenSize.height / rows )
 			return new Dimension(width, height)
 		}
 	}
 
 	@Override
-	Point getWindowPosition(int capacity, int index) {
-		validateIndex(capacity, index)
-		int x = basePoint.x + (index % 2) * this.getWindowDimension(capacity, index).width
-		int y = basePoint.y + Math.floor(index / 2) * this.getWindowDimension(capacity, index).height
+	Point getWindowPosition(WindowLocation windowLocation) {
+		int x = basePoint.x + (windowLocation.index % 2) * this.getWindowDimension(windowLocation).width
+		int y = basePoint.y + Math.floor(windowLocation.index / 2) * this.getWindowDimension(windowLocation).height
 		return new Point(x, y)
 	}
 

@@ -1,9 +1,11 @@
-package com.kazurayam.ks.testclosure
+package com.kazurayam.ks.windowlayout
 
 import static org.junit.Assert.*
 
 import org.openqa.selenium.Dimension as Dimension
-import org.openqa.selenium.Point as Point
+import org.openqa.selenium.Point
+import com.kazurayam.ks.windowlayout.StackingLayoutMetrics
+import com.kazurayam.ks.windowlayout.WindowLocation
 
 import org.junit.Before
 import org.junit.Test
@@ -24,15 +26,17 @@ public class StackingLayoutMetricsTest {
 
 	@Test
 	void test_getWindowDimension() {
-		assertTrue("width=${lm.getWindowDimension(NUM_OF_WINDOWS,0).width}, expected 1280",
-				lm.getWindowDimension(NUM_OF_WINDOWS, 0).width == 1280)
-		assertTrue("height=${lm.getWindowDimension(NUM_OF_WINDOWS, 0).height}, epected 1024",
-				lm.getWindowDimension(NUM_OF_WINDOWS, 0).height == 1024)
+		WindowLocation windowLocation = new WindowLocation(NUM_OF_WINDOWS,0)
+		assertTrue("width=${lm.getWindowDimension(windowLocation).width}, expected 1280",
+				lm.getWindowDimension(windowLocation).width == 1280)
+		assertTrue("height=${lm.getWindowDimension(windowLocation).height}, epected 1024",
+				lm.getWindowDimension(windowLocation).height == 1024)
 	}
 
 	@Test
 	void testWindow0() {
-		Point pos = lm.getWindowPosition(NUM_OF_WINDOWS, 0)
+		WindowLocation windowLocation = new WindowLocation(NUM_OF_WINDOWS,0)
+		Point pos = lm.getWindowPosition(windowLocation)
 		assertTrue("pos.x=${pos.x}, expected to be equal to ${lm.getDisposition().width * 0}",
 				pos.x == lm.getDisposition().width * 0)
 		assertTrue("pos.y=${pos.y}, expected to be equal to ${lm.getDisposition().height * 0}",
@@ -41,7 +45,8 @@ public class StackingLayoutMetricsTest {
 
 	@Test
 	void testWindow1() {
-		Point pos = lm.getWindowPosition(NUM_OF_WINDOWS, 1)
+		WindowLocation windowLocation = new WindowLocation(NUM_OF_WINDOWS,1)
+		Point pos = lm.getWindowPosition(windowLocation)
 		assertTrue("pos.x=${pos.x}, expected to be equal to ${lm.getDisposition().width * 1}",
 				pos.x == lm.getDisposition().width * 1)
 		assertTrue("pos.y=${pos.y}, expected to be equal to ${lm.getDisposition().height * 1}",
@@ -50,7 +55,8 @@ public class StackingLayoutMetricsTest {
 
 	@Test
 	void testWindow2() {
-		Point pos = lm.getWindowPosition(NUM_OF_WINDOWS, 2)
+		WindowLocation windowLocation = new WindowLocation(NUM_OF_WINDOWS,2)
+		Point pos = lm.getWindowPosition(windowLocation)
 		assertTrue("pos.x=${pos.x}, expected to be equal to ${lm.getDisposition().width * 2}",
 				pos.x == lm.getDisposition().width * 2)
 		assertTrue("pos.y=${pos.y}, expected to be equal to ${lm.getDisposition().height * 2}",

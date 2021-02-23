@@ -1,10 +1,12 @@
-package com.kazurayam.ks.testclosure
+package com.kazurayam.ks.windowlayout
 
 import org.openqa.selenium.Dimension as Dimension
-import org.openqa.selenium.Point as Point
+import org.openqa.selenium.Point
+
+import com.kazurayam.ks.windowlayout.WindowLocation
 
 
-public class StackingLayoutMetrics extends BrowserWindowsLayoutMetrics {
+public class StackingLayoutMetrics extends WindowLayoutMetrics {
 
 	private final Dimension windowDimension
 	private final Dimension disposition
@@ -14,15 +16,14 @@ public class StackingLayoutMetrics extends BrowserWindowsLayoutMetrics {
 	}
 
 	@Override
-	Point getWindowPosition(int capacity, int index) {
-		validateIndex(capacity, index)
-		int x = disposition.width * index
-		int y = disposition.height * index
+	Point getWindowPosition(WindowLocation windowLocation) {
+		int x = disposition.width * windowLocation.index
+		int y = disposition.height * windowLocation.index
 		return new Point(x, y)
 	}
 
 	@Override
-	Dimension getWindowDimension(int capacity, int index) {
+	Dimension getWindowDimension(WindowLocation windowLocation) {
 		return windowDimension
 	}
 
