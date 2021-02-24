@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestSuiteEntity>
    <description></description>
-   <name>demo12</name>
+   <name>demo2C</name>
    <tag></tag>
    <isRerun>false</isRerun>
    <mailRecipient></mailRecipient>
@@ -10,11 +10,11 @@
    <pageLoadTimeoutDefault>true</pageLoadTimeoutDefault>
    <rerunFailedTestCasesOnly>false</rerunFailedTestCasesOnly>
    <rerunImmediately>false</rerunImmediately>
-   <testSuiteGuid>f8bdd209-f893-455d-8957-9badbb09af84</testSuiteGuid>
+   <testSuiteGuid>d1c5c4b2-8476-4e5d-aea6-e1087450d060</testSuiteGuid>
    <testCaseLink>
-      <guid>10acb305-2655-45e9-aa33-b23c215e6303</guid>
+      <guid>b5a553ea-f0b6-4ec3-9403-ecca45689ea9</guid>
       <isReuseDriver>false</isReuseDriver>
       <isRun>true</isRun>
-      <testCaseId>Test Cases/demo/demo12_sequential_tiling</testCaseId>
+      <testCaseId>Test Cases/demo/demo2C_simultaneous_stacking_screenshots</testCaseId>
    </testCaseLink>
 </TestSuiteEntity>

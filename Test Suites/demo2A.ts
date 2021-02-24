@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestSuiteEntity>
    <description></description>
-   <name>demo11</name>
+   <name>demo2A</name>
    <tag></tag>
    <isRerun>false</isRerun>
    <mailRecipient></mailRecipient>
@@ -10,11 +10,11 @@
    <pageLoadTimeoutDefault>true</pageLoadTimeoutDefault>
    <rerunFailedTestCasesOnly>false</rerunFailedTestCasesOnly>
    <rerunImmediately>false</rerunImmediately>
-   <testSuiteGuid>df09f80d-86c4-4398-9fca-b728de1c727c</testSuiteGuid>
+   <testSuiteGuid>d71bfc3c-a1f5-45c6-97ed-2af0ef806d6b</testSuiteGuid>
    <testCaseLink>
-      <guid>83750774-5049-4f3c-88aa-6c8e62946d45</guid>
+      <guid>2199b797-3882-4b37-9d7a-fe41abf57293</guid>
       <isReuseDriver>false</isReuseDriver>
       <isRun>true</isRun>
-      <testCaseId>Test Cases/demo/demo11_sequential_unmanaged</testCaseId>
+      <testCaseId>Test Cases/demo/demo2A_simultaneous_overlaying</testCaseId>
    </testCaseLink>
 </TestSuiteEntity>

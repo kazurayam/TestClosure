@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestSuiteEntity>
    <description></description>
-   <name>demo22</name>
+   <name>demo1C</name>
    <tag></tag>
    <isRerun>false</isRerun>
    <mailRecipient></mailRecipient>
@@ -10,11 +10,11 @@
    <pageLoadTimeoutDefault>true</pageLoadTimeoutDefault>
    <rerunFailedTestCasesOnly>false</rerunFailedTestCasesOnly>
    <rerunImmediately>false</rerunImmediately>
-   <testSuiteGuid>d1c5c4b2-8476-4e5d-aea6-e1087450d060</testSuiteGuid>
+   <testSuiteGuid>4e90ee54-3ea1-4152-8f44-0ece482280f6</testSuiteGuid>
    <testCaseLink>
-      <guid>b5a553ea-f0b6-4ec3-9403-ecca45689ea9</guid>
+      <guid>1f0c3684-ba0d-45fe-8899-107ca0aba6e4</guid>
       <isReuseDriver>false</isReuseDriver>
       <isRun>true</isRun>
-      <testCaseId>Test Cases/demo/demo22_simultaneous_stacking_screenshots</testCaseId>
+      <testCaseId>Test Cases/demo/demo1C_sequential_stacking_screenshots</testCaseId>
    </testCaseLink>
 </TestSuiteEntity>
