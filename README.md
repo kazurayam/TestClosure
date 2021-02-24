@@ -31,15 +31,15 @@ When I executed a Test Suite in Katalon Studio to take the [demo2A](https://driv
 
 ## Problem to solve
 
-Many of Katalon Studio users want to execute multiple test processings *pararelly* vor various reasons. Me too.
+Many of Katalon Studio users want to execute multiple test processings *parallely*. Me too. They have their own unique reasons. In my case, *I want to take a lot of web page screenshots as quick as possible*.
 
 As I wrote in the README of [ExecutionProfilesLoader project](https://github.com/kazurayam/ExecutionProfilesLoader), last year I wanted to take massive amount of web page screenshots, and that job took very long time: 6000 * 10 seconds = over 17 hours. I wanted to find out a way to do this job quicker.
 
-If I can execute a job with multiple threads of processing --- open browser, navigate to URL, take screenshot, save image to file, close browser --- simultaniously (= parallely), the job will be done faster provided that I can afford sufficient hardware resources. I want to process 6000 web pages. I want to process these pages with, say 8 Java Thread Pools. If I can do it, I would be able to finish the job in 17 hours / 8 = 2.2 hours. Far quicker! I want to achieve it. 
+If I can execute a job with in multiple threads of processing --- open browser, navigate to URL, take screenshot, save image to file, close browser --- simultaniously, I expect, the job will be done faster. Here I assume, I need sufficient hardware resources. If I can process these 6000 pages with 8 Threads, then the job will be done in 17hours / 8threads = 2.2hours. Far quicker!
 
-But how can I execute multiple threads in Katalon Studio? 
+But how can I do this in Katalon Studio? 
 
-I know that Katalon Studio offers [a feature of executing Test Suites in parallel mode](https://docs.katalon.com/katalon-studio/docs/test-suite-collection.html#manage-execution-information). It does not satisfies me. It is too heavy-waited. I want a way to execute a piece of Groovy scripts in fly-weighted Java Threads.
+I know that Katalon Studio offers [a feature of executing Test Suites in parallel mode](https://docs.katalon.com/katalon-studio/docs/test-suite-collection.html#manage-execution-information). It does not satisfies me. It is too coarse-grained. I want a way to execute a piece of Groovy scripts in fine-grained Java Threads.
 
 ## Solution
 
@@ -154,30 +154,56 @@ This project includes working implementation. You can read the Groovy source cod
 
 I will list some quick pointers to codes:
 
+### Entry point
+
+
+Have a look at a Test Case that opens 3 browser windows simultaneously:
+
+- [Test Cases/demo/demo2B_simultaneous_tiling](Scripts/demo/demo2B_simultaneous_tiling/Script1614138730541.groovy)
+
+The code is short. Is it simple? --- not really. This short code triggers a lot.
+
 ### What is TestClosure? How to write it?
 
-Essentially a `TestClosure` object is a pair of a Groovy Closure and a list of parameters.
+Essentially a `TestClosure` object is a pair of a Groovy Closure and a list of parameters for the closure. Plus a `TestClosure` carries information where the browser window should be located and how it should be sized. The source of `TestClosure` is this:
 
-Plus a `TestClosure` carries information where the browser window should be located and how it should be sized.
+- [`com.kazurayam.ks.testclosure.TestClosure`](Keywords/com/kazurayam/ks/testclosure/TestClosure.groovy)
 
 The following Test Case shows an example of creating a list of `TestClosure` objects.
 
 - [Test Cases/demo/createTestClosures4Demo](Scripts/demo/createTestClosures4Demo/Script1614138730543.groovy)
 
-The source of `TestClosure` is this:
-
-- [`com.kazurayam.ks.testclosure.TestClosure`](Keywords/com/kazurayam/ks/testclosure/TestClosure.groovy)
 
 ### How to execute TestClosures in parallel?
 
+The Test Case [`Test Cases/demo/demo2B_simultaneous_tiling`](Scripts/demo/demo2B_simultaneous_tiling/Script1614138730541.groovy) calles `TestClosureCollectionExcecutor`. This object executes the collection of `TestClosures` simultaneoutly.
+
+The source code is here:
+
+- [`com.kazurayam.ks.testclosure.TestClosuresCollectionExecutor`](Keywords/com/kazurayam/ks/testclosure/TestClosureCollectionExecutor.groovy)
+
+`TestClosuresCollectionExecutor` creates a thread pool of 4 as default. The Builder accepts the maxThread size. The value 1 - 32 is accepted.
 
 ### 2 strategies of window layout 
 
-Tiling
+This project provides 2 strategies of browser window layout:
 
-Stacking
+- Tiling : see [demo2B](https://drive.google.com/file/d/1-MKKXkGclWOOsdvKgrL5Z7DyWRt_TemH/view?usp=sharing) for example
+- Stacking : see [demo2C](https://drive.google.com/file/d/1xkq50B8gOLIskDTrjad_fJ-ZC_5M9mZK/view?usp=sharing) for example
+
+`TestClosuresCollectionExecutor`  uses the Tiling strategy as default, but you can specify the Stacking strategy.
+
+### Multiple threads --- does it run faster?
+
+Yes, it does, if my test case executes mutilple TestClosures with multiple threads than a single thread.
+
+ I used a Mac with dual-core processor. So my test with 2 threads perfomed faster than with single thread. If I can afford Mac Book Air M1 with 8-core CPU, my test case will run much more faster.
+
+It is pointless to set the maximum threads for `TestClosureCollectionExceutor` with value larger (8, 16, 32) than the number of cores you have.
 
 ## Conclusion
+
+I could implement a Test Case that executes multiple Groovy Closures in multiple Threads 
 
 
 ## Other discussions
