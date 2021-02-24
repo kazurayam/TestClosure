@@ -16,6 +16,8 @@ As I wrote in the README of [ExecutionProfilesLoader project](https://github.com
 
 >*Open browser, navigate to URL, take screenshot, save image to file, close browser*. 
 
+Everytime we navite to a new URL, we are forced to wait a few seconds until a new page is responded. This wait makes our sequential processing very slow.
+
 If I can process these 6000 pages with 8 threads, then the job will be done in 17 hours / 8 threads = 2.2 hours.
 
 But how can I do multi-threading in a Test Case of Katalon Studio?
@@ -110,11 +112,9 @@ When you execute this example, you will get puzzled. *I only see 1 window opened
 
 - [Why 1 window?](https://drive.google.com/file/d/1xHTVUhEGo041zHxvFyyUPAnGS1gWIIwc/view?usp=sharing)
 
-*What you saw is not what you got*. The fact is that acutally 2 windows were opened by [Test Cases/solution/03_executeClosuresByMultipleThreads](Scripts/solution/03_exeuteClosuresByMultipleThreads/Script1614155016466.groovy), but they were displayed overlayed at the same position (x, y coordinate) with just the same dimension (width, height). 
+*What you saw is not what you got*. The fact is that acutally 2 windows were opened by [Test Cases/solution/03_executeClosuresByMultipleThreads](Scripts/solution/03_exeuteClosuresByMultipleThreads/Script1614155016466.groovy), but they were displayed overlayed at the same position (x, y coordinate) with just the same dimension (width, height). This is very confusing. I want to manage the layout of browser windows; I want them displayed at different positions (x, y) so that I can see them identifiable.
 
-This is very confusing. I want to manage the layout of browser windows; I want them displayed at different positions (x, y) so that I can see them identifiable.
-
-WebDriver API provides solutions for us. You can explicitly set Window Position and Size by WebDriver API. For example,
+WebDriver API provides tools for us to solve this problem. You can explicitly set Window Position and Size. For example,
 
 ```
 driver.manage().window().setPosition(new Point(50,200));
@@ -126,10 +126,9 @@ and
 driver.manage().window().setSize(new Dimension(300,500));
 ```
 
-See, for example, http://www.software-testing-tutorials-automation.com/2015/02/how-to-setget-window-position-and-size.html
+>See, for example, have a look at [this article](http://www.software-testing-tutorials-automation.com/2015/02/how-to-setget-window-position-and-size.html).
 
-I want to apply this WebDriver API call to the windows opened by `WebUI.openBrowser('')` call inside the Closures in Test Cases.
-
+I want find a way to apply the WebDriver API to the windows opened by `WebUI.openBrowser('')` call inside the Closures in Test Cases.
 
 
 ## Demo videos summary
@@ -152,11 +151,13 @@ Using the following environment:
 
 ### Caution: videos are compressed
 
-When I executed a Test Suite in Katalon Studio to take the [demo2A](https://drive.google.com/file/d/1sS2D8SLUwMKuarHnqBvr7WJgSs-cNJRe/view?usp=sharing), the Test Suite acutally took 20 seconds to finish processing. But you will find the ["movie"](https://drive.google.com/file/d/1sS2D8SLUwMKuarHnqBvr7WJgSs-cNJRe/view?usp=sharing) plays in 7 seconds. The movie plays far quicker than the acutal scene. I suppose that, while I uploaded the files, the movies are compressed to reduce the size by chomping the still frames off.
+When I executed a Test Suite in Katalon Studio to take the [demo2A](https://drive.google.com/file/d/1sS2D8SLUwMKuarHnqBvr7WJgSs-cNJRe/view?usp=sharing), the Test Suite acutally took 20 seconds to finish processing. But you will find the ["movie"](https://drive.google.com/file/d/1sS2D8SLUwMKuarHnqBvr7WJgSs-cNJRe/view?usp=sharing) plays in 7 seconds. The movie plays far quicker than the acutal scene. I suppose that, while I uploaded the files to Google Drive, the movies were compressed to reduce the size by chomping the still frames off.
 
 ## Description 
 
-This project includes a set of working codes. I will add some comments and quick pointers to the codes to read:
+This project includes a set of working codes. Please read the source to find the detail. The code will tell you everything I could.
+
+Here I write quick pointers:
 
 ### Entry point
 
@@ -164,7 +165,7 @@ Have a look at a Test Case that opens 3 browser windows simultaneously:
 
 - [Test Cases/demo/demo2B_simultaneous_tiling](Scripts/demo/demo2B_simultaneous_tiling/Script1614138730541.groovy)
 
-The code is short. Is it simple? --- not really. This short code triggers a lot.
+The code is very short. Is it simple? --- not really. This short code triggers a lot.
 
 ### What is TestClosure? How to write it?
 
@@ -185,7 +186,7 @@ The source code is here:
 
 - [`com.kazurayam.ks.testclosure.TestClosuresCollectionExecutor`](Keywords/com/kazurayam/ks/testclosure/TestClosureCollectionExecutor.groovy)
 
-`TestClosuresCollectionExecutor` creates a thread pool of 4 as default. The Builder accepts the maxThread size. The value 1 - 32 is accepted.
+`TestClosuresCollectionExecutor` creates a thread pool of 4 as default. You can change the maxThread by parameter to the Buiilder. The value 1 - 32 is accepted.
 
 ### 2 strategies of window layout 
 
@@ -194,31 +195,18 @@ This project provides 2 strategies of browser window layout:
 - Tiling : see [demo2B](https://drive.google.com/file/d/1-MKKXkGclWOOsdvKgrL5Z7DyWRt_TemH/view?usp=sharing) for example
 - Stacking : see [demo2C](https://drive.google.com/file/d/1xkq50B8gOLIskDTrjad_fJ-ZC_5M9mZK/view?usp=sharing) for example
 
-`TestClosuresCollectionExecutor`  uses the Tiling strategy as default, but you can specify the Stacking strategy.
+`TestClosuresCollectionExecutor`  uses the Tiling strategy as default. You can explicitly specify the strategy as a parameter to the Builder.
 
 ### Multiple threads --- does it run faster?
 
-Yes, it does, if my test case executes mutilple TestClosures with multiple threads than a single thread.
+Yes, it does.  If my test case executes mutilple TestClosures with multiple threads, it rus faster than with a single thread.
 
- I used a Mac with dual-core processor. So my test with 2 threads perfomed faster than with single thread. If I can afford Mac Book Air M1 with 8-core CPU, my test case will run much more faster.
+Of course, the faster processing assumes powerful machine resources. If I can afford Mac Book Air M1 with 8-core CPU, my test case with 8 threds will run much more faster. Taking screenshots of 6000 URL sequentially took 17 hours last year. With powerful machine and Katalon Test empowered by `TestClosure` may run 17 hours / 8 cores = 2.2 hours. Wow!, I want to see it someday!
 
-It is pointless to set the maximum threads for `TestClosureCollectionExceutor` with value larger (8, 16, 32) than the number of cores you have.
+It is pointless to set the maximum number of threads for `TestClosureCollectionExceutor` with a value larger (8, 16, 32) than the number of cores you have.
 
 ## Conclusion
 
-I could implement a Test Case that executes multiple Groovy Closures in multiple Threads 
+I could implement a Test Case that executes multiple Groovy Closures with multiple Threads. The code ran faster on my dual-core machine than with single Thread.
 
-
-## Other discussions
-
-
-
-
-
-
-
-### 
-
-
-
-
+The codes of this project is yet preliminary. It has a lot more to develop. Especially, it does not consier failure handling seriously.
