@@ -10,13 +10,13 @@ import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 @RunWith(JUnit4.class)
 public class BrowserWindowLayoutKeywordTest {
 
-	TilingLayoutMetrics tilingLayout
-	StackingLayoutMetrics stackingLayout
+	TilingWindowLayoutMetrics tilingLayout
+	StackingWindowLayoutMetrics stackingLayout
 
 	@Before
 	void setup() {
-		tilingLayout = new TilingLayoutMetrics.Builder().build()
-		stackingLayout = new StackingLayoutMetrics.Builder().build()
+		tilingLayout = new TilingWindowLayoutMetrics.Builder().build()
+		stackingLayout = new StackingWindowLayoutMetrics.Builder().build()
 	}
 
 	@Test

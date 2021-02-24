@@ -5,7 +5,7 @@ import static org.junit.Assert.*
 import org.openqa.selenium.Dimension as Dimension
 import org.openqa.selenium.Point
 
-import com.kazurayam.ks.windowlayout.TilingLayoutMetrics
+import com.kazurayam.ks.windowlayout.TilingWindowLayoutMetrics
 import com.kazurayam.ks.windowlayout.WindowLocation
 
 import org.junit.Before
@@ -15,14 +15,14 @@ import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 
 @RunWith(JUnit4.class)
-class TilingLayoutMetricsTest {
+class TilingWindowLayoutMetricsTest {
 
-	TilingLayoutMetrics lm
+	TilingWindowLayoutMetrics lm
 	int NUM_OF_WINDOWS = 4
 
 	@Before
 	void setup() {
-		lm = new TilingLayoutMetrics.Builder().physicalScreenSize(new Dimension(1020, 820)).build()
+		lm = new TilingWindowLayoutMetrics.Builder().physicalScreenSize(new Dimension(1020, 820)).build()
 	}
 
 	@Test

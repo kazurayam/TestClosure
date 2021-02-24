@@ -5,7 +5,7 @@ import org.openqa.selenium.Point
 
 import java.awt.Toolkit
 
-public class TilingLayoutMetrics extends WindowLayoutMetrics {
+public class TilingWindowLayoutMetrics extends WindowLayoutMetrics {
 
 	protected final Dimension virtualScreenSize
 	protected final Point basePoint
@@ -62,12 +62,12 @@ public class TilingLayoutMetrics extends WindowLayoutMetrics {
 			return this
 		}
 
-		TilingLayoutMetrics build() {
-			return new TilingLayoutMetrics(this)
+		TilingWindowLayoutMetrics build() {
+			return new TilingWindowLayoutMetrics(this)
 		}
 	}
 
-	private TilingLayoutMetrics(Builder builder) {
+	private TilingWindowLayoutMetrics(Builder builder) {
 		virtualScreenSize = new Dimension(
 				builder.physicalScreenSize.width - builder.basePoint.x * 2,
 				builder.physicalScreenSize.height - builder.basePoint.y * 2

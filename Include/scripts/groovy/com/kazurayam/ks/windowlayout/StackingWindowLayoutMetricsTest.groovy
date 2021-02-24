@@ -4,7 +4,7 @@ import static org.junit.Assert.*
 
 import org.openqa.selenium.Dimension as Dimension
 import org.openqa.selenium.Point
-import com.kazurayam.ks.windowlayout.StackingLayoutMetrics
+import com.kazurayam.ks.windowlayout.StackingWindowLayoutMetrics
 import com.kazurayam.ks.windowlayout.WindowLocation
 
 import org.junit.Before
@@ -13,14 +13,14 @@ import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 
 @RunWith(JUnit4.class)
-public class StackingLayoutMetricsTest {
+public class StackingWindowLayoutMetricsTest {
 
-	StackingLayoutMetrics lm
+	StackingWindowLayoutMetrics lm
 	int NUM_OF_WINDOWS = 3
 
 	@Before
 	void setup() {
-		lm = new StackingLayoutMetrics.Builder().windowDimension(new Dimension(1280, 1024)).build()
+		lm = new StackingWindowLayoutMetrics.Builder().windowDimension(new Dimension(1280, 1024)).build()
 	}
 
 

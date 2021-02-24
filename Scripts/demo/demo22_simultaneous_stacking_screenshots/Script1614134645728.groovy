@@ -4,7 +4,7 @@ import org.openqa.selenium.Dimension
 
 import com.kazurayam.ks.testclosure.TestClosure
 import com.kazurayam.ks.testclosure.TestClosureCollectionExecutor
-import com.kazurayam.ks.windowlayout.StackingLayoutMetrics
+import com.kazurayam.ks.windowlayout.StackingWindowLayoutMetrics
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 
 /**
@@ -26,7 +26,7 @@ List<TestClosure> tclosures = WebUI.callTestCase(findTestCase("demo/createTestCl
 TestClosureCollectionExecutor executor = 
 	new TestClosureCollectionExecutor.Builder().
 		maxThreads(3).
-		windowLayoutMetrics(new StackingLayoutMetrics.Builder().windowDimension(new Dimension(1024, 500)).build()).
+		windowLayoutMetrics(new StackingWindowLayoutMetrics.Builder().windowDimension(new Dimension(1024, 500)).build()).
 		build()
 
 // setup the executor what to do

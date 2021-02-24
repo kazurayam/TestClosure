@@ -6,7 +6,7 @@ import org.openqa.selenium.Point
 import com.kazurayam.ks.windowlayout.WindowLocation
 
 
-public class StackingLayoutMetrics extends WindowLayoutMetrics {
+public class StackingWindowLayoutMetrics extends WindowLayoutMetrics {
 
 	private final Dimension windowDimension
 	private final Dimension disposition
@@ -50,13 +50,13 @@ public class StackingLayoutMetrics extends WindowLayoutMetrics {
 			return this
 		}
 
-		StackingLayoutMetrics build() {
-			return new StackingLayoutMetrics(this)
+		StackingWindowLayoutMetrics build() {
+			return new StackingWindowLayoutMetrics(this)
 		}
 	}
 
 
-	private StackingLayoutMetrics(Builder builder) {
+	private StackingWindowLayoutMetrics(Builder builder) {
 		windowDimension = builder.windowDimension
 		disposition     = builder.disposition
 	}

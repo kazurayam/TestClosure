@@ -11,7 +11,7 @@ import org.openqa.selenium.Dimension
 import org.openqa.selenium.Point
 import org.openqa.selenium.WebDriver
 
-import com.kazurayam.ks.windowlayout.TilingLayoutMetrics
+import com.kazurayam.ks.windowlayout.TilingWindowLayoutMetrics
 import com.kazurayam.ks.windowlayout.WindowLayoutMetrics
 import com.kazurayam.ks.windowlayout.WindowLocation
 import com.kms.katalon.core.webui.driver.DriverFactory
@@ -99,7 +99,7 @@ public class TestClosureCollectionExecutor {
 		// Required parameters - none
 
 		// Optional parameters - initialized to default values
-		private WindowLayoutMetrics metrics = new TilingLayoutMetrics.Builder().build()
+		private WindowLayoutMetrics metrics = new TilingWindowLayoutMetrics.Builder().build()
 		private List<TestClosure> testClosures = new ArrayList<TestClosure>()
 		private int maxThreads = 4
 
