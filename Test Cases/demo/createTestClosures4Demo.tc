@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestCaseEntity>
    <description></description>
-   <name>createDemoTestClosures</name>
+   <name>createTestClosures4Demo</name>
    <tag></tag>
    <comment></comment>
    <testCaseGuid>f15bbe7a-a422-4cbf-9213-f46f4a45dfbf</testCaseGuid>

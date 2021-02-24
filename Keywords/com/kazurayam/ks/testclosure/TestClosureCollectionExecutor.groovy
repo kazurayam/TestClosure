@@ -23,25 +23,29 @@ import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
  */
 public class TestClosureCollectionExecutor {
 
-	private static final int MAX_THREADS = 8
-
+	private final int maxThreads
 	private final WindowLayoutMetrics metrics
-	private int capacity
-	private List<TestClosure> testClosures
+	private final List<TestClosure> testClosures
 
-	public TestClosureCollectionExecutor() {
-		this(new TilingLayoutMetrics.Builder().build())
+	private int capacity
+
+	public int getMaxThreads() {
+		return maxThreads
 	}
 
-	public TestClosureCollectionExecutor(WindowLayoutMetrics metrics) {
-		this.metrics = metrics
-		this.testClosures = new ArrayList<TestClosure>()
+	public resolveIndex(int i) {
+		return i % maxThreads
+	}
+
+	public int size() {
+		return testClosures.size()
 	}
 
 	public void addAllClosures(List<TestClosure> tclosures) {
-		capacity = (tclosures.size() > MAX_THREADS) ? MAX_THREADS : tclosures.size()
+		capacity = (tclosures.size() > maxThreads) ? maxThreads : tclosures.size()
 		for (int i = 0; i < tclosures.size(); i++) {
-			this.addClosure(tclosures.get(i), i)
+			int index = resolveIndex(i)
+			this.addClosure(tclosures.get(i), index)
 		}
 	}
 
@@ -52,7 +56,7 @@ public class TestClosureCollectionExecutor {
 		this.testClosures.add(tclosure)
 	}
 
-	void execute() {
+	public void execute() {
 		int size = testClosures.size()
 		if (size < 1) {
 			throw new IllegalStateException("should add one or more TestClosure objects")
@@ -60,7 +64,7 @@ public class TestClosureCollectionExecutor {
 
 		// create Thread pool
 		ExecutorService executorService = Executors.newFixedThreadPool(
-				(size > MAX_THREADS) ?  MAX_THREADS : size)
+				(size > maxThreads) ?  maxThreads : size)
 
 		List<Future<String>> futures = executorService.invokeAll(testClosures)
 
@@ -87,5 +91,46 @@ public class TestClosureCollectionExecutor {
 			executorService.shutdownNow()
 		}
 	}
+
+	/**
+	 * Builder pattern by "Effective Java"
+	 */
+	public static class Builder {
+		// Required parameters - none
+
+		// Optional parameters - initialized to default values
+		private WindowLayoutMetrics metrics = new TilingLayoutMetrics.Builder().build()
+		private List<TestClosure> testClosures = new ArrayList<TestClosure>()
+		private int maxThreads = 4
+
+		Builder() {}
+
+		Builder windowLayoutMetrics(WindowLayoutMetrics metrics) {
+			this.metrics = metrics
+			return this
+		}
+
+		Builder maxThreads(int maxThreads) {
+			if (maxThreads <= 0) {
+				throw new IllegalArgumentException("maxThreads=${maxThreads} must not be less or equal to 0")
+			}
+			if (maxThreads > 16) {
+				throw new IllegalArgumentException("maxThreds=${maxThreads} must not be greater than 16")
+			}
+			this.maxThreads = maxThreads
+			return this
+		}
+
+		TestClosureCollectionExecutor build() {
+			return new TestClosureCollectionExecutor(this)
+		}
+	}
+
+	private TestClosureCollectionExecutor(Builder builder) {
+		maxThreads = builder.maxThreads
+		metrics = builder.metrics
+		testClosures = new ArrayList<TestClosure>()
+	}
 }
+
 

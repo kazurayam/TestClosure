@@ -5,6 +5,6 @@ import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 
 List<Closure> closures = WebUI.callTestCase(findTestCase("demo/createPlainClosures"), [:])
 
-for (int i = 0; i < closures.size(); i++) {
-	closures.get(i).call()
+closures.each { closure ->
+	closure.call()
 }

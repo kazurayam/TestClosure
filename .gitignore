@@ -15,4 +15,4 @@ build
 
 .project
 
-screenshots/
+tmp/

@@ -40,10 +40,10 @@ public class TilingLayoutMetrics extends WindowLayoutMetrics {
 
 
 	/**
-	 * Builder by Effective Java
+	 * Builder pattern by "Effective Java"
 	 */
 	public static class Builder {
-		// Required parameters
+		// Required parameters - none
 
 		// Optional parameters - initialized to default values
 		private java.awt.Dimension ss = Toolkit.getDefaultToolkit().getScreenSize()

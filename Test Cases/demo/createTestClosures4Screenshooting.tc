@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestCaseEntity>
    <description></description>
-   <name>createScreenshootingTestClosures</name>
+   <name>createTestClosures4Screenshooting</name>
    <tag></tag>
    <comment></comment>
    <testCaseGuid>e419d552-d592-4315-b062-a99e9b039a8d</testCaseGuid>

@@ -15,6 +15,6 @@
       <guid>b5a553ea-f0b6-4ec3-9403-ecca45689ea9</guid>
       <isReuseDriver>false</isReuseDriver>
       <isRun>true</isRun>
-      <testCaseId>Test Cases/demo/demo22_simultaneous_stacking</testCaseId>
+      <testCaseId>Test Cases/demo/demo22_simultaneous_stacking_screenshots</testCaseId>
    </testCaseLink>
 </TestSuiteEntity>

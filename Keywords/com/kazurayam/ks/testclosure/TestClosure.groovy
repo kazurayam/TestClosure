@@ -23,7 +23,7 @@ public class TestClosure implements Callable<String> {
 
 	private WindowLayoutMetrics metrics
 	private WindowLocation location
-	
+
 	/**
 	 * Constructor
 	 * 
@@ -37,12 +37,12 @@ public class TestClosure implements Callable<String> {
 		this.closure = closure
 		this.parameters = parameters
 	}
-	
+
 	public void setWindowLayoutMetrics(WindowLayoutMetrics metrics) {
 		Objects.requireNonNull(metrics)
 		this.metrics = metrics
 	}
-	
+
 	public void setWindowLocation(WindowLocation location) {
 		Objects.requireNonNull(location)
 		this.location = location
