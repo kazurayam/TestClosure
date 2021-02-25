@@ -31,11 +31,12 @@ List<TestClosure> tclosures = new ArrayList<TestClosure>()
 Closure shooter = { WindowLayoutMetrics metrics, WindowLocation location, List<Tuple> urlFilePairs ->
 	Closure shoot = { url, file ->
 		WebUI.navigateToUrl(url)
-		WebUI.waitForPageLoad(1, FailureHandling.STOP_ON_FAILURE)
+		WebUI.waitForPageLoad(3, FailureHandling.STOP_ON_FAILURE)
 		WebUI.comment("processing ${url}")
 		StopWatch stopWatch = new StopWatch()
 		stopWatch.start()
 		WebUI.takeFullPageScreenshot(file.toString())
+		//WebUI.takeScreenshot(file.toString())
 		stopWatch.stop()
 		println "shooting ${url} took ${stopWatch.getTime() / 1000} seconds"
 	}
@@ -55,19 +56,23 @@ FileUtils.deleteDirectory(dir.toFile())
 Files.createDirectories(dir)
 
 // construct closures
-tclosures.add(new TestClosure(shooter, [[
+tclosures.add(new TestClosure(shooter, [
+	[
 		new Tuple("https://www.katalon.com/", dir.resolve("01_top.png")),
 		new Tuple("https://www.katalon.com/katalon-studio", dir.resolve("02_katalon-studio.png")),
 		new Tuple("https://www.katalon.com/testops", dir.resolve("03_testops.png")),
 		new Tuple("https://www.katalon.com/katalon-recorder-ide", dir.resolve("04_katalon-recorder-ide.png"))
-	]]))
+	]
+	]))
 
-tclosures.add(new TestClosure(shooter, [[
-	new Tuple("https://www.katalon.com/web-testing/", dir.resolve("05_web-testing.png")),
-	new Tuple("https://www.katalon.com/mobile-testing/", dir.resolve("06_mobile-testing.png")),
-	new Tuple("https://www.katalon.com/api-testing/", dir.resolve("07_api-testing.png")),
-	new Tuple("https://www.katalon.com/desktop-testing/", dir.resolve("08_desktop-testing.png"))
-	]]))
+tclosures.add(new TestClosure(shooter, [
+	[
+		new Tuple("https://www.katalon.com/web-testing/", dir.resolve("05_web-testing.png")),
+		new Tuple("https://www.katalon.com/mobile-testing/", dir.resolve("06_mobile-testing.png")),
+		new Tuple("https://www.katalon.com/api-testing/", dir.resolve("07_api-testing.png")),
+		new Tuple("https://www.katalon.com/desktop-testing/", dir.resolve("08_desktop-testing.png"))
+	]
+	]))
 
 // Here you are
 return tclosures

@@ -27,7 +27,7 @@ import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 
 // load the collection of TestClosures
 List<TestClosure> tclosures = WebUI.callTestCase(findTestCase(
-	"demo/createTestClosures4fullPageScreenshotReusingWindowForMultipleURLs"), [:])
+	"demo/createTestClosures4ScreenshootingReusingWindowForMultipleURLs"), [:])
 
 // create the executor
 TestClosureCollectionExecutor executor =

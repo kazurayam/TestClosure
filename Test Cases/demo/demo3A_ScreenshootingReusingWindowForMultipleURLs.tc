@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestCaseEntity>
    <description></description>
-   <name>demo2D_fullPageScreenshotReusingWindowForMultipleURLs</name>
+   <name>demo3A_ScreenshootingReusingWindowForMultipleURLs</name>
    <tag></tag>
    <comment></comment>
    <testCaseGuid>b3d86fdf-4fe2-453e-bb71-ea80a475786f</testCaseGuid>
