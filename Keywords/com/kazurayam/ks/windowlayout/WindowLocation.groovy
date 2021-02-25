@@ -2,6 +2,8 @@ package com.kazurayam.ks.windowlayout
 
 public class WindowLocation {
 
+	public static final WindowLocation DEFAULT = new WindowLocation(1, 0)
+	
 	public final int size
 	public final int index
 

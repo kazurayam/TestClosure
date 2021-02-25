@@ -8,7 +8,7 @@ import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 
 List<TestClosure> tclosures = WebUI.callTestCase(findTestCase("demo/createTestClosures4Demo"), [:])
 
-WindowLayoutMetrics metrics = new TilingWindowLayoutMetrics.Builder().build()
+WindowLayoutMetrics metrics = TilingWindowLayoutMetrics.DEFAULT
 
 tclosures.eachWithIndex { tclosure, i ->
 	tclosure.setWindowLayoutMetrics(metrics)

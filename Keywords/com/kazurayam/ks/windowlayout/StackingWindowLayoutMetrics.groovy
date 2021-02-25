@@ -8,6 +8,9 @@ import com.kazurayam.ks.windowlayout.WindowLocation
 
 public class StackingWindowLayoutMetrics extends WindowLayoutMetrics {
 
+	public static final StackingWindowLayoutMetrics DEFAULT =
+	new StackingWindowLayoutMetrics.Builder().build()
+
 	private final Dimension windowDimension
 	private final Dimension disposition
 
@@ -34,8 +37,8 @@ public class StackingWindowLayoutMetrics extends WindowLayoutMetrics {
 		// Required parameters
 
 		// Optional parameters - initialized to default values
-		private Dimension windowDimension = new Dimension(1024, 768)
-		private Dimension disposition = new Dimension(100, 80)
+		private Dimension windowDimension = new Dimension(1280, 600)
+		private Dimension disposition = new Dimension(80, 80)
 
 		public Builder() {
 		}

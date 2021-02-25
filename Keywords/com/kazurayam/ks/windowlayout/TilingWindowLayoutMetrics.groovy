@@ -7,6 +7,9 @@ import java.awt.Toolkit
 
 public class TilingWindowLayoutMetrics extends WindowLayoutMetrics {
 
+	public static final TilingWindowLayoutMetrics DEFAULT = 
+		new TilingWindowLayoutMetrics.Builder().build()
+	
 	protected final Dimension virtualScreenSize
 	protected final Point basePoint
 

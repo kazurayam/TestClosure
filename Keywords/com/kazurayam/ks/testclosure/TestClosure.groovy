@@ -21,8 +21,8 @@ public class TestClosure implements Callable<String> {
 	private final Closure closure
 	private final List<Object> parameters
 
-	private WindowLayoutMetrics metrics
-	private WindowLocation location
+	private WindowLayoutMetrics metrics = WindowLayoutMetrics.DEFAULT
+	private WindowLocation location = WindowLocation.DEFAULT
 
 	/**
 	 * Constructor
