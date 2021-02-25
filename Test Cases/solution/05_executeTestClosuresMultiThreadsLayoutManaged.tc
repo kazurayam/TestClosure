@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestCaseEntity>
    <description></description>
-   <name>03_exeuteClosuresByMultipleThreads</name>
+   <name>05_executeTestClosuresMultiThreadsLayoutManaged</name>
    <tag></tag>
    <comment></comment>
-   <testCaseGuid>e32a3140-84ef-4a0f-b6b2-67743b10a37c</testCaseGuid>
+   <testCaseGuid>98391bf8-7acf-458c-9385-4c459039f85f</testCaseGuid>
 </TestCaseEntity>

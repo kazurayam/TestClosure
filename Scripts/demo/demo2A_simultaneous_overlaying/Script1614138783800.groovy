@@ -17,6 +17,6 @@ TestClosureCollectionExecutor executor =
 			build()).
 		build()
 
-executor.addAllClosures(tclosures)
+executor.addTestClosures(tclosures)
 	
 executor.execute()

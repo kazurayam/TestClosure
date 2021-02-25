@@ -7,9 +7,9 @@ import java.awt.Toolkit
 
 public class TilingWindowLayoutMetrics extends WindowLayoutMetrics {
 
-	public static final TilingWindowLayoutMetrics DEFAULT = 
-		new TilingWindowLayoutMetrics.Builder().build()
-	
+	public static final TilingWindowLayoutMetrics DEFAULT =
+	new TilingWindowLayoutMetrics.Builder().build()
+
 	protected final Dimension virtualScreenSize
 	protected final Point basePoint
 
@@ -41,6 +41,37 @@ public class TilingWindowLayoutMetrics extends WindowLayoutMetrics {
 		return new Point(x, y)
 	}
 
+	@Override
+	boolean equals(Object o) {
+		if (o == this) {
+			return true
+		}
+		if (!(o instanceof TilingWindowLayoutMetrics)) {
+			return false
+		}
+		TilingWindowLayoutMetrics other = (TilingWindowLayoutMetrics)o
+		return this.virtualScreenSize == other.virtualScreenSize &&
+				this.basePoint == other.basePoint
+	}
+
+	@Override
+	int hashCode() {
+		int result = 17
+		result = 31 * result + this.virtualScreenSize.hashCode()
+		result = 31 * result + this.basePoint.hashCode()
+		return result
+	}
+
+	@Override
+	String toString() {
+		StringBuilder sb = new StringBuilder()
+		sb.append("{\"TilingWindowLayoutMetrics\":{")
+		sb.append("\"virtualScreenSize\":[${virtualScreenSize.width},${virtualScreenSize.height}]")
+		sb.append(",")
+		sb.append("\"basePoint\":[${basePoint.x},${basePoint.y}]")
+		sb.append("}}")
+		return sb.toString()
+	}
 
 	/**
 	 * Builder pattern by "Effective Java"

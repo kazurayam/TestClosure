@@ -30,7 +30,7 @@ TestClosureCollectionExecutor executor =
 		build()
 
 // setup the executor what to do
-executor.addAllClosures(tclosures)
+executor.addTestClosures(tclosures)
 	
 // now do the job
 executor.execute()

@@ -3,7 +3,7 @@ package com.kazurayam.ks.windowlayout
 public class WindowLocation {
 
 	public static final WindowLocation DEFAULT = new WindowLocation(1, 0)
-	
+
 	public final int size
 	public final int index
 
@@ -11,6 +11,31 @@ public class WindowLocation {
 		validate(size, index)
 		this.size = size
 		this.index = index
+	}
+
+	@Override
+	boolean equals(Object o) {
+		if (o == this) {
+			return true
+		}
+		if (!(o instanceof WindowLocation)) {
+			return false
+		}
+		WindowLocation other = (WindowLocation)o
+		return this.size == other.size && this.index == other.index
+	}
+
+	@Override
+	int hashCode() {
+		int result = 17
+		result = 31 * result + this.size
+		result = 31 * result + this.index
+		return result
+	}
+
+	@Override
+	String toString() {
+		return "{\"WindowLocation\":{\"size\":${size},\"index\":${index}}}"
 	}
 
 	static void validate(int size, int index) {

@@ -40,5 +40,10 @@ exService.invokeAll(callables)
 // Effectively you will misunderstand that only 1 window was displayed.
 
 exService.shutdown()
-exService.awaitTermination(1, TimeUnit.SECONDS)
-
+try {
+	if (!exService.awaitTermination(800, TimeUnit.MILLISECONDS)) {
+		exService.shutdownNow()
+	}
+} catch (InterruptedException e) {
+	exService.shutdownNow()
+}

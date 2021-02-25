@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestCaseEntity>
    <description></description>
-   <name>02_exeuteClosuresBySingleThread</name>
+   <name>02_invokeClosuresByExecutorService</name>
    <tag></tag>
    <comment></comment>
-   <testCaseGuid>aa8a00c2-c030-48bc-ac61-7f19ce6c53fe</testCaseGuid>
+   <testCaseGuid>303bba28-fae4-4382-a01e-eb5b3dbd1def</testCaseGuid>
 </TestCaseEntity>

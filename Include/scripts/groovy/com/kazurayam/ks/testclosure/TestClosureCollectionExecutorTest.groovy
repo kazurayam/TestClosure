@@ -7,6 +7,8 @@ import org.openqa.selenium.Point
 
 import com.kazurayam.ks.testclosure.TestClosure
 import com.kazurayam.ks.testclosure.TestClosureCollectionExecutor
+import com.kazurayam.ks.windowlayout.WindowLayoutMetrics
+import com.kazurayam.ks.windowlayout.WindowLocation
 
 import org.junit.Before
 import org.junit.Ignore
@@ -23,8 +25,10 @@ public class TestClosureCollectionExecutorTest {
 	void setup() {
 		executor = new TestClosureCollectionExecutor.Builder().maxThreads(3).build()
 		List<TestClosure> tclosures = new ArrayList<TestClosure>()
-		tclosures.add(new TestClosure({ name -> println "Hello, ${name}!"}, ["World"]))
-		executor.addAllClosures(tclosures)
+		tclosures.add(new TestClosure({ WindowLayoutMetrics metrics, WindowLocation location, String name ->
+			println "Hello, ${name}!"
+		}, ["World"]))
+		executor.addTestClosures(tclosures)
 	}
 
 	@Test
@@ -32,7 +36,7 @@ public class TestClosureCollectionExecutorTest {
 		int mt = executor.getMaxThreads()
 		assertTrue("expected MAX_THREADS to be 4, but was ${mt}", 3 == mt)
 	}
-	
+
 	@Test
 	void test_resolveIndex() {
 		def input    = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
@@ -40,9 +44,9 @@ public class TestClosureCollectionExecutorTest {
 		input.eachWithIndex { value, index ->
 			int actual = executor.resolveIndex(value)
 			assertTrue("actual=${actual} for value=${value}, expected ${expected.get(index)}", actual == expected.get(index))
-		} 
+		}
 	}
-	
+
 	@Test
 	void test_size() {
 		assertTrue(executor.size() == 1)

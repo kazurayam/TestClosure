@@ -30,6 +30,38 @@ public class StackingWindowLayoutMetrics extends WindowLayoutMetrics {
 		return windowDimension
 	}
 
+	@Override
+	boolean equals(Object o) {
+		if (o == this) {
+			return true
+		}
+		if (!(o instanceof StackingWindowLayoutMetrics)) {
+			return false
+		}
+		StackingWindowLayoutMetrics other = (StackingWindowLayoutMetrics)o
+		return this.windowDimension == other.windowDimension &&
+				this.disposition == other.disposition
+	}
+
+	@Override
+	int hashCode() {
+		int result = 17
+		result = 31 * result + this.windowDimension.hashCode()
+		result = 31 * result + this.disposition.hashCode()
+		return result
+	}
+
+	@Override
+	String toString() {
+		StringBuilder sb = new StringBuilder()
+		sb.append("{\"StackingWindowLayoutMetrics\":{")
+		sb.append("\"windowDimension\":[${windowDimension.width},${windowDimension.height}]")
+		sb.append(",")
+		sb.append("\"disposition\":[${disposition.width},${disposition.height}]")
+		sb.append("}}")
+		return sb.toString()
+	}
+
 	/**
 	 * Builder by Effective Java
 	 */

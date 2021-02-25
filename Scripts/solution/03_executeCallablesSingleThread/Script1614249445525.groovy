@@ -36,5 +36,11 @@ ExecutorService exService = Executors.newFixedThreadPool(1)
 exService.invokeAll(callables)
 
 exService.shutdown()
-exService.awaitTermination(1, TimeUnit.SECONDS)
+try {
+	if (!exService.awaitTermination(800, TimeUnit.MILLISECONDS)) {
+		exService.shutdownNow()
+	}
+} catch (InterruptedException e) {
+	exService.shutdownNow()
+}
 

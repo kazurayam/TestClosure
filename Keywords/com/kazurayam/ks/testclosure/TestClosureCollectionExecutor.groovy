@@ -41,15 +41,15 @@ public class TestClosureCollectionExecutor {
 		return testClosures.size()
 	}
 
-	public void addAllClosures(List<TestClosure> tclosures) {
+	public void addTestClosures(List<TestClosure> tclosures) {
 		capacity = (tclosures.size() > maxThreads) ? maxThreads : tclosures.size()
 		for (int i = 0; i < tclosures.size(); i++) {
 			int index = resolveIndex(i)
-			this.addClosure(tclosures.get(i), index)
+			this.addTestClosure(tclosures.get(i), index)
 		}
 	}
 
-	private void addClosure(TestClosure tclosure, int index) {
+	private void addTestClosure(TestClosure tclosure, int index) {
 		Objects.requireNonNull(tclosure)
 		tclosure.setWindowLayoutMetrics(metrics)
 		tclosure.setWindowLocation(new WindowLocation(capacity, index))

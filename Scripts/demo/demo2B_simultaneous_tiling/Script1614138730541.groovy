@@ -8,6 +8,6 @@ List<TestClosure> tclosures = WebUI.callTestCase(findTestCase("demo/createTestCl
 
 TestClosureCollectionExecutor executor = new TestClosureCollectionExecutor.Builder().build()
 
-executor.addAllClosures(tclosures)
+executor.addTestClosures(tclosures)
 
 executor.execute()

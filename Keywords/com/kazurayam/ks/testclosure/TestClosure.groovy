@@ -35,6 +35,7 @@ public class TestClosure implements Callable<String> {
 		Objects.requireNonNull(closure)
 		Objects.requireNonNull(parameters)
 		assert parameters instanceof List
+		validateClosureParameters(closure)
 		this.closure = closure
 		this.parameters = parameters
 	}
@@ -60,5 +61,24 @@ public class TestClosure implements Callable<String> {
 		args.addAll(parameters)
 		closure.call(args)
 		return "done"
+	}
+
+	/**
+	 * 
+	 * @param closure
+	 */
+	private void validateClosureParameters(Closure closure) {
+		Objects.requireNonNull(closure)
+		def parameterTypes = closure.getParameterTypes()
+		if (parameterTypes.length < 2) {
+			throw new IllegalArgumentException("TestClosure requires a Closure with 2 or more parameters. " + 
+				"{ WindowLayoutMetries metrics, WindowLocation location [, xxx...] -> ... }")
+		}
+		if (parameterTypes[0] != WindowLayoutMetrics.class) {
+			throw new IllegalArgumentException("TestClosure requires the 1st Closure parameter to be WindowLayoutMetrics type")
+		}
+		if (parameterTypes[1] != WindowLocation.class) {
+			throw new IllegalArgumentException("TestClosure requires the 2nd Closure parameter to be WindowLocation type")
+		}
 	}
 }
