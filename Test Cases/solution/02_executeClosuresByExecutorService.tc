@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestCaseEntity>
    <description></description>
-   <name>02_invokeClosuresByExecutorService</name>
+   <name>02_executeClosuresByExecutorService</name>
    <tag></tag>
    <comment></comment>
    <testCaseGuid>303bba28-fae4-4382-a01e-eb5b3dbd1def</testCaseGuid>

@@ -6,7 +6,6 @@ import java.util.concurrent.Future
 import java.util.concurrent.TimeUnit
 
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
-import com.kms.katalon.core.util.KeywordUtil
 
 class URLVisitor implements Callable<String> {
 	private final Closure closure
@@ -39,7 +38,6 @@ callables.add(new URLVisitor(closure, "https://duckduckgo.com/"))
 ExecutorService exService = Executors.newFixedThreadPool(1)
 List<Future<String>> futures = exService.invokeAll(callables, 30, TimeUnit.SECONDS)
 
-
 // consume the returned values from the threads
 for (ft in futures) {
 	String result = null
@@ -51,16 +49,11 @@ for (ft in futures) {
 }
 
 exService.shutdown()
-
 try {
 	if (!exService.awaitTermination(800, TimeUnit.MILLISECONDS)) {
-		println "after calling awaitTermination()"
 		exService.shutdownNow()
-		println "after calling shutdownNow()"
 	}
 } catch (InterruptedException e) {
 	exService.shutdownNow()
 	Thread.currentThread().interrupt();
 }
-
-KeywordUtil.logInfo("Heigh Ho")
