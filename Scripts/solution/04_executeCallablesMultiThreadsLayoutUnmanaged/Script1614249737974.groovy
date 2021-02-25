@@ -1,6 +1,8 @@
 import java.util.concurrent.Callable
+import java.util.concurrent.ExecutionException
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
+import java.util.concurrent.Future
 import java.util.concurrent.TimeUnit
 
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
@@ -12,7 +14,8 @@ class URLVisitor implements Callable<String> {
 		this.closure = closure
 		this.url = url 
 	}
-	String call() {
+	@Override
+	String call() throws Exception {
 		closure.call(url)
 		return "OK"
 	}
@@ -31,13 +34,19 @@ List<Callable> callables = new ArrayList<Callable>()
 callables.add(new URLVisitor(closure, "http://demoaut.katalon.com/"))
 callables.add(new URLVisitor(closure, "https://duckduckgo.com/"))
 
-// Multi-threaded
+// execute the Callable objects in 4 Threads
 ExecutorService exService = Executors.newFixedThreadPool(4)
-exService.invokeAll(callables)
+List<Future<String>> futures = exService.invokeAll(callables, 30, TimeUnit.SECONDS)
 
-// You will see 2 browser windows are displayed overlayed
-// at the same position with same width/size.
-// Effectively you will misunderstand that only 1 window was displayed.
+// consume the returned values from the threads
+for (ft in futures) {
+	String result = null
+	try {
+		result = ft.get()
+	} catch (InterruptedException | ExecutionException e) {
+		e.printStackTrace()
+	}
+}
 
 exService.shutdown()
 try {

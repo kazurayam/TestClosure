@@ -71,8 +71,8 @@ public class TestClosure implements Callable<String> {
 		Objects.requireNonNull(closure)
 		def parameterTypes = closure.getParameterTypes()
 		if (parameterTypes.length < 2) {
-			throw new IllegalArgumentException("TestClosure requires a Closure with 2 or more parameters. " + 
-				"{ WindowLayoutMetries metrics, WindowLocation location [, xxx...] -> ... }")
+			throw new IllegalArgumentException("TestClosure requires a Closure with 2 or more parameters. " +
+			"{ WindowLayoutMetries metrics, WindowLocation location [, xxx...] -> ... }")
 		}
 		if (parameterTypes[0] != WindowLayoutMetrics.class) {
 			throw new IllegalArgumentException("TestClosure requires the 1st Closure parameter to be WindowLayoutMetrics type")
