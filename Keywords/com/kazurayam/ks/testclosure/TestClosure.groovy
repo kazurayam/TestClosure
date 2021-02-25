@@ -34,6 +34,7 @@ public class TestClosure implements Callable<String> {
 	public TestClosure(Closure closure, List<Object> parameters) {
 		Objects.requireNonNull(closure)
 		Objects.requireNonNull(parameters)
+		assert parameters instanceof List
 		this.closure = closure
 		this.parameters = parameters
 	}
@@ -53,7 +54,9 @@ public class TestClosure implements Callable<String> {
 		Objects.requireNonNull(metrics)
 		Objects.requireNonNull(location)
 		//
-		def args = [metrics, location]
+		List<Object> args = new ArrayList<Object>()
+		args.add(metrics)
+		args.add(location)
 		args.addAll(parameters)
 		closure.call(args)
 		return "done"

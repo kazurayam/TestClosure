@@ -61,10 +61,10 @@ tclosures.add(new TestClosure(shooter, ["https://www.katalon.com/mobile-testing/
 							dir.resolve("06_mobile-testing.png")] ))
 
 tclosures.add(new TestClosure(shooter, ["https://www.katalon.com/api-testing/", 
-							dir.resolve("07_api-testing")]))
+							dir.resolve("07_api-testing.png")]))
 
 tclosures.add(new TestClosure(shooter, ["https://www.katalon.com/desktop-testing/", 
-							dir.resolve("08_desktop-testing")]))
+							dir.resolve("08_desktop-testing.png")]))
  */
 
 // Here you are

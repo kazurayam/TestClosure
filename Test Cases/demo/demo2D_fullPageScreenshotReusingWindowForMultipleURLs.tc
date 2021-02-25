@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestCaseEntity>
    <description></description>
-   <name>demo30_execute_single_closure</name>
+   <name>demo2D_fullPageScreenshotReusingWindowForMultipleURLs</name>
    <tag></tag>
    <comment></comment>
-   <testCaseGuid>ba9cf6d7-5323-4107-9ecf-d568dc77e059</testCaseGuid>
+   <testCaseGuid>b3d86fdf-4fe2-453e-bb71-ea80a475786f</testCaseGuid>
 </TestCaseEntity>

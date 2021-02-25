@@ -10,23 +10,23 @@ This project proposes a new concept **TestClosure** for Katalon Studio. This pro
 
 ## Problem to solve
 
-Many of Katalon Studio users want to execute multiple test processings *parallelly*. Me too. They have their own requirements. In my case, *I want to take a lot of web page screenshots as quick as possible*.
+Many of Katalon Studio users want to execute multiple test processings *parallelly*. Me too. They have their own requirements. In my case, *I want to take a lot of web page screenshots as quickly as possible*. As I wrote in the README of [ExecutionProfilesLoader project](https://github.com/kazurayam/ExecutionProfilesLoader), last year I wanted to take screenshots of 6000 URLs. The job took me 6000 * 10 seconds = over 17 hours. Obviously it's too long. I wanted to make the job run faster. 
 
-As I wrote in the README of [ExecutionProfilesLoader project](https://github.com/kazurayam/ExecutionProfilesLoader), last year I wanted to take screenshots of 6000 URLs. The job took me 6000 * 10 seconds = over 17 hours. Obviously it's too long. I wanted to make the job run faster. It is a simple job to take a screenshot of a web page. 
+It is a simple job to take a screenshot of a web page. 
 
 >*Open browser, navigate to URL, take screenshot, save image to file, close browser*. 
 
-Everytime we navite to a new URL, we are forced to wait a few seconds until a new page is responded. This wait makes our sequential processing very slow.
+Every time we navigate to a new URL, we are forced to wait for a few seconds until the page is fully loaded. This wait makes our sequential processing very slow.
 
 If I can process these 6000 pages with 8 threads, then the job will be done in 17 hours / 8 threads = 2.2 hours.
 
 But how can I do multi-threading in a Test Case of Katalon Studio?
 
-I know that Katalon Studio offers [a feature of executing Test Suites in parallel mode](https://docs.katalon.com/katalon-studio/docs/test-suite-collection.html#manage-execution-information). It does't satisfactory for me. It is too coarse-grained. I want a way to execute a piece of Groovy scripts in fine-grained / light-weighted Java Threads.
+I know that Katalon Studio offers [a feature of executing Test Suites in parallel mode](https://docs.katalon.com/katalon-studio/docs/test-suite-collection.html#manage-execution-information). It isn't satisfactory for me. It is too coarse-grained. I want a way to execute a piece of Groovy scripts in fine-grained / light-weighted Java Threads.
 
 ## Solution
 
-### execute Multipe Groovy Closures in Test Case
+### execute Multiple Groovy Closures in a Test Case
 
 It is quite easy to create a Groovy [Closure](https://www.baeldung.com/groovy-closures) that contains `WebUI.*` statements in a Test Case. Executing it is a breeze. See the following example.
 
@@ -186,7 +186,7 @@ The source code is here:
 
 - [`com.kazurayam.ks.testclosure.TestClosuresCollectionExecutor`](Keywords/com/kazurayam/ks/testclosure/TestClosureCollectionExecutor.groovy)
 
-`TestClosuresCollectionExecutor` creates a thread pool of 4 as default. You can change the maxThread by parameter to the Buiilder. The value 1 - 32 is accepted.
+`TestClosuresCollectionExecutor` creates a thread pool of 4 as default. You can change the maxThread by parameter to the Buiilder. The value 1 - 16 is accepted.
 
 ### 2 strategies of window layout 
 
@@ -199,11 +199,11 @@ This project provides 2 strategies of browser window layout:
 
 ### Multiple threads --- does it run faster?
 
-Yes, it does.  If my test case executes mutilple TestClosures with multiple threads, it rus faster than with a single thread.
+Yes, it does on a machine with 2 or more core-CPU.  If my test case executes mutilple TestClosures with multiple threads, it rus faster than with a single thread.
 
-Of course, the faster processing assumes powerful machine resources. If I can afford Mac Book Air M1 with 8-core CPU, my test case with 8 threds will run much more faster. Taking screenshots of 6000 URL sequentially took 17 hours last year. With powerful machine and Katalon Test empowered by `TestClosure` may run 17 hours / 8 cores = 2.2 hours. Wow!, I want to see it someday!
+Of course, the faster processing demands more powerful machine resources. If I can afford Mac Book Air M1 with 8-core CPU, my test case with Thread Pool of 8 will run far faster. I want to see it!
 
-It is pointless to set the maximum number of threads for `TestClosureCollectionExceutor` with a value larger (8, 16, 32) than the number of cores you have.
+It is pointless to give the maximum number of threads for `TestClosureCollectionExceutor` with a value larger (8, 16, 32) than the number of cores you have.
 
 ## Conclusion
 
