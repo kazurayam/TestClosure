@@ -10,7 +10,9 @@ This project proposes a new concept **TestClosure** for Katalon Studio. This pro
 
 ## Problem to solve
 
-Many of Katalon Studio users want to execute multiple test processings *parallelly*. Me too. They have their own requirements. In my case, *I want to take a lot of web page screenshots as quickly as possible*. As I wrote in the README of [ExecutionProfilesLoader project](https://github.com/kazurayam/ExecutionProfilesLoader), last year I wanted to take screenshots of 6000 URLs. The job took me 6000 * 10 seconds = over 17 hours. Obviously it's too long. I wanted to make the job run faster. 
+Many of Katalon Studio users want to execute multiple test processings *parallelly*. Me too. They have their own requirements. In my case, *I want to take a lot of web page screenshots as quickly as possible.*
+
+As I wrote in the README of [ExecutionProfilesLoader project](https://github.com/kazurayam/ExecutionProfilesLoader), last year I wanted to take screenshots of 6000 URLs. The job took me 6000 * 10 seconds = over 17 hours. Obviously it's too long. I wanted to make the job run faster. 
 
 It is a simple job to take a screenshot of a web page. 
 
@@ -26,93 +28,57 @@ I know that Katalon Studio offers [a feature of executing Test Suites in paralle
 
 ## Solution
 
-### execute Multiple Groovy Closures in a Test Case
+### 1. You can call Groovy Closure in Katalon Test Case
 
 It is quite easy to create a Groovy [Closure](https://www.baeldung.com/groovy-closures) that contains `WebUI.*` statements in a Test Case. Executing it is a breeze. See the following example.
 
-[Test Cases/solution/01_callClosure](Scripts/solution/01_callClosure/Script1614148921401.groovy)
-```
-import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
+- code [Test Cases/solution/01_callClosure](Scripts/solution/01_callClosure/Script1614148921401.groovy)
+- video [01_callClosure](https://drive.google.com/file/d/1TfVjI36NQ-QQt52fQTX_94QGdMo3B5Bv/view?usp=sharing)
 
-Closure closure = {
-	WebUI.openBrowser('')
-	WebUI.navigateToUrl("http://demoaut.katalon.com/")
-	WebUI.waitForPageLoad(10)
-	WebUI.delay(3)
-	WebUI.closeBrowser()
-}
-
-closure.call()
-```
 When you execute this, you will see a browser window opens, shows a web page, and closes.
 
-A Groovy Closure implemwents the [`java.util.concurrent.Callable`](https://docs.oracle.com/javase/7/docs/api/java/util/concurrent/Callable.html) interface. This means, you can execute Closure objects using [`java.util.concurrent.ExecutorService`](https://www.baeldung.com/java-executor-service-tutorial). Therefore you can easily execute Closures of `WebUI.*` statements using the `ExecutorSerivce` utility in a Katalon Test Case.
+### 2. You can excute Groovy Closures using ExecutorService utility
 
-The following sample code shows how to execute 2 Closures sequantially in Katalon Test Case. This code shows how to parameterise Closures as well.
+[`java.util.concurrent.ExecutorService`](https://www.baeldung.com/java-executor-service-tutorial) makes conncurrent programming in Java/Groovy much easier. A Groovy Closure implemwents the [`java.util.concurrent.Callable`](https://docs.oracle.com/javase/7/docs/api/java/util/concurrent/Callable.html) interface. You can execute Closures of `WebUI.*` statements using `ExecutorSerivce` utility in a Katalon Test Case.
 
-[Test Cases/solution/02_executeClosuresBySingleThread](Scripts/solution/02_exeuteClosuresBySingleThread/Script1614154169248.groovy)
-```
-import java.util.concurrent.Callable
-import java.util.concurrent.ExecutorService
-import java.util.concurrent.Executors
-import java.util.concurrent.TimeUnit
+The following sample code shows 2 Closures are in 2 threads sequantially in Katalon Test Case.
 
-import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
-
-class URLVisitor implements Callable<String> {
-	private final Closure closure
-	private final String url
-	URLVisitor(Closure closure, String url) {
-		this.closure = closure
-		this.url = url 
-	}
-	String call() {
-		closure.call(url)
-		return "OK"
-	}
-}
-
-Closure closure = { url ->
-	WebUI.openBrowser('')
-	WebUI.navigateToUrl(url)
-	WebUI.waitForPageLoad(10)
-	WebUI.delay(3)
-	WebUI.closeBrowser()
-}
-
-// create Callable closures with param values
-List<Callable> callables = new ArrayList<Callable>()
-callables.add(new URLVisitor(closure, "http://demoaut.katalon.com/"))
-callables.add(new URLVisitor(closure, "https://duckduckgo.com/"))
-
-// Single threaded
-ExecutorService exService = Executors.newFixedThreadPool(1)
-exService.invokeAll(callables)
-
-exService.shutdown()
-exService.awaitTermination(1, TimeUnit.SECONDS)
-```
+- code [Test Cases/solution/02_executeClosuresByExecutorService](Scripts/solution/02_executeClosuresByExecutorService/Script1614264505453.groovy)
+- video [02_executeClosuresByExecutorService](https://drive.google.com/file/d/1TCy1_gYpE_jFJwNydtRcX114wPUO5TGH/view?usp=sharing)
 
 When you execute this code, you will see 2 browser windows opened/closed sequentially.
 
+### 3. You can parametrize Closures
 
-### 2. Should Manage Layout of Browser windows
+I want to parametrize a Closure. I want to execute 2 instances of a Groovy Closure with different values of parameters. The following code shows how to do it. I made a Groovy Class `URLVisitor` which implements the `java.util.concurrent.Callable` interface.
 
-Now I want to try openig 2 browser windows simultaneously using multiple threads. The following code does that:
+- code [Test Cases/solution/03_executeClosuresByExecutorService](Scripts/solution/03_executeCallablesSingleThread/Script1614249445525.groovy)
+- video [03_executeCallablesSingleThread](https://drive.google.com/file/d/1qBZS_sUnziRsb5zouB_D9jQzHPQ4WXHk/view?usp=sharing)
 
-[Test Cases/solution/03_executeClosuresByMultipleThreads](Scripts/solution/03_exeuteClosuresByMultipleThreads/Script1614155016466.groovy)
+When you execute this code, you will see 2 browser windows opened/closed sequentially.
 
-The difference of `03_executeClosuresByMultipleThreads` and `02_executeClosuresBySigngleThreads` is only 1 character: the size of Thread Pool: 1 -> 4.
+### 4. You can only see 1 browser window
 
+Now I want to execute 2 Closures simultaneously, in parallel. The following code does that:
+
+The code difference between this and the previous one is only 1 character. The size of Thread Pool is changed: 1 -> 4.
 ```
 ExecutorService exService = Executors.newFixedThreadPool(4)
 ```
 
-When you execute this example, you will get puzzled. *I only see 1 window opened for 2 threads, why?* See the following video:
+Of course I would expect to see 2 Browser windows to open. 
 
-- [Why 1 window?](https://drive.google.com/file/d/1xHTVUhEGo041zHxvFyyUPAnGS1gWIIwc/view?usp=sharing)
+- code [Test Cases/solutions/04_executeCallablesMultiThreadsLayoutUnmanaged](Scripts/solution/04_executeCallablesMultiThreadsLayoutUnmanaged/Script1614249737974.groovy)
+- video [04_executeCallablesMultiThreadsLayoutUnmanaged](https://drive.google.com/file/d/1AJ7R1Gu2R4eagsUskTDzAeyr10FUmNcb/view?usp=sharing)
 
-*What you saw is not what you got*. The fact is that acutally 2 windows were opened by [Test Cases/solution/03_executeClosuresByMultipleThreads](Scripts/solution/03_exeuteClosuresByMultipleThreads/Script1614155016466.groovy), but they were displayed overlayed at the same position (x, y coordinate) with just the same dimension (width, height). This is very confusing. I want to manage the layout of browser windows; I want them displayed at different positions (x, y) so that I can see them identifiable.
+
+When I executed this example, I got puzzled. *I executed 2 threads in parallel, and I saw only 1 window opened. why?*
+
+What you see is not what you get, sometimes. The fact is, acutally 2 windows were opened by the script, but the windows were displayed overlayed at the same position (x, y coordinate) with just the same dimension (width, height). So I could see only one. This behavior is very confusing.
+
+### 5. Introduce TestClosure to manage layout of browser windows
+
+I want to manage the layout of browser windows. I want them displayed at different positions (x, y) so that I can see them identifiable. But how can I do it?
 
 WebDriver API provides tools for us to solve this problem. You can explicitly set Window Position and Size. For example,
 
@@ -126,12 +92,16 @@ and
 driver.manage().window().setSize(new Dimension(300,500));
 ```
 
->See, for example, have a look at [this article](http://www.software-testing-tutorials-automation.com/2015/02/how-to-setget-window-position-and-size.html).
+I can should be able to set position and size to the windows opened by `WebUI.openBrowser('')` call inside the Closures in Test Cases. The following code shows how I managed it.
 
-I want find a way to apply the WebDriver API to the windows opened by `WebUI.openBrowser('')` call inside the Closures in Test Cases.
+- code [Test Cases/solutions/05_executeCallablesMultiThreadsLayoutManaged](Scripts/solution/05_executeTestClosuresMultiThreadsLayoutManaged/Script1614249845231.groovy)
+- video [05_executeTestClosuresMultiThreadsLayoutManaged](https://drive.google.com/file/d/112Yq5kQGnpycEOPn5sF-PD-qBs9I8OIB/view?usp=sharing)
 
+I introduced a custom helper `BrowserWindow.layout(metrics, position)` that moves the browser window appropriately.
 
-## Demo videos summary
+Problems are resolved.
+
+## Miscellaneous demo videos
 
 You can view the videos by clicking the following links: 
 
@@ -151,11 +121,11 @@ Using the following environment:
 - macOS Big Sur
 - Katalon Studio v7.9.1
 
-### Caution: videos are compressed
+**Caution: videos are compressed**
 
 When I executed a Test Suite in Katalon Studio to take the [demo2A](https://drive.google.com/file/d/1sS2D8SLUwMKuarHnqBvr7WJgSs-cNJRe/view?usp=sharing), the Test Suite acutally took 20 seconds to finish processing. But you will find the ["movie"](https://drive.google.com/file/d/1sS2D8SLUwMKuarHnqBvr7WJgSs-cNJRe/view?usp=sharing) plays in 7 seconds. The movie plays far quicker than the acutal scene. I suppose that, while I uploaded the files to Google Drive, the movies were compressed to reduce the size by chomping the still frames off.
 
-## Description 
+## Design Description 
 
 This project includes a set of working codes. Please read the source to find the detail. The code will tell you everything I could.
 
