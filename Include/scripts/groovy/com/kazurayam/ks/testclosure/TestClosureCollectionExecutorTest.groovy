@@ -2,19 +2,12 @@ package com.kazurayam.ks.testclosure
 
 import static org.junit.Assert.*
 
-import org.openqa.selenium.Dimension as Dimension
-import org.openqa.selenium.Point
-
-import com.kazurayam.ks.testclosure.TestClosure
-import com.kazurayam.ks.testclosure.TestClosureCollectionExecutor
-import com.kazurayam.ks.windowlayout.WindowLayoutMetrics
-import com.kazurayam.ks.windowlayout.WindowLocation
-
 import org.junit.Before
-import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
+import org.openqa.selenium.Dimension
+import org.openqa.selenium.Point
 
 @RunWith(JUnit4.class)
 public class TestClosureCollectionExecutorTest {
@@ -25,7 +18,7 @@ public class TestClosureCollectionExecutorTest {
 	void setup() {
 		executor = new TestClosureCollectionExecutor.Builder().maxThreads(3).build()
 		List<TestClosure> tclosures = new ArrayList<TestClosure>()
-		tclosures.add(new TestClosure({ WindowLayoutMetrics metrics, WindowLocation location, String name ->
+		tclosures.add(new TestClosure({ Point position, Dimension dimension, String name ->
 			println "Hello, ${name}!"
 		}, ["World"]))
 		executor.addTestClosures(tclosures)

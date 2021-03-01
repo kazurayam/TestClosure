@@ -11,7 +11,8 @@ List<TestClosure> tclosures = WebUI.callTestCase(findTestCase("demo/createTestCl
 WindowLayoutMetrics metrics = TilingWindowLayoutMetrics.DEFAULT
 
 tclosures.eachWithIndex { tclosure, i ->
-	tclosure.setWindowLayoutMetrics(metrics)
-	tclosure.setWindowLocation(new WindowLocation(tclosures.size(), i))
+	WindowLocation location = new WindowLocation(tclosures.size(), i)
+	tclosure.setPosition(metrics.getWindowPosition(location))
+	tclosure.setDimension(metrics.getWindowDimension(location))
 	tclosure.call()
 }

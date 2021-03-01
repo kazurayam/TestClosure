@@ -13,7 +13,8 @@ List<TestClosure> tclosures = WebUI.callTestCase(findTestCase("demo/createTestCl
 WindowLayoutMetrics metrics = new StackingWindowLayoutMetrics.Builder().windowDimension(new Dimension(1024, 500)).build()
 
 tclosures.eachWithIndex { tclosure, i ->
-	tclosure.setWindowLayoutMetrics(metrics)
-	tclosure.setWindowLocation(new WindowLocation(tclosures.size(), i))
+	WindowLocation location = new WindowLocation(tclosures.size(), i)
+	tclosure.setPosition(metrics.getWindowPosition(location))
+	tclosure.setDimension(metrics.getWindowDimension(location))
 	tclosure.call()
 }

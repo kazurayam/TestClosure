@@ -4,8 +4,6 @@ import java.nio.file.Paths
 
 import com.kazurayam.ks.testclosure.TestClosure
 import com.kazurayam.ks.windowlayout.BrowserWindowLayoutKeyword as BrowserWindow
-import com.kazurayam.ks.windowlayout.WindowLayoutMetrics
-import com.kazurayam.ks.windowlayout.WindowLocation
 import com.kms.katalon.core.configuration.RunConfiguration
 import com.kms.katalon.core.testobject.ConditionType
 import com.kms.katalon.core.testobject.TestObject
@@ -13,6 +11,9 @@ import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import org.apache.commons.io.FileUtils
 import com.kms.katalon.core.model.FailureHandling as FailureHandling
 import org.apache.commons.lang.time.StopWatch
+
+import org.openqa.selenium.Dimension
+import org.openqa.selenium.Point
 
 /*
  * Helper function
@@ -28,7 +29,7 @@ TestObject newTestObjectXPath(String xpath) {
  */
 List<TestClosure> tclosures = new ArrayList<TestClosure>()
 
-Closure shooter = { WindowLayoutMetrics metrics, WindowLocation location, List<Tuple> urlFilePairs ->
+Closure shooter = { Point position, Dimension dimension, List<Tuple> urlFilePairs ->
 	Closure shoot = { url, file ->
 		WebUI.navigateToUrl(url)
 		WebUI.waitForPageLoad(3, FailureHandling.STOP_ON_FAILURE)
@@ -41,7 +42,7 @@ Closure shooter = { WindowLayoutMetrics metrics, WindowLocation location, List<T
 		println "shooting ${url} took ${stopWatch.getTime() / 1000} seconds"
 	}
 	WebUI.openBrowser('')
-	BrowserWindow.layout(metrics, location)
+	BrowserWindow.layout(position, dimension)
 	urlFilePairs.each { Tuple pair ->
 		String url = pair[0]
 		Path file = pair[1]

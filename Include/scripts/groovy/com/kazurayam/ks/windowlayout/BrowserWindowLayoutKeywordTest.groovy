@@ -24,18 +24,19 @@ public class BrowserWindowLayoutKeywordTest {
 		String url = "http://demoaut.katalon.com/"
 		WebUI.openBrowser('')
 		WebUI.navigateToUrl(url)
-		BrowserWindowLayoutKeyword.layout(tilingLayout, new WindowLocation(2, 0))
-		WebUI.delay(1)
-		BrowserWindowLayoutKeyword.layout(tilingLayout, new WindowLocation(2, 1))
-		WebUI.delay(1)
-		BrowserWindowLayoutKeyword.layout(tilingLayout, new WindowLocation(4, 0))
-		WebUI.delay(1)
-		BrowserWindowLayoutKeyword.layout(tilingLayout, new WindowLocation(4, 1))
-		WebUI.delay(1)
-		BrowserWindowLayoutKeyword.layout(tilingLayout, new WindowLocation(4, 2))
-		WebUI.delay(1)
-		BrowserWindowLayoutKeyword.layout(tilingLayout, new WindowLocation(4, 3))
-		WebUI.delay(1)
+		List<WindowLocation> locations = [
+			new WindowLocation(2, 0),
+			new WindowLocation(2, 1),
+			new WindowLocation(4, 0),
+			new WindowLocation(4, 1),
+			new WindowLocation(4, 2),
+			new WindowLocation(4, 3),
+		]
+		locations.each { loc ->
+			BrowserWindowLayoutKeyword.layout(
+					tilingLayout.getWindowPosition(loc), tilingLayout.getWindowDimension(loc))
+			WebUI.delay(1)
+		}
 		WebUI.closeBrowser()
 	}
 
@@ -44,14 +45,17 @@ public class BrowserWindowLayoutKeywordTest {
 		String url = "http://demoaut-mimic.kazurayam.com/"
 		WebUI.openBrowser('')
 		WebUI.navigateToUrl(url)
-		BrowserWindowLayoutKeyword.layout(stackingLayout, new WindowLocation(4, 0))
-		WebUI.delay(1)
-		BrowserWindowLayoutKeyword.layout(stackingLayout, new WindowLocation(4, 1))
-		WebUI.delay(1)
-		BrowserWindowLayoutKeyword.layout(stackingLayout, new WindowLocation(4, 2))
-		WebUI.delay(1)
-		BrowserWindowLayoutKeyword.layout(stackingLayout, new WindowLocation(4, 3))
-		WebUI.delay(1)
+		List<WindowLocation> locations = [
+			new WindowLocation(4, 0),
+			new WindowLocation(4, 1),
+			new WindowLocation(4, 2),
+			new WindowLocation(4, 3),
+		]
+		locations.each { loc ->
+			BrowserWindowLayoutKeyword.layout(
+					stackingLayout.getWindowPosition(loc), tilingLayout.getWindowDimension(loc))
+			WebUI.delay(1)
+		}
 		WebUI.closeBrowser()
 	}
 }

@@ -1,16 +1,9 @@
 package com.kazurayam.ks.testclosure
 
 import java.util.concurrent.Callable
-import java.util.concurrent.TimeUnit
 
 import org.openqa.selenium.Dimension
 import org.openqa.selenium.Point
-import org.openqa.selenium.WebDriver
-
-import com.kazurayam.ks.windowlayout.WindowLayoutMetrics
-import com.kazurayam.ks.windowlayout.WindowLocation
-import com.kms.katalon.core.webui.driver.DriverFactory
-import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 
 /**
  * 
@@ -21,8 +14,8 @@ public class TestClosure implements Callable<String> {
 	private final Closure closure
 	private final List<Object> parameters
 
-	private WindowLayoutMetrics metrics = WindowLayoutMetrics.DEFAULT
-	private WindowLocation location = WindowLocation.DEFAULT
+	private Point position
+	private Dimension dimension
 
 	/**
 	 * Constructor
@@ -38,26 +31,28 @@ public class TestClosure implements Callable<String> {
 		validateClosureParameters(closure)
 		this.closure = closure
 		this.parameters = parameters
+		this.position = new Point(0, 0)
+		this.dimension = new Dimension(1280, 760)
 	}
 
-	public void setWindowLayoutMetrics(WindowLayoutMetrics metrics) {
-		Objects.requireNonNull(metrics)
-		this.metrics = metrics
+	public void setPosition(Point position) {
+		Objects.requireNonNull(position)
+		this.position = position
 	}
 
-	public void setWindowLocation(WindowLocation location) {
-		Objects.requireNonNull(location)
-		this.location = location
+	public void setDimension(Dimension dimension) {
+		Objects.requireNonNull(dimension)
+		this.dimension = dimension
 	}
 
 	@Override
 	public String call() throws Exception {
-		Objects.requireNonNull(metrics)
-		Objects.requireNonNull(location)
+		Objects.requireNonNull(position)
+		Objects.requireNonNull(dimension)
 		//
 		List<Object> args = new ArrayList<Object>()
-		args.add(metrics)
-		args.add(location)
+		args.add(position)
+		args.add(dimension)
 		args.addAll(parameters)
 		closure.call(args)
 		return "done"
@@ -72,13 +67,13 @@ public class TestClosure implements Callable<String> {
 		def parameterTypes = closure.getParameterTypes()
 		if (parameterTypes.length < 2) {
 			throw new IllegalArgumentException("TestClosure requires a Closure with 2 or more parameters. " +
-			"{ WindowLayoutMetries metrics, WindowLocation location [, xxx...] -> ... }")
+			"{ Point position, Dimension dimension [, xxx...] -> ... }")
 		}
-		if (parameterTypes[0] != WindowLayoutMetrics.class) {
-			throw new IllegalArgumentException("TestClosure requires the 1st Closure parameter to be WindowLayoutMetrics type")
+		if (parameterTypes[0] != Point.class) {
+			throw new IllegalArgumentException("TestClosure requires the 1st Closure parameter to be ${Point.class.toString()} type")
 		}
-		if (parameterTypes[1] != WindowLocation.class) {
-			throw new IllegalArgumentException("TestClosure requires the 2nd Closure parameter to be WindowLocation type")
+		if (parameterTypes[1] != Dimension.class) {
+			throw new IllegalArgumentException("TestClosure requires the 2nd Closure parameter to be ${Dimension.class.toString()} type")
 		}
 	}
 }

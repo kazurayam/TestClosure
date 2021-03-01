@@ -2,12 +2,13 @@ import org.openqa.selenium.Keys
 
 import com.kazurayam.ks.testclosure.TestClosure
 import com.kazurayam.ks.windowlayout.BrowserWindowLayoutKeyword as BrowserWindow
-import com.kazurayam.ks.windowlayout.WindowLayoutMetrics
-import com.kazurayam.ks.windowlayout.WindowLocation
 import com.kms.katalon.core.model.FailureHandling
 import com.kms.katalon.core.testobject.ConditionType
 import com.kms.katalon.core.testobject.TestObject
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
+
+import org.openqa.selenium.Dimension
+import org.openqa.selenium.Point
 
 /*
  * Helper function
@@ -33,11 +34,11 @@ TestObject newTestObjectCSS(String cssSelector) {
 List<TestClosure> tclosures = new ArrayList<TestClosure>()
 
 // construct closures
-tclosures.add(new TestClosure({ WindowLayoutMetrics metrics, WindowLocation location ->
+tclosures.add(new TestClosure({ Point position, Dimension dimension ->
 	String url = 'http://demoaut.katalon.com/'
 	WebUI.openBrowser('')
 	//
-	BrowserWindow.layout(metrics, location)
+	BrowserWindow.layout(position, dimension)
 	//
 	WebUI.navigateToUrl(url)
 	WebUI.waitForPageLoad(5)
@@ -59,11 +60,11 @@ tclosures.add(new TestClosure({ WindowLayoutMetrics metrics, WindowLocation loca
 	}, [])
 )
 
-tclosures.add(new TestClosure({ WindowLayoutMetrics metrics, WindowLocation location ->
+tclosures.add(new TestClosure({ Point position, Dimension dimension ->
 	String url = 'https://forum.katalon.com/'
 	WebUI.openBrowser('')
 	//
-	BrowserWindow.layout(metrics, location)
+	BrowserWindow.layout(position, dimension)
 	//
 	WebUI.navigateToUrl(url)
 	WebUI.comment("processing ${url}")
@@ -75,11 +76,11 @@ tclosures.add(new TestClosure({ WindowLayoutMetrics metrics, WindowLocation loca
 	}, [])
 )
 
-tclosures.add(new TestClosure({ WindowLayoutMetrics metrics, WindowLocation location ->
+tclosures.add(new TestClosure({ Point position, Dimension dimension ->
 	String url = 'https://duckduckgo.com/'
 	WebUI.openBrowser('')
 	//
-	BrowserWindow.layout(metrics, location)
+	BrowserWindow.layout(position, dimension)
 	//
 	WebUI.navigateToUrl(url)
 	WebUI.comment("processing ${url}")
