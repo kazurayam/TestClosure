@@ -20,7 +20,7 @@ It is a simple job to take a screenshot of a web page.
 
 Every time we navigate to a new URL, we are forced to wait for a few seconds until the page is fully loaded. This wait makes our sequential processing very slow.
 
-If I can process these 6000 pages with 8 threads, then the job will be done in 17 hours / 8 threads = 2.2 hours.
+If I have a machine with 8 Core-CPU, I can process these 6000 pages with 8 threads, then the job will be done in 17 hours / 8 threads = 2.2 hours.
 
 But how can I do multi-threading in a Test Case of Katalon Studio?
 
@@ -29,7 +29,7 @@ I know that Katalon Studio offers [a feature of executing Test Suites in paralle
 ## Solution
 
 ### 1. You can call Groovy Closure in Katalon Test Case
-
+d
 It is quite easy to create a Groovy [Closure](https://www.baeldung.com/groovy-closures) that contains `WebUI.*` statements in a Test Case. Executing it is a breeze. See the following example.
 
 - code [Test Cases/solution/01_callClosure](Scripts/solution/01_callClosure/Script1614148921401.groovy)
@@ -50,7 +50,7 @@ When you execute this code, you will see 2 browser windows opened/closed sequent
 
 ### 3. You can parametrize Closures
 
-I want to parametrize a Closure. I want to execute 2 instances of a Groovy Closure with different values of parameters. The following code shows how to do it. I made a Groovy Class `URLVisitor` which implements the `java.util.concurrent.Callable` interface.
+I want to parametrize a Closure. I want to execute 2 instances of a Groovy Closure with different values of parameters. The following code shows how to do it. I made a Groovy Class `URLVisitor` which implements the `java.util.concurrent.Callable` interface. Its constructor accepts parameters.
 
 - code [Test Cases/solution/03_executeClosuresByExecutorService](Scripts/solution/03_executeCallablesSingleThread/Script1614249445525.groovy)
 - video [03_executeCallablesSingleThread](https://drive.google.com/file/d/1qBZS_sUnziRsb5zouB_D9jQzHPQ4WXHk/view?usp=sharing)
@@ -92,7 +92,7 @@ and
 driver.manage().window().setSize(new Dimension(300,500));
 ```
 
-I can should be able to set position and size to the windows opened by `WebUI.openBrowser('')` call inside the Closures in Test Cases. The following code shows how I managed it.
+I want to call WebDriver API to set position and size to the windows opened by `WebUI.openBrowser('')` call inside the Closures in Test Cases. The following code shows how I managed it.
 
 - code [Test Cases/solutions/05_executeCallablesMultiThreadsLayoutManaged](Scripts/solution/05_executeTestClosuresMultiThreadsLayoutManaged/Script1614249845231.groovy)
 - video [05_executeTestClosuresMultiThreadsLayoutManaged](https://drive.google.com/file/d/112Yq5kQGnpycEOPn5sF-PD-qBs9I8OIB/view?usp=sharing)
