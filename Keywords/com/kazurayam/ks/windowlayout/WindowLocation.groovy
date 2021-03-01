@@ -15,7 +15,7 @@ public class WindowLocation {
 
 	@Override
 	boolean equals(Object o) {
-		if (o == this) {
+		if (o.is(this)) {
 			return true
 		}
 		if (!(o instanceof WindowLocation)) {

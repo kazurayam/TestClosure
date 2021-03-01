@@ -2,6 +2,8 @@ package com.kazurayam.ks.testclosure
 
 import static org.junit.Assert.*
 
+import java.time.LocalDateTime
+
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith

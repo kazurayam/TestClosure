@@ -1,17 +1,17 @@
 package com.kazurayam.ks.testclosure
 
-import java.time.LocalDateTime
 import java.util.concurrent.ExecutionException
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import java.util.concurrent.Future
 import java.util.concurrent.TimeUnit
 
+import org.openqa.selenium.Dimension
+import org.openqa.selenium.Point
+
 import com.kazurayam.ks.windowlayout.TilingWindowLayoutMetrics
 import com.kazurayam.ks.windowlayout.WindowLayoutMetrics
 import com.kazurayam.ks.windowlayout.WindowLocation
-import org.openqa.selenium.Dimension
-import org.openqa.selenium.Point
 
 /**
  * 
@@ -47,17 +47,17 @@ public class TestClosureCollectionExecutor {
 
 	private void addTestClosure(TestClosure tclosure, int index) {
 		Objects.requireNonNull(tclosure)
-		
+
 		WindowLocation location = new WindowLocation(capacity, index)
-		
+
 		// the position (x,y) to which browser window should be moved to
 		Point position = metrics.getWindowPosition(location)
 		tclosure.setPosition(position)
-		
+
 		// the size (width, height) to which browser window should be resized to
 		Dimension dimension = metrics.getWindowDimension(location)
 		tclosure.setDimension(dimension)
-		
+
 		this.testClosures.add(tclosure)
 	}
 
@@ -74,14 +74,15 @@ public class TestClosureCollectionExecutor {
 		List<Future<String>> futures = executorService.invokeAll(testClosures)
 
 		for (ft in futures) {
-			String result = null
 			try {
 				/* calling the get() method while the task is
 				 * running will cause execution to block
 				 * until the task properly execut4s and
 				 * the result is available
 				 */
-				result = ft.get()
+				TestClosureResult result = ft.get()
+				// how to make use of TestClosureResult? ... should study more
+				//println result
 			} catch (InterruptedException | ExecutionException e) {
 				e.printStackTrace()
 			}
@@ -137,39 +138,4 @@ public class TestClosureCollectionExecutor {
 		testClosures = new ArrayList<TestClosure>()
 	}
 
-
-	public static class Result {
-
-		private String name;
-		private LocalDateTime timestamp;
-
-		public Result(String name, LocalDateTime timestamp) {
-			super();
-			this.name = name;
-			this.timestamp = timestamp;
-		}
-
-		public String getName() {
-			return name;
-		}
-
-		public void setName(String name) {
-			this.name = name;
-		}
-
-		public LocalDateTime getTimestamp() {
-			return timestamp;
-		}
-
-		public void setTimestamp(LocalDateTime timestamp) {
-			this.timestamp = timestamp;
-		}
-
-		@Override
-		public String toString() {
-			return "Result [name=" + name + ", value=" + timestamp.toString() + "]";
-		}
-	}
 }
-
-

@@ -1,5 +1,6 @@
 package com.kazurayam.ks.testclosure
 
+import java.time.LocalDateTime
 import java.util.concurrent.Callable
 
 import org.openqa.selenium.Dimension
@@ -9,7 +10,7 @@ import org.openqa.selenium.Point
  * 
  * @author kazurayam
  */
-public class TestClosure implements Callable<String> {
+public class TestClosure implements Callable<TestClosureResult> {
 
 	private final Closure closure
 	private final List<Object> parameters
@@ -46,7 +47,7 @@ public class TestClosure implements Callable<String> {
 	}
 
 	@Override
-	public String call() throws Exception {
+	public TestClosureResult call() throws Exception {
 		Objects.requireNonNull(position)
 		Objects.requireNonNull(dimension)
 		//
@@ -54,8 +55,14 @@ public class TestClosure implements Callable<String> {
 		args.add(position)
 		args.add(dimension)
 		args.addAll(parameters)
+		LocalDateTime startAt = LocalDateTime.now()
+		//
 		closure.call(args)
-		return "done"
+		//
+		TestClosureResult result = new TestClosureResult(closure.getClass().getName(), LocalDateTime.now())
+		result.setStopAt(LocalDateTime.now())
+		result.setMessage("done")
+		return result
 	}
 
 	/**

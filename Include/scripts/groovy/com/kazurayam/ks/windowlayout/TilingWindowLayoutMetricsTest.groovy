@@ -85,4 +85,5 @@ class TilingWindowLayoutMetricsTest {
 		assertTrue("dim.width=${dim.width}, expected to be 500", 500 == dim.width)
 		assertTrue("dim.height=${dim.height}, expected to be 400", 400 == dim.height)
 	}
+	
 }

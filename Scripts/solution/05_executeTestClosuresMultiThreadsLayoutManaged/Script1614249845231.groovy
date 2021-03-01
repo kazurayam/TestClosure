@@ -1,17 +1,18 @@
+import org.openqa.selenium.Dimension
+import org.openqa.selenium.Point
+
 import com.kazurayam.ks.testclosure.TestClosure
 import com.kazurayam.ks.testclosure.TestClosureCollectionExecutor
 import com.kazurayam.ks.windowlayout.BrowserWindowLayoutKeyword as BrowserWindow
 import com.kazurayam.ks.windowlayout.StackingWindowLayoutMetrics
-import com.kazurayam.ks.windowlayout.WindowLayoutMetrics
-import com.kazurayam.ks.windowlayout.WindowLocation
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 
 // load the collection of TestClosures
 List<TestClosure> tclosures = new ArrayList<TestClosure>()
 
-Closure closure = { WindowLayoutMetrics metrics, WindowLocation location, String url ->
+Closure closure = { Point position, Dimension dimension, String url ->
 	WebUI.openBrowser('')
-	BrowserWindow.layout(metrics, location)
+	BrowserWindow.layout(position, dimension)
 	WebUI.navigateToUrl(url)
 	WebUI.waitForPageLoad(10)
 	WebUI.delay(3)
