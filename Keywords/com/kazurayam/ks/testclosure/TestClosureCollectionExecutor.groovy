@@ -83,8 +83,12 @@ public class TestClosureCollectionExecutor {
 				TestClosureResult result = ft.get()
 				// how to make use of TestClosureResult? ... should study more
 				//println result
-			} catch (InterruptedException | ExecutionException e) {
+			} catch (InterruptedException e) {
 				e.printStackTrace()
+			} catch (ExecutionException e) {
+				// re-throw com.kms.katalon.core.exception.StepFailedException 
+				// raised by some WebUI.* keywords in the Closure
+				throw e
 			}
 		}
 
