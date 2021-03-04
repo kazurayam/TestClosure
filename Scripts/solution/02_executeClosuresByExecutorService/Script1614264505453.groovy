@@ -12,6 +12,7 @@ closures.add({
 	WebUI.waitForPageLoad(10)
 	WebUI.delay(1)
 	WebUI.closeBrowser()
+	return "OK"
 })
 
 closures.add({
@@ -20,6 +21,7 @@ closures.add({
 	WebUI.waitForPageLoad(10)
 	WebUI.delay(1)
 	WebUI.closeBrowser()
+	return "OK"
 })
 
 ExecutorService exService = Executors.newFixedThreadPool(1)

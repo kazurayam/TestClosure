@@ -86,7 +86,7 @@ public class TestClosureCollectionExecutor {
 			} catch (InterruptedException e) {
 				e.printStackTrace()
 			} catch (ExecutionException e) {
-				// re-throw com.kms.katalon.core.exception.StepFailedException 
+				// re-throw com.kms.katalon.core.exception.StepFailedException
 				// raised by some WebUI.* keywords in the Closure
 				throw e
 			}

@@ -12,9 +12,9 @@
    <rerunImmediately>false</rerunImmediately>
    <testSuiteGuid>a11437e2-fc6e-484f-a725-315012f7a22a</testSuiteGuid>
    <testCaseLink>
-      <guid>bbf66640-f427-4a14-bd25-a5907947b051</guid>
+      <guid>f5a63997-6d13-4ce7-a0e0-5334380daa28</guid>
       <isReuseDriver>false</isReuseDriver>
       <isRun>true</isRun>
-      <testCaseId>Test Cases/solution/04_executeCallablesMultiThreadsLayoutUnmanaged</testCaseId>
+      <testCaseId>Test Cases/solution/03_executeCallablesSingleThread</testCaseId>
    </testCaseLink>
 </TestSuiteEntity>

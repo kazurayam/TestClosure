@@ -7,19 +7,7 @@ import java.util.concurrent.TimeUnit
 
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 
-class URLVisitor implements Callable<String> {
-	private final Closure closure
-	private final String url
-	URLVisitor(Closure closure, String url) {
-		this.closure = closure
-		this.url = url 
-	}
-	@Override
-	String call() throws Exception {
-		closure.call(url)
-		return "OK"
-	}
-}
+import solution.URLVisitor
 
 Closure closure = { url ->
 	WebUI.openBrowser('')
@@ -43,8 +31,11 @@ for (ft in futures) {
 	String result = null
 	try {
 		result = ft.get()
-	} catch (InterruptedException | ExecutionException e) {
+		println result
+	} catch (InterruptedException e) {
 		e.printStackTrace()
+	} catch (ExecutionException e) {
+		throw e
 	}
 }
 
