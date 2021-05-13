@@ -125,6 +125,13 @@ Using the following environment:
 
 When I executed a Test Suite in Katalon Studio to take the [demo2A](https://drive.google.com/file/d/1sS2D8SLUwMKuarHnqBvr7WJgSs-cNJRe/view?usp=sharing), the Test Suite acutally took 20 seconds to finish processing. But you will find the ["movie"](https://drive.google.com/file/d/1sS2D8SLUwMKuarHnqBvr7WJgSs-cNJRe/view?usp=sharing) plays in 7 seconds. The movie plays far quicker than the acutal scene. I suppose that, while I uploaded the files to Google Drive, the movies were compressed to reduce the size by chomping the still frames off.
 
+
+## How to install the plug-in
+
+A plug-in jar named `kazurayam-ks-testobject-x.x.x.jar` is available at the [Releases](https://github.com/kazurayam/TestClosure/releases) page.
+This jar contains `com.kazurayam.ks.testclosure.TestClosure` and related classes. Once you install this jar into your project's `Plugins` directory, 
+you can quickly start multi-threading in Katalon Studio.
+
 ## Design Description 
 
 This project includes a set of working codes. Please read the source to find the detail. The code will tell you everything I could.

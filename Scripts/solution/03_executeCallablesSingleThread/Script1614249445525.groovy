@@ -8,6 +8,20 @@ import java.util.concurrent.TimeUnit
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import solution.URLVisitor
 
+class URLVisitor implements Callable<String> {
+	private final Closure closure
+	private final String url
+	URLVisitor(Closure closure, String url) {
+		this.closure = closure
+		this.url = url
+	}
+	@Override
+	String call() throws Exception {
+		closure.call(url)
+		return "OK"
+	}
+}
+
 Closure closure = { url ->
 	WebUI.openBrowser('')
 	WebUI.navigateToUrl(url)
