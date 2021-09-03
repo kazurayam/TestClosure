@@ -1,12 +1,11 @@
 plugins {
-  id 'java'
   id 'groovy'
   id 'com.github.johnrengelman.shadow' version '4.0.4'
   id "com.katalon.gradle-plugin" version "0.0.7"
 }
 
 group = 'com.kazurayam'
-version = '0.20.0'
+version = '0.21.0-SNAPSHOT'
 
 sourceCompatibility = '1.8'
 targetCompatibility = '1.8'

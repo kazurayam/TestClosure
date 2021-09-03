@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestCaseEntity>
    <description></description>
-   <name>demo3D_ScreenshootingReusingWindowForMultipleURLs</name>
+   <name>createTestClosures4ScreenshootingMultipleURLsInABrowser</name>
    <tag></tag>
    <comment></comment>
-   <testCaseGuid>b3d86fdf-4fe2-453e-bb71-ea80a475786f</testCaseGuid>
+   <testCaseGuid>7fb9b3ea-c06d-456b-82d5-34bf24206437</testCaseGuid>
 </TestCaseEntity>

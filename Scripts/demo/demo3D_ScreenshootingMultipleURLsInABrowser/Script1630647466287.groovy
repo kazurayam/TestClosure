@@ -32,7 +32,7 @@ List<TestClosure> tclosures = WebUI.callTestCase(findTestCase(
 // create the executor
 TestClosureCollectionExecutor executor =
 	new TestClosureCollectionExecutor.Builder().
-		maxThreads(2).          // maxThreads should be equal to the number of CPU Cores
+		numThreads(2).          // numThreads should be equal to the number of CPU Cores
 		windowLayoutMetrics(StackingWindowLayoutMetrics.DEFAULT).
 		build()
 

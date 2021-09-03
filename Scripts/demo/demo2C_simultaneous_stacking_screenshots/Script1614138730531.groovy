@@ -25,7 +25,7 @@ List<TestClosure> tclosures = WebUI.callTestCase(findTestCase("demo/createTestCl
 // create the executor
 TestClosureCollectionExecutor executor = 
 	new TestClosureCollectionExecutor.Builder().
-		maxThreads(3).
+		numThreads(3).
 		windowLayoutMetrics(StackingWindowLayoutMetrics.DEFAULT).
 		build()
 

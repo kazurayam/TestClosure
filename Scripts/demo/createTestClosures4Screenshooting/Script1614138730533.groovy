@@ -3,14 +3,14 @@ import java.nio.file.Path
 import java.nio.file.Paths
 
 import org.apache.commons.io.FileUtils
-import org.openqa.selenium.Dimension
-import org.openqa.selenium.Point
+import org.openqa.selenium.WebDriver
 
 import com.kazurayam.ks.testclosure.TestClosure
 import com.kazurayam.ks.windowlayout.BrowserWindowLayoutKeyword as BrowserWindow
 import com.kms.katalon.core.configuration.RunConfiguration
 import com.kms.katalon.core.testobject.ConditionType
 import com.kms.katalon.core.testobject.TestObject
+import com.kms.katalon.core.webui.driver.DriverFactory
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 
 /*
@@ -27,14 +27,12 @@ TestObject newTestObjectXPath(String xpath) {
  */
 List<TestClosure> tclosures = new ArrayList<TestClosure>()
 
-Closure shooter = { Point position, Dimension dimension, String url, Path file ->
-	WebUI.openBrowser('')
-	BrowserWindow.layout(position, dimension)
+Closure shooter = { WebDriver driver, String url, Path file ->
+	DriverFactory.changeWebDriver(driver)
 	WebUI.navigateToUrl(url)
 	WebUI.waitForPageLoad(5)
 	WebUI.comment("processing ${url}")
 	WebUI.takeScreenshot(file.toString())
-	WebUI.closeBrowser()
 }
 
 // clean screenshots dir

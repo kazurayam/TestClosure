@@ -19,4 +19,6 @@ import org.openqa.selenium.Keys as Keys
 
 List<Closure> closures = WebUI.callTestCase(findTestCase("demo/createPlainClosures"), [:])
 
+closures.get(0).call()
 closures.get(1).call()
+closures.get(2).call()

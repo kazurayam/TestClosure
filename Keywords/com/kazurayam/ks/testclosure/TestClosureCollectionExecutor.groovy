@@ -13,24 +13,35 @@ import com.kazurayam.ks.windowlayout.TilingWindowLayoutMetrics
 import com.kazurayam.ks.windowlayout.WindowLayoutMetrics
 import com.kazurayam.ks.windowlayout.WindowLocation
 
+import com.kms.katalon.core.webui.driver.DriverFactory
+import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
+
+import org.openqa.selenium.WebDriver
+
 /**
  * 
  * @author kazurayam
  */
 public class TestClosureCollectionExecutor {
 
-	private final int maxThreads
+	public static final int THREADS_LIMIT = 8
+
+	private final int numThreads
 	private final WindowLayoutMetrics metrics
 	private final List<TestClosure> testClosures
+	private List<WebDriver> drivers
 
 	private int capacity
 
-	public int getMaxThreads() {
-		return maxThreads
+	private TestClosureCollectionExecutor(Builder builder) {
+		this.numThreads = builder.numThreads
+		this.metrics = builder.metrics
+		this.testClosures = new ArrayList<TestClosure>()
+		this.drivers = new ArrayList<WebDriver>()
 	}
 
-	public resolveIndex(int i) {
-		return i % maxThreads
+	public int getNumThreads() {
+		return numThreads
 	}
 
 	public int size() {
@@ -38,29 +49,55 @@ public class TestClosureCollectionExecutor {
 	}
 
 	public void addTestClosures(List<TestClosure> tclosures) {
-		capacity = (tclosures.size() > maxThreads) ? maxThreads : tclosures.size()
+		capacity = (tclosures.size() > numThreads) ? numThreads : tclosures.size()
 		for (int i = 0; i < tclosures.size(); i++) {
-			int index = resolveIndex(i)
-			this.addTestClosure(tclosures.get(i), index)
+			this.addTestClosure(tclosures.get(i))
 		}
 	}
 
-	private void addTestClosure(TestClosure tclosure, int index) {
-		Objects.requireNonNull(tclosure)
+	private resolveIndex(int i) {
+		return i % numThreads
+	}
+
+	/*
+	 * start a browser for each TestClosures and setup them ready to invoke
+	 */
+	private void addTestClosure(TestClosure tc) {
+		Objects.requireNonNull(tc)
+
+		int index = resolveIndex(this.testClosures.size())
 
 		WindowLocation location = new WindowLocation(capacity, index)
 
 		// the position (x,y) to which browser window should be moved to
 		Point position = metrics.getWindowPosition(location)
-		tclosure.setPosition(position)
 
 		// the size (width, height) to which browser window should be resized to
 		Dimension dimension = metrics.getWindowDimension(location)
-		tclosure.setDimension(dimension)
 
-		this.testClosures.add(tclosure)
+		// open a browser window for this TestClosure
+		WebUI.openBrowser('')
+
+		WebDriver driver = DriverFactory.getWebDriver()
+
+		// move the browser window to a good position (x,y)
+		driver.manage().window().setPosition(position)
+
+		// resize the browser window to a good dimension (width, height)
+		driver.manage().window().setSize(dimension)
+
+		// store the reference to the WebDriver instance into a list, so that we can quit them in the end
+		drivers.add(driver)
+
+		// pass the WebDriver instance to this TestClosure
+		tc.setDriver(driver)
+
+		this.testClosures.add(tc)
 	}
 
+	/**
+	 * 
+	 */
 	public void execute() {
 		int size = testClosures.size()
 		if (size < 1) {
@@ -69,7 +106,7 @@ public class TestClosureCollectionExecutor {
 
 		// create Thread pool
 		ExecutorService executorService = Executors.newFixedThreadPool(
-				(size > maxThreads) ?  maxThreads : size)
+				(size > numThreads) ?  numThreads : size)
 
 		List<Future<String>> futures = executorService.invokeAll(testClosures)
 
@@ -100,7 +137,20 @@ public class TestClosureCollectionExecutor {
 		} catch (InterruptedException e) {
 			executorService.shutdownNow()
 		}
+
+		closeBrowsers();
 	}
+
+	/*
+	 *  close all browsers
+	 */
+	void closeBrowsers() {
+		drivers.forEach({ WebDriver driver ->
+			driver.quit()
+		})
+	}
+
+
 
 	/**
 	 * Builder pattern by "Effective Java"
@@ -111,7 +161,7 @@ public class TestClosureCollectionExecutor {
 		// Optional parameters - initialized to default values
 		private WindowLayoutMetrics metrics = new TilingWindowLayoutMetrics.Builder().build()
 		private List<TestClosure> testClosures = new ArrayList<TestClosure>()
-		private int maxThreads = 4
+		private int numThreads = 2
 
 		Builder() {}
 
@@ -120,26 +170,20 @@ public class TestClosureCollectionExecutor {
 			return this
 		}
 
-		Builder maxThreads(int maxThreads) {
-			if (maxThreads <= 0) {
-				throw new IllegalArgumentException("maxThreads=${maxThreads} must not be less or equal to 0")
+		Builder numThreads(int numThreads) {
+			if (numThreads <= 0) {
+				throw new IllegalArgumentException("numThreads=${numThreads} must not be less or equal to 0")
 			}
-			if (maxThreads > 16) {
-				throw new IllegalArgumentException("maxThreds=${maxThreads} must not be greater than 16")
+			if (numThreads > THREADS_LIMIT) {
+				throw new IllegalArgumentException("numThreds=${numThreads} must not be greater than ${THREADS_LIMIT}")
 			}
-			this.maxThreads = maxThreads
+			this.numThreads = numThreads
 			return this
 		}
 
 		TestClosureCollectionExecutor build() {
 			return new TestClosureCollectionExecutor(this)
 		}
-	}
-
-	private TestClosureCollectionExecutor(Builder builder) {
-		maxThreads = builder.maxThreads
-		metrics = builder.metrics
-		testClosures = new ArrayList<TestClosure>()
 	}
 
 }

@@ -7,13 +7,14 @@ import com.kazurayam.ks.windowlayout.BrowserWindowLayoutKeyword as BrowserWindow
 import com.kms.katalon.core.configuration.RunConfiguration
 import com.kms.katalon.core.testobject.ConditionType
 import com.kms.katalon.core.testobject.TestObject
+import com.kms.katalon.core.webui.driver.DriverFactory
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import org.apache.commons.io.FileUtils
 import com.kms.katalon.core.model.FailureHandling as FailureHandling
 import org.apache.commons.lang.time.StopWatch
 
-import org.openqa.selenium.Dimension
-import org.openqa.selenium.Point
+
+import org.openqa.selenium.WebDriver
 
 /*
  * Helper function
@@ -29,7 +30,9 @@ TestObject newTestObjectXPath(String xpath) {
  */
 List<TestClosure> tclosures = new ArrayList<TestClosure>()
 
-Closure shooter = { Point position, Dimension dimension, List<Tuple> urlFilePairs ->
+Closure shooter = { WebDriver driver, List<Tuple> urlFilePairs ->
+	Objects.requireNonNull(driver)
+	DriverFactory.changeWebDriver(driver)
 	Closure shoot = { url, file ->
 		WebUI.navigateToUrl(url)
 		WebUI.waitForPageLoad(3, FailureHandling.STOP_ON_FAILURE)
@@ -41,14 +44,11 @@ Closure shooter = { Point position, Dimension dimension, List<Tuple> urlFilePair
 		stopWatch.stop()
 		println "shooting ${url} took ${stopWatch.getTime() / 1000} seconds"
 	}
-	WebUI.openBrowser('')
-	BrowserWindow.layout(position, dimension)
 	urlFilePairs.each { Tuple pair ->
 		String url = pair[0]
 		Path file = pair[1]
 		shoot.call( url, file )
 	}
-	WebUI.closeBrowser()
 }
 
 // clean screenshots dir

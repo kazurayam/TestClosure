@@ -23,15 +23,8 @@ TestObject newTestObjectCSS(String cssSelector) {
 	return tObj
 }
 
-/*
- * the container of Closures to return
- */
-List<Closure> closures = new ArrayList<Closure>()
-
-// construct closures
-closures.add({
+def sub1() {
 	String url = 'http://demoaut.katalon.com/'
-	WebUI.openBrowser('')
 	WebUI.navigateToUrl(url)
 	WebUI.waitForPageLoad(5)
 	WebUI.comment("processing ${url}")
@@ -48,24 +41,20 @@ closures.add({
 	TestObject btnBookAppointment = newTestObjectCSS("#btn-book-appointment")
 	WebUI.waitForElementPresent(btnBookAppointment, 3, FailureHandling.STOP_ON_FAILURE)
 	WebUI.delay(1)
-	WebUI.closeBrowser()
-})
+}
 
-closures.add({
+def sub2() {
 	String url = 'https://forum.katalon.com/'
-	WebUI.openBrowser('')
 	WebUI.navigateToUrl(url)
 	WebUI.comment("processing ${url}")
 	TestObject tObj = newTestObjectXPath("//a[contains(text(),'How To Help Us Help You')]")
 	WebUI.verifyElementPresent(tObj, 5)
 	WebUI.scrollToElement(tObj, 5)
 	WebUI.delay(1)
-	WebUI.closeBrowser()
-})
+}
 
-closures.add({
+def sub3() {
 	String url = 'https://duckduckgo.com/'
-	WebUI.openBrowser('')
 	WebUI.navigateToUrl(url)
 	WebUI.comment("processing ${url}")
 	TestObject searchText = newTestObjectXPath("//input[@id='search_form_input_homepage']")
@@ -76,6 +65,30 @@ closures.add({
 	String title = WebUI.getWindowTitle()
 	WebUI.verifyMatch(title, "katalon at DuckDuckGo", true)
 	WebUI.delay(1)
+}
+
+/*
+ * the container of Closures to return
+ */
+List<Closure> closures = new ArrayList<Closure>()
+
+// construct closures
+
+closures.add({
+	WebUI.openBrowser('')
+	sub1()
+	WebUI.closeBrowser()
+})
+
+closures.add({
+	WebUI.openBrowser('')
+	sub2()
+	WebUI.closeBrowser()
+})
+
+closures.add({
+	WebUI.openBrowser('')
+	sub3()
 	WebUI.closeBrowser()
 })
 

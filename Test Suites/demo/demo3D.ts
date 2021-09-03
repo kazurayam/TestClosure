@@ -15,6 +15,6 @@
       <guid>7ecc5ea0-b6fe-40e2-8ea8-0fb338a45c03</guid>
       <isReuseDriver>false</isReuseDriver>
       <isRun>true</isRun>
-      <testCaseId>Test Cases/demo/demo3D_ScreenshootingReusingWindowForMultipleURLs</testCaseId>
+      <testCaseId>Test Cases/demo/demo3D_ScreenshootingMultipleURLsInABrowser</testCaseId>
    </testCaseLink>
 </TestSuiteEntity>
