@@ -15,6 +15,9 @@ import org.apache.commons.lang.time.StopWatch
 
 
 import org.openqa.selenium.WebDriver
+import com.kazurayam.ashotwrapper.AShotWrapper;
+import com.kazurayam.ashotwrapper.AShotWrapper.Options;
+
 
 /*
  * Helper function
@@ -33,21 +36,28 @@ List<TestClosure> tclosures = new ArrayList<TestClosure>()
 Closure shooter = { WebDriver driver, List<Tuple> urlFilePairs ->
 	Objects.requireNonNull(driver)
 	DriverFactory.changeWebDriver(driver)
-	Closure shoot = { url, file ->
-		WebUI.navigateToUrl(url)
-		WebUI.waitForPageLoad(3, FailureHandling.STOP_ON_FAILURE)
-		WebUI.comment("processing ${url}")
-		StopWatch stopWatch = new StopWatch()
-		stopWatch.start()
-		WebUI.takeFullPageScreenshot(file.toString())
-		//WebUI.takeScreenshot(file.toString())
-		stopWatch.stop()
-		println "shooting ${url} took ${stopWatch.getTime() / 1000} seconds"
-	}
 	urlFilePairs.each { Tuple pair ->
 		String url = pair[0]
 		Path file = pair[1]
-		shoot.call( url, file )
+		//
+		StopWatch stopWatch = new StopWatch()
+		stopWatch.start()
+		//
+		WebUI.comment("navigating to ${url}")
+		WebUI.navigateToUrl(url)
+		stopWatch.suspend()
+		WebUI.comment("navigation to ${url} took ${stopWatch.getTime() / 1000} seconds")
+		stopWatch.reset();
+		stopWatch.start();
+		WebUI.comment("saving image of ${url}")
+		
+		//WebUI.takeFullPageScreenshot(file.toString())
+		//WebUI.takeScreenshot(file.toString())
+		Options opt = new Options.Builder().timeout(100).build()
+		AShotWrapper.saveEntirePageImage(driver, opt, file.toFile())
+		
+		stopWatch.stop()
+		WebUI.comment("saving image of ${url} took ${stopWatch.getTime() / 1000} seconds")
 	}
 }
 
