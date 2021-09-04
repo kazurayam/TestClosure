@@ -1,5 +1,4 @@
-import org.openqa.selenium.Dimension
-import org.openqa.selenium.Point
+import org.openqa.selenium.WebDriver
 
 import com.kazurayam.ks.testclosure.TestClosure
 import com.kazurayam.ks.testclosure.TestClosureCollectionExecutor
@@ -8,7 +7,7 @@ import com.kms.katalon.core.util.KeywordUtil
 // load the collection of TestClosures
 List<TestClosure> tclosures = new ArrayList<TestClosure>()
 
-Closure closure = { Point position, Dimension dimension, String url ->
+Closure closure = { WebDriver driver, String url ->
 	KeywordUtil.markFailedAndStop("Planned exception")
 }
 
