@@ -97,7 +97,9 @@ I want to call WebDriver API to set position and size to the windows opened by `
 - code [Test Cases/solutions/05_executeCallablesMultiThreadsLayoutManaged](Scripts/solution/05_executeTestClosuresMultiThreadsLayoutManaged/Script1614249845231.groovy)
 - video [05_executeTestClosuresMultiThreadsLayoutManaged](https://drive.google.com/file/d/112Yq5kQGnpycEOPn5sF-PD-qBs9I8OIB/view?usp=sharing)
 
-I introduced a custom helper `BrowserWindow.layout(metrics, position)` that moves the browser window appropriately.
+The framework [`com.kazurayam.ks.testclosure.TestClosureCollectionExecutor`](Keywords/Keywords/com/kazurayam/ks/testclosure/TestClosureCollectionExecutor.groovy) manages opening/closing browser,
+as well as positioning the browser windows. A TestClosure will be pass an instance of `WebDriver` as argument. The TestClosure just use the driver.
+The TestClosure is not responsible for managing the browsers at all. 
 
 Problems are resolved.
 
