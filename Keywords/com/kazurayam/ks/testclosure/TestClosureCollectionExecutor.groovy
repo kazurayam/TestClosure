@@ -25,19 +25,15 @@ import org.openqa.selenium.WebDriver
 public class TestClosureCollectionExecutor {
 
 	public static final int THREADS_LIMIT = 8
-
 	private final int numThreads
 	private final WindowLayoutMetrics metrics
-	private final List<TestClosure> testClosures
-	private List<WebDriver> drivers
-
+	private final List<Closure> loadedTestClosures
 	private int capacity
 
 	private TestClosureCollectionExecutor(Builder builder) {
 		this.numThreads = builder.numThreads
 		this.metrics = builder.metrics
-		this.testClosures = new ArrayList<TestClosure>()
-		this.drivers = new ArrayList<WebDriver>()
+		this.loadedTestClosures = new ArrayList<Closure>()
 	}
 
 	public int getNumThreads() {
@@ -45,13 +41,13 @@ public class TestClosureCollectionExecutor {
 	}
 
 	public int size() {
-		return testClosures.size()
+		return loadedTestClosures.size()
 	}
 
 	public void addTestClosures(List<TestClosure> tclosures) {
 		capacity = (tclosures.size() > numThreads) ? numThreads : tclosures.size()
 		for (int i = 0; i < tclosures.size(); i++) {
-			this.addTestClosure(tclosures.get(i))
+			this.loadTestClosure(tclosures.get(i))
 		}
 	}
 
@@ -62,60 +58,53 @@ public class TestClosureCollectionExecutor {
 	/*
 	 * start a browser for each TestClosures and setup them ready to invoke
 	 */
-	private void addTestClosure(TestClosure tc) {
+	private void loadTestClosure(TestClosure tc) {
 		Objects.requireNonNull(tc)
-
-		int index = resolveIndex(this.testClosures.size())
-
+		int index = resolveIndex(this.loadedTestClosures.size())
 		WindowLocation location = new WindowLocation(capacity, index)
-
 		// the position (x,y) to which browser window should be moved to
 		Point position = metrics.getWindowPosition(location)
-
 		// the size (width, height) to which browser window should be resized to
 		Dimension dimension = metrics.getWindowDimension(location)
-
-		// open a browser window for this TestClosure
-		WebUI.openBrowser('')
-
-		WebDriver driver = DriverFactory.getWebDriver()
-
-		// move the browser window to a good position (x,y)
-		driver.manage().window().setPosition(position)
-
-		// resize the browser window to a good dimension (width, height)
-		driver.manage().window().setSize(dimension)
-
-		// store the reference to the WebDriver instance into a list, so that we can quit them in the end
-		drivers.add(driver)
-
-		// pass the WebDriver instance to this TestClosure
-		tc.setDriver(driver)
-
-		this.testClosures.add(tc)
+		//
+		Closure cls = {
+			// open a browser window for this TestClosure
+			WebUI.openBrowser('')
+			WebDriver driver = DriverFactory.getWebDriver()
+			// move the browser window to a good position (x,y)
+			driver.manage().window().setPosition(position)
+			// resize the browser window to a good dimension (width, height)
+			driver.manage().window().setSize(dimension)
+			// pass the WebDriver instance to this TestClosure
+			tc.setDriver(driver)
+			// execute the TestClosure
+			TestClosureResult result = tc.call()
+			// close the browser
+			driver.quit()
+			//
+			return result
+		}
+		this.loadedTestClosures.add(cls)
 	}
 
 	/**
 	 * 
 	 */
 	public void execute() {
-		int size = testClosures.size()
-		if (size < 1) {
+		int size = loadedTestClosures.size()
+		if (size == 0) {
 			throw new IllegalStateException("should add one or more TestClosure objects")
 		}
 
 		// create Thread pool
-		ExecutorService executorService = Executors.newFixedThreadPool(
-				(size > numThreads) ?  numThreads : size)
+		ExecutorService executorService = Executors.newFixedThreadPool(capacity)
 
-		List<Future<String>> futures = executorService.invokeAll(testClosures)
-
+		List<Future<String>> futures = executorService.invokeAll(loadedTestClosures)
 		for (ft in futures) {
 			try {
-				/* calling the get() method while the task is
-				 * running will cause execution to block
-				 * until the task properly execut4s and
-				 * the result is available
+				/* calling the get() method while the task is running will 
+				 * cause execution to block until the task finishes properly
+				 * executed and the result is available
 				 */
 				TestClosureResult result = ft.get()
 				// how to make use of TestClosureResult? ... should study more
@@ -137,19 +126,7 @@ public class TestClosureCollectionExecutor {
 		} catch (InterruptedException e) {
 			executorService.shutdownNow()
 		}
-
-		closeBrowsers();
 	}
-
-	/*
-	 *  close all browsers
-	 */
-	void closeBrowsers() {
-		drivers.forEach({ WebDriver driver ->
-			driver.quit()
-		})
-	}
-
 
 
 	/**
@@ -157,19 +134,15 @@ public class TestClosureCollectionExecutor {
 	 */
 	public static class Builder {
 		// Required parameters - none
-
 		// Optional parameters - initialized to default values
 		private WindowLayoutMetrics metrics = new TilingWindowLayoutMetrics.Builder().build()
 		private List<TestClosure> testClosures = new ArrayList<TestClosure>()
 		private int numThreads = 2
-
 		Builder() {}
-
 		Builder windowLayoutMetrics(WindowLayoutMetrics metrics) {
 			this.metrics = metrics
 			return this
 		}
-
 		Builder numThreads(int numThreads) {
 			if (numThreads <= 0) {
 				throw new IllegalArgumentException("numThreads=${numThreads} must not be less or equal to 0")
@@ -180,10 +153,8 @@ public class TestClosureCollectionExecutor {
 			this.numThreads = numThreads
 			return this
 		}
-
 		TestClosureCollectionExecutor build() {
 			return new TestClosureCollectionExecutor(this)
 		}
 	}
-
 }
