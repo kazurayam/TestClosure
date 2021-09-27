@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <GlobalVariableEntities>
    <description></description>
-   <name>default</name>
+   <name>8Cores</name>
    <tag></tag>
-   <defaultProfile>true</defaultProfile>
+   <defaultProfile>false</defaultProfile>
    <GlobalVariableEntity>
       <description></description>
-      <initValue>2</initValue>
+      <initValue>8</initValue>
       <name>NUM_OF_THREADS</name>
    </GlobalVariableEntity>
 </GlobalVariableEntities>
