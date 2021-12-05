@@ -2,21 +2,19 @@ import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
 
+import org.apache.commons.io.FileUtils
+import org.apache.commons.lang.time.StopWatch
+import org.openqa.selenium.WebDriver
+
+import com.kazurayam.ashotwrapper.AShotWrapper;
+import com.kazurayam.ashotwrapper.AShotWrapper.Options;
 import com.kazurayam.ks.testclosure.TestClosure
-import com.kazurayam.ks.windowlayout.BrowserWindowLayoutKeyword as BrowserWindow
 import com.kms.katalon.core.configuration.RunConfiguration
+import com.kms.katalon.core.model.FailureHandling
 import com.kms.katalon.core.testobject.ConditionType
 import com.kms.katalon.core.testobject.TestObject
 import com.kms.katalon.core.webui.driver.DriverFactory
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
-import org.apache.commons.io.FileUtils
-import com.kms.katalon.core.model.FailureHandling as FailureHandling
-import org.apache.commons.lang.time.StopWatch
-
-
-import org.openqa.selenium.WebDriver
-import com.kazurayam.ashotwrapper.AShotWrapper;
-import com.kazurayam.ashotwrapper.AShotWrapper.Options;
 
 
 /*
@@ -43,13 +41,11 @@ Closure shooter = { WebDriver driver, List<Tuple> urlFilePairs ->
 		StopWatch stopWatch = new StopWatch()
 		stopWatch.start()
 		//
-		WebUI.comment("navigating to ${url}")
-		WebUI.navigateToUrl(url)
+		WebUI.navigateToUrl(url, FailureHandling.OPTIONAL)
 		stopWatch.suspend()
-		WebUI.comment("navigation to ${url} took ${stopWatch.getTime() / 1000} seconds")
+		WebUI.comment("navigate ${url} took ${stopWatch.getTime() / 1000} secs")
 		stopWatch.reset();
 		stopWatch.start();
-		WebUI.comment("saving image of ${url}")
 		
 		//WebUI.takeFullPageScreenshot(file.toString())
 		//WebUI.takeScreenshot(file.toString())
@@ -57,7 +53,7 @@ Closure shooter = { WebDriver driver, List<Tuple> urlFilePairs ->
 		AShotWrapper.saveEntirePageImage(driver, opt, file.toFile())
 		
 		stopWatch.stop()
-		WebUI.comment("saving image of ${url} took ${stopWatch.getTime() / 1000} seconds")
+		WebUI.comment("screenshot ${url} took ${stopWatch.getTime() / 1000} secs")
 	}
 }
 

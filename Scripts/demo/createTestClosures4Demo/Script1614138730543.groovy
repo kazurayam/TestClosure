@@ -2,7 +2,6 @@ import org.openqa.selenium.Keys
 import org.openqa.selenium.WebDriver
 
 import com.kazurayam.ks.testclosure.TestClosure
-import com.kazurayam.ks.windowlayout.BrowserWindowLayoutKeyword as BrowserWindow
 import com.kms.katalon.core.model.FailureHandling
 import com.kms.katalon.core.testobject.ConditionType
 import com.kms.katalon.core.testobject.TestObject
@@ -34,7 +33,7 @@ List<TestClosure> tclosures = new ArrayList<TestClosure>()
 // construct closures
 tclosures.add(new TestClosure({ WebDriver driver ->
 	String url = 'http://demoaut.katalon.com/'
-	WebUI.navigateToUrl(url)
+	WebUI.navigateToUrl(url, FailureHandling.OPTIONAL)
 	WebUI.comment("processing ${url}")
 	TestObject btnMakeAppointment = newTestObjectCSS("#btn-make-appointment")
 	WebUI.verifyElementPresent(btnMakeAppointment, 5)

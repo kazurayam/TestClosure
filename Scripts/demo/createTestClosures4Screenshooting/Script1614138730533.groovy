@@ -6,12 +6,13 @@ import org.apache.commons.io.FileUtils
 import org.openqa.selenium.WebDriver
 
 import com.kazurayam.ks.testclosure.TestClosure
-import com.kazurayam.ks.windowlayout.BrowserWindowLayoutKeyword as BrowserWindow
 import com.kms.katalon.core.configuration.RunConfiguration
+import com.kms.katalon.core.model.FailureHandling
 import com.kms.katalon.core.testobject.ConditionType
 import com.kms.katalon.core.testobject.TestObject
 import com.kms.katalon.core.webui.driver.DriverFactory
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
+
 
 /*
  * Helper function
@@ -29,7 +30,7 @@ List<TestClosure> tclosures = new ArrayList<TestClosure>()
 
 Closure shooter = { WebDriver driver, String url, Path file ->
 	DriverFactory.changeWebDriver(driver)
-	WebUI.navigateToUrl(url)
+	WebUI.navigateToUrl(url, FailureHandling.OPTIONAL)
 	WebUI.waitForPageLoad(10)
 	WebUI.comment("processing ${url}")
 	WebUI.takeScreenshot(file.toString())

@@ -1,3 +1,8 @@
+// TestClosure/build.gradle
+
+// $ gradle drivers
+
+
 plugins {
   id 'groovy'
   id 'com.github.johnrengelman.shadow' version '4.0.4'
@@ -5,27 +10,64 @@ plugins {
 }
 
 group = 'com.kazurayam'
-version = '0.21.1'
+version = '0.22.0-SNAPSHOT'
 
 sourceCompatibility = '1.8'
 targetCompatibility = '1.8'
 
 ext {
-    groovyVersion = '2.4.7'
-}
-
-configurations {
-    generateDocs
+    AUTO_IMPORTED_JAR_PREFIX = 'AUTOIMPORTED_'
+    groovyVersion = '2.4.21'
+    ashotVersion = '1.5.4'
+    ashotwrapperVersion = '0.1.0'
+    junit4ksVersion = '1.6.1'
+    timekeeperVersion = '0.1.0-SNAPSHOT'
 }
 
 repositories {
-    jcenter()
     mavenCentral()
+    mavenLocal()
+}
+
+configurations {
+    myconf
+    generateDocs
 }
 
 dependencies {
+    myconf group: 'ru.yandex.qatools.ashot', name: 'ashot', version: "${ashotVersion}"
+    myconf group: 'com.kazurayam', name: 'ashotwrapper', version: "${ashotwrapperVersion}"
+    myconf group: 'com.kazurayam', name: 'junit4ks', version: "${junit4ksVersion}"
+    myconf group: 'com.kazurayam', name: 'timekeeper', version: "${timekeeperVersion}"
     generateDocs "org.codehaus.groovy:groovy-all:${groovyVersion}"
 }
+
+task drivers {
+    doFirst {
+        delete fileTree("Drivers") {
+            include("**/" + AUTO_IMPORTED_JAR_PREFIX + "*")
+        }
+    }
+    doLast {
+        copy { copySpec ->
+            copySpec
+                .from(project.getConfigurations().getByName("myconf"))
+                .into("Drivers")
+                .include(
+                    "**/ashot*.jar",
+                    "**/ashotwrapper*.jar",
+                    "**/junit4ks*.jar",
+                    "**/timekeeper*.jar",
+                    )
+                .rename({ s ->
+                    AUTO_IMPORTED_JAR_PREFIX + s
+                    })
+        }
+    }
+}
+
+
+
 
 def defaultEncoding = 'UTF-8'
 tasks.withType(AbstractCompile).each { it.options.encoding = defaultEncoding }
