@@ -7,6 +7,8 @@ import com.kazurayam.ks.testclosure.TestClosureCollectionExecutor
 import com.kazurayam.ks.windowlayout.StackingWindowLayoutMetrics
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 
+import internal.GlobalVariable
+
 /**
  * This script processes multiple Web pages simultaniously.
  * This script opens up to 2 browser windows.
@@ -31,10 +33,10 @@ List<TestClosure> tclosures = WebUI.callTestCase(findTestCase(
 
 // create the executor
 TestClosureCollectionExecutor executor =
-	new TestClosureCollectionExecutor.Builder().
-		numThreads(2).          // numThreads should be equal to the number of CPU Cores
-		windowLayoutMetrics(StackingWindowLayoutMetrics.DEFAULT).
-		build()
+	new TestClosureCollectionExecutor.Builder()
+		.numThreads(GlobalVariable.NUM_OF_THREADS)          // numThreads should be equal to the number of CPU Cores
+		.windowLayoutMetrics(StackingWindowLayoutMetrics.DEFAULT)
+		.build()
 
 // setup the executor what to do
 executor.addTestClosures(tclosures)

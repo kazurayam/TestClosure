@@ -12,6 +12,7 @@ plugins {
 group = 'com.kazurayam'
 version = '0.22.0-SNAPSHOT'
 
+
 sourceCompatibility = '1.8'
 targetCompatibility = '1.8'
 

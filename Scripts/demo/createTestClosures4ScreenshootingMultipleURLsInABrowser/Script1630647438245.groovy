@@ -81,6 +81,60 @@ tclosures.add(new TestClosure(shooter, [
 	]
 	]))
 
+tclosures.add(new TestClosure(shooter, [
+	[
+		new Tuple("https://www.katalon.com/", dir.resolve("11_top.png")),
+		new Tuple("https://www.katalon.com/katalon-studio", dir.resolve("12_katalon-studio.png")),
+		new Tuple("https://www.katalon.com/testops", dir.resolve("13_testops.png")),
+		new Tuple("https://www.katalon.com/katalon-recorder-ide", dir.resolve("14_katalon-recorder-ide.png"))
+	]
+	]))
+
+tclosures.add(new TestClosure(shooter, [
+	[
+		new Tuple("https://www.katalon.com/web-testing/", dir.resolve("15_web-testing.png")),
+		new Tuple("https://www.katalon.com/mobile-testing/", dir.resolve("16_mobile-testing.png")),
+		new Tuple("https://www.katalon.com/api-testing/", dir.resolve("17_api-testing.png")),
+		new Tuple("https://www.katalon.com/desktop-testing/", dir.resolve("18_desktop-testing.png"))
+	]
+	]))
+
+tclosures.add(new TestClosure(shooter, [
+	[
+		new Tuple("https://www.katalon.com/", dir.resolve("21_top.png")),
+		new Tuple("https://www.katalon.com/katalon-studio", dir.resolve("22_katalon-studio.png")),
+		new Tuple("https://www.katalon.com/testops", dir.resolve("23_testops.png")),
+		new Tuple("https://www.katalon.com/katalon-recorder-ide", dir.resolve("24_katalon-recorder-ide.png"))
+	]
+	]))
+
+tclosures.add(new TestClosure(shooter, [
+	[
+		new Tuple("https://www.katalon.com/web-testing/", dir.resolve("25_web-testing.png")),
+		new Tuple("https://www.katalon.com/mobile-testing/", dir.resolve("26_mobile-testing.png")),
+		new Tuple("https://www.katalon.com/api-testing/", dir.resolve("27_api-testing.png")),
+		new Tuple("https://www.katalon.com/desktop-testing/", dir.resolve("28_desktop-testing.png"))
+	]
+	]))
+
+tclosures.add(new TestClosure(shooter, [
+	[
+		new Tuple("https://www.katalon.com/", dir.resolve("31_top.png")),
+		new Tuple("https://www.katalon.com/katalon-studio", dir.resolve("32_katalon-studio.png")),
+		new Tuple("https://www.katalon.com/testops", dir.resolve("33_testops.png")),
+		new Tuple("https://www.katalon.com/katalon-recorder-ide", dir.resolve("34_katalon-recorder-ide.png"))
+	]
+	]))
+
+tclosures.add(new TestClosure(shooter, [
+	[
+		new Tuple("https://www.katalon.com/web-testing/", dir.resolve("35_web-testing.png")),
+		new Tuple("https://www.katalon.com/mobile-testing/", dir.resolve("36_mobile-testing.png")),
+		new Tuple("https://www.katalon.com/api-testing/", dir.resolve("37_api-testing.png")),
+		new Tuple("https://www.katalon.com/desktop-testing/", dir.resolve("38_desktop-testing.png"))
+	]
+	]))
+
 // Here you are
 return tclosures
 
