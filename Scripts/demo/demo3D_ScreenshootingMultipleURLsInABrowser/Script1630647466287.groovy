@@ -4,10 +4,17 @@ import org.openqa.selenium.Dimension
 
 import com.kazurayam.ks.testclosure.TestClosure
 import com.kazurayam.ks.testclosure.TestClosureCollectionExecutor
+import com.kazurayam.timekeeper.Timekeeper
+import com.kazurayam.ks.webdriverfactory.DriverTypeName
 import com.kazurayam.ks.windowlayout.StackingWindowLayoutMetrics
+
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
+import com.kms.katalon.core.configuration.RunConfiguration
 
 import internal.GlobalVariable
+import java.nio.file.Files
+import java.nio.file.Path
+import java.nio.file.Paths
 
 /**
  * This script processes multiple Web pages simultaniously.
@@ -27,14 +34,18 @@ import internal.GlobalVariable
  * 
  */
 
+Timekeeper tk = new Timekeeper()
+
 // load the collection of TestClosures
 List<TestClosure> tclosures = WebUI.callTestCase(findTestCase(
-	"demo/createTestClosures4ScreenshootingMultipleURLsInABrowser"), [:])
+	"demo/createTestClosures4ScreenshootingMultipleURLsInABrowser"), ["timekeeper": tk])
 
 // create the executor
 TestClosureCollectionExecutor executor =
 	new TestClosureCollectionExecutor.Builder()
 		.numThreads(GlobalVariable.NUM_OF_THREADS)          // numThreads should be equal to the number of CPU Cores
+		.driverTypeName(DriverTypeName.HEADLESS_DRIVER)
+		.userProfiles(["Katalon", "Katalon2", "Katalon3", "Katalon4", "Katalon5", "Katalon6", "Katalon7"])
 		.windowLayoutMetrics(StackingWindowLayoutMetrics.DEFAULT)
 		.build()
 
@@ -43,3 +54,9 @@ executor.addTestClosures(tclosures)
 	
 // now do the job
 executor.execute()
+
+// compile a performance report
+Path projectDir = Paths.get(RunConfiguration.getProjectDir())
+Path reportFile = projectDir.resolve("tmp/demo3D_report.md")
+Files.createDirectories(reportFile.getParent())
+tk.report(reportFile)

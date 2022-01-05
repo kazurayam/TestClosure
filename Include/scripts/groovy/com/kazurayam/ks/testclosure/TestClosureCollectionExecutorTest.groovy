@@ -46,9 +46,9 @@ public class TestClosureCollectionExecutorTest {
 	void test_size() {
 		assertTrue(executor.size() == 1)
 	}
-	
+
 	@After
 	void tearDown() {
-		executor.closeBrowsers()
+		//executor.closeBrowsers()
 	}
 }

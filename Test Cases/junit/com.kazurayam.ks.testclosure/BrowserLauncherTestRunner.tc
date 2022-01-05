@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestCaseEntity>
    <description></description>
-   <name>WindowLocationTestRunner</name>
+   <name>BrowserLauncherTestRunner</name>
    <tag></tag>
    <comment></comment>
-   <testCaseGuid>d01a978f-c765-4008-ab76-00fa91e86b2a</testCaseGuid>
+   <testCaseGuid>85d80ee3-85ec-4e35-81dc-826625406a76</testCaseGuid>
 </TestCaseEntity>

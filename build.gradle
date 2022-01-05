@@ -19,10 +19,11 @@ targetCompatibility = '1.8'
 ext {
     AUTO_IMPORTED_JAR_PREFIX = 'AUTOIMPORTED_'
     groovyVersion = '2.4.21'
+    webdriverfactoryVersion = '0.2.2-SNAPSHOT'
     ashotVersion = '1.5.4'
     ashotwrapperVersion = '0.1.0'
     junit4ksVersion = '1.6.1'
-    timekeeperVersion = '0.1.0-SNAPSHOT'
+    timekeeperVersion = '0.3.3'
 }
 
 repositories {
@@ -37,6 +38,7 @@ configurations {
 
 dependencies {
     myconf group: 'ru.yandex.qatools.ashot', name: 'ashot', version: "${ashotVersion}"
+    myconf group: 'com.kazurayam', name: 'webdriverfactory', version: "${webdriverfactoryVersion}"
     myconf group: 'com.kazurayam', name: 'ashotwrapper', version: "${ashotwrapperVersion}"
     myconf group: 'com.kazurayam', name: 'junit4ks', version: "${junit4ksVersion}"
     myconf group: 'com.kazurayam', name: 'timekeeper', version: "${timekeeperVersion}"
@@ -59,6 +61,7 @@ task drivers {
                     "**/ashotwrapper*.jar",
                     "**/junit4ks*.jar",
                     "**/timekeeper*.jar",
+                    "**/webdriverfactory*.jar"
                     )
                 .rename({ s ->
                     AUTO_IMPORTED_JAR_PREFIX + s

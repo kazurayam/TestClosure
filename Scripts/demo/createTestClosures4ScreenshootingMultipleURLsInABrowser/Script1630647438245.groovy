@@ -1,14 +1,19 @@
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
+import java.time.LocalDateTime
 
 import org.apache.commons.io.FileUtils
-import org.apache.commons.lang.time.StopWatch
+//import org.apache.commons.lang.time.StopWatch
+
 import org.openqa.selenium.WebDriver
 
-import com.kazurayam.ashotwrapper.AShotWrapper;
-import com.kazurayam.ashotwrapper.AShotWrapper.Options;
+import com.kazurayam.ashotwrapper.AShotWrapper
+import com.kazurayam.ashotwrapper.AShotWrapper.Options
 import com.kazurayam.ks.testclosure.TestClosure
+import com.kazurayam.timekeeper.Measurement
+import com.kazurayam.timekeeper.Timekeeper
+import com.kazurayam.timekeeper.Table
 import com.kms.katalon.core.configuration.RunConfiguration
 import com.kms.katalon.core.model.FailureHandling
 import com.kms.katalon.core.testobject.ConditionType
@@ -16,6 +21,22 @@ import com.kms.katalon.core.testobject.TestObject
 import com.kms.katalon.core.webui.driver.DriverFactory
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 
+// the caller Test Case should pass an instance of Timekeeper as runtime parameter
+assert timekeeper != null
+
+Measurement navigation = new Measurement.Builder(
+	"How long it took to navigate to URLs", ["URL"]).build()
+timekeeper.add(new Table.Builder(navigation)
+	.noLegend().build())	
+timekeeper.add(new Table.Builder(navigation)
+	.sortByAttributes().thenByDuration().noLegend().build())
+
+Measurement screenshot = new Measurement.Builder(
+	"How long it took to take screenshots", ["URL"]).build()
+timekeeper.add(new Table.Builder(screenshot)
+	.noLegend().build())
+timekeeper.add(new Table.Builder(screenshot)
+	.sortByAttributes().thenByDuration().noLegend().build())
 
 /*
  * Helper function
@@ -38,22 +59,21 @@ Closure shooter = { WebDriver driver, List<Tuple> urlFilePairs ->
 		String url = pair[0]
 		Path file = pair[1]
 		//
-		StopWatch stopWatch = new StopWatch()
-		stopWatch.start()
+		LocalDateTime beforeNavi = LocalDateTime.now()
 		//
 		WebUI.navigateToUrl(url, FailureHandling.OPTIONAL)
-		stopWatch.suspend()
-		WebUI.comment("navigate ${url} took ${stopWatch.getTime() / 1000} secs")
-		stopWatch.reset();
-		stopWatch.start();
+		LocalDateTime afterNavi = LocalDateTime.now()
+		navigation.recordDuration(["URL": url],
+			beforeNavi, afterNavi)
+		WebUI.comment("navigate ${url} took ${navigation.getLastRecordDurationMillis() / 1000} seconds")
 		
-		//WebUI.takeFullPageScreenshot(file.toString())
-		//WebUI.takeScreenshot(file.toString())
+		LocalDateTime beforeScreenshot = LocalDateTime.now()
 		Options opt = new Options.Builder().timeout(100).build()
 		AShotWrapper.saveEntirePageImage(driver, opt, file.toFile())
-		
-		stopWatch.stop()
-		WebUI.comment("screenshot ${url} took ${stopWatch.getTime() / 1000} secs")
+		LocalDateTime afterScreenshot = LocalDateTime.now()
+		screenshot.recordSizeAndDuration(["URL": url],
+			file.toFile().length(), beforeScreenshot, afterScreenshot)
+		WebUI.comment("screenshot ${url} took ${screenshot.getLastRecordDurationMillis() / 1000} secs")		
 	}
 }
 

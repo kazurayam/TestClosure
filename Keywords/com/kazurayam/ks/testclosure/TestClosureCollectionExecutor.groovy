@@ -9,9 +9,11 @@ import java.util.concurrent.TimeUnit
 import org.openqa.selenium.Dimension
 import org.openqa.selenium.Point
 
-import com.kazurayam.ks.windowlayout.TilingWindowLayoutMetrics
-import com.kazurayam.ks.windowlayout.WindowLayoutMetrics
-import com.kazurayam.ks.windowlayout.WindowLocation
+import com.kazurayam.browserwindowlayout.TilingWindowLayoutMetrics
+import com.kazurayam.browserwindowlayout.WindowLayoutMetrics
+import com.kazurayam.browserwindowlayout.WindowLocation
+
+import com.kazurayam.webdriverfactory.chrome.ChromeDriverFactory
 
 import com.kms.katalon.core.webui.driver.DriverFactory
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
@@ -27,15 +29,21 @@ import org.openqa.selenium.WebDriver
 public class TestClosureCollectionExecutor {
 
 	public static final int THREADS_LIMIT = 8
-	private final int numThreads
-	private final WindowLayoutMetrics metrics
-	private final List<Closure> loadedTestClosures
 	private int capacity
 
+	private final WindowLayoutMetrics metrics
+	private final List<Closure> loadedTestClosures
+	private final BrowserLauncher
+
+	private final int numThreads
+	private List<String> userProfiles
+
+
 	private TestClosureCollectionExecutor(Builder builder) {
-		this.numThreads = builder.numThreads
 		this.metrics = builder.metrics
 		this.loadedTestClosures = new ArrayList<Closure>()
+		this.numThreads = builder.numThreads
+		this.userProfiles = builder.userProfiles
 	}
 
 	public int getNumThreads() {
@@ -49,7 +57,9 @@ public class TestClosureCollectionExecutor {
 	public void addTestClosures(List<TestClosure> tclosures) {
 		capacity = (tclosures.size() > numThreads) ? numThreads : tclosures.size()
 		for (int i = 0; i < tclosures.size(); i++) {
-			this.loadTestClosure(tclosures.get(i))
+			BrowserLauncher launcher = new BrowserLauncher.Builder(userProfiles)
+					.index(i).build()
+			this.loadTestClosure(tclosures.get(i), launcher)
 		}
 	}
 
@@ -57,11 +67,15 @@ public class TestClosureCollectionExecutor {
 		return i % numThreads
 	}
 
-	/*
+	/**
 	 * start a browser for each TestClosures and setup them ready to invoke
+	 * 
+	 * @param seq ID of the Test Closure 0,1,2,3...
+	 * @param tc TestClosure object
 	 */
-	private void loadTestClosure(TestClosure tc) {
+	private void loadTestClosure(TestClosure tc, BrowserLauncher browserLauncher) {
 		Objects.requireNonNull(tc)
+		Objects.requireNonNull(browserLauncher)
 		int index = resolveIndex(this.loadedTestClosures.size())
 		WindowLocation location = new WindowLocation(capacity, index)
 		// the position (x,y) to which browser window should be moved to
@@ -71,8 +85,7 @@ public class TestClosureCollectionExecutor {
 		//
 		Closure cls = {
 			// open a browser window for this TestClosure
-			WebUI.openBrowser('')
-			WebDriver driver = DriverFactory.getWebDriver()
+			WebDriver driver = browserLauncher.launch()
 			// move the browser window to a good position (x,y)
 			driver.manage().window().setPosition(position)
 			// resize the browser window to a good dimension (width, height)
@@ -139,7 +152,8 @@ public class TestClosureCollectionExecutor {
 		// Optional parameters - initialized to default values
 		private WindowLayoutMetrics metrics = new TilingWindowLayoutMetrics.Builder().build()
 		private List<TestClosure> testClosures = new ArrayList<TestClosure>()
-		private int numThreads = 2
+		private int numThreads = 1
+		private List<String> userProfiles = []
 		Builder() {}
 		Builder windowLayoutMetrics(WindowLayoutMetrics metrics) {
 			this.metrics = metrics
@@ -155,8 +169,17 @@ public class TestClosureCollectionExecutor {
 			this.numThreads = numThreads
 			return this
 		}
+		Builder userProfiles(List<String> userProfiles) {
+			if (userProfiles.size() == 0) {
+				throw new IllegalArgumentException("userProfiles must not be empty")
+			}
+			this.userProfiles = userProfiles
+			this.numThreads = userProfiles.size()
+			return this
+		}
 		TestClosureCollectionExecutor build() {
 			return new TestClosureCollectionExecutor(this)
 		}
 	}
+
 }

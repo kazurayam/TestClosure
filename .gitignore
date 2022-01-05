@@ -24,3 +24,5 @@ tmp/
 .settings
 
 settings/
+
+out.json

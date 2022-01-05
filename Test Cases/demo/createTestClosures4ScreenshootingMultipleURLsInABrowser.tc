@@ -5,4 +5,11 @@
    <tag></tag>
    <comment></comment>
    <testCaseGuid>7fb9b3ea-c06d-456b-82d5-34bf24206437</testCaseGuid>
+   <variable>
+      <defaultValue>null</defaultValue>
+      <description></description>
+      <id>a0e20a3c-ae10-4467-beab-22aa3e112f53</id>
+      <masked>false</masked>
+      <name>timekeeper</name>
+   </variable>
 </TestCaseEntity>
