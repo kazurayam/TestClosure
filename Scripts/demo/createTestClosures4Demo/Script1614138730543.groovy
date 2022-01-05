@@ -1,11 +1,12 @@
 import org.openqa.selenium.Keys
-import org.openqa.selenium.WebDriver
+import org.openqa.selenium.chrome.ChromeDriver
 
 import com.kazurayam.ks.testclosure.TestClosure
 import com.kms.katalon.core.model.FailureHandling
 import com.kms.katalon.core.testobject.ConditionType
 import com.kms.katalon.core.testobject.TestObject
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
+import com.kms.katalon.core.webui.driver.DriverFactory
 
 /*
  * Helper function
@@ -31,7 +32,8 @@ TestObject newTestObjectCSS(String cssSelector) {
 List<TestClosure> tclosures = new ArrayList<TestClosure>()
 
 // construct closures
-tclosures.add(new TestClosure({ WebDriver driver ->
+tclosures.add(new TestClosure({ ChromeDriver driver ->
+	DriverFactory.changeWebDriver(driver)
 	String url = 'http://demoaut.katalon.com/'
 	WebUI.navigateToUrl(url, FailureHandling.OPTIONAL)
 	WebUI.comment("processing ${url}")
@@ -50,7 +52,8 @@ tclosures.add(new TestClosure({ WebDriver driver ->
 	}, [])
 )
 
-tclosures.add(new TestClosure({ WebDriver driver ->
+tclosures.add(new TestClosure({ ChromeDriver driver ->
+	DriverFactory.changeWebDriver(driver)
 	String url = 'https://forum.katalon.com/'
 	WebUI.navigateToUrl(url)
 	WebUI.comment("processing ${url}")
@@ -60,7 +63,8 @@ tclosures.add(new TestClosure({ WebDriver driver ->
 	}, [])
 )
 
-tclosures.add(new TestClosure({ WebDriver driver ->
+tclosures.add(new TestClosure({ ChromeDriver driver ->
+	DriverFactory.changeWebDriver(driver)
 	String url = 'https://duckduckgo.com/'
 	WebUI.navigateToUrl(url)
 	WebUI.comment("processing ${url}")

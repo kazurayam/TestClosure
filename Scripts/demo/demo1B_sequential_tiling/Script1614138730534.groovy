@@ -4,9 +4,9 @@ import org.openqa.selenium.WebDriver
 
 import com.kazurayam.ks.testclosure.TestClosure
 import com.kazurayam.ks.testclosure.TestClosureResult
-import com.kazurayam.ks.windowlayout.TilingWindowLayoutMetrics
-import com.kazurayam.ks.windowlayout.WindowLayoutMetrics
-import com.kazurayam.ks.windowlayout.WindowLocation
+import com.kazurayam.browserwindowlayout.TilingWindowLayoutMetrics
+import com.kazurayam.browserwindowlayout.WindowLayoutMetrics
+import com.kazurayam.browserwindowlayout.WindowLocation
 import com.kms.katalon.core.webui.driver.DriverFactory
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 

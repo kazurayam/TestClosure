@@ -3,7 +3,7 @@ import java.nio.file.Path
 import java.nio.file.Paths
 
 import org.apache.commons.io.FileUtils
-import org.openqa.selenium.WebDriver
+import org.openqa.selenium.chrome.ChromeDriver
 
 import com.kazurayam.ks.testclosure.TestClosure
 import com.kms.katalon.core.configuration.RunConfiguration
@@ -28,7 +28,7 @@ TestObject newTestObjectXPath(String xpath) {
  */
 List<TestClosure> tclosures = new ArrayList<TestClosure>()
 
-Closure shooter = { WebDriver driver, String url, Path file ->
+Closure shooter = { ChromeDriver driver, String url, Path file ->
 	DriverFactory.changeWebDriver(driver)
 	WebUI.navigateToUrl(url, FailureHandling.OPTIONAL)
 	WebUI.waitForPageLoad(10)

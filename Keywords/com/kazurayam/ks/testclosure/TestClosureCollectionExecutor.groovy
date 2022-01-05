@@ -19,7 +19,7 @@ import com.kms.katalon.core.webui.driver.DriverFactory
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 
 import org.apache.commons.lang.time.StopWatch
-import org.openqa.selenium.WebDriver
+import org.openqa.selenium.chrome.ChromeDriver
 
 
 /**
@@ -85,7 +85,7 @@ public class TestClosureCollectionExecutor {
 		//
 		Closure cls = {
 			// open a browser window for this TestClosure
-			WebDriver driver = browserLauncher.launch()
+			ChromeDriver driver = browserLauncher.launch()
 			// move the browser window to a good position (x,y)
 			driver.manage().window().setPosition(position)
 			// resize the browser window to a good dimension (width, height)

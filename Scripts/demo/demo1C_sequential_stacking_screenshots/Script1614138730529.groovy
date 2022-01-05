@@ -4,9 +4,10 @@ import org.openqa.selenium.Dimension
 import org.openqa.selenium.WebDriver
 
 import com.kazurayam.ks.testclosure.TestClosure
-import com.kazurayam.ks.windowlayout.StackingWindowLayoutMetrics
-import com.kazurayam.ks.windowlayout.WindowLayoutMetrics
-import com.kazurayam.ks.windowlayout.WindowLocation
+import com.kazurayam.ks.testclosure.TestClosureResult
+import com.kazurayam.browserwindowlayout.StackingWindowLayoutMetrics
+import com.kazurayam.browserwindowlayout.WindowLayoutMetrics
+import com.kazurayam.browserwindowlayout.WindowLocation
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import com.kms.katalon.core.webui.driver.DriverFactory
 
@@ -26,7 +27,8 @@ tclosures.eachWithIndex { tclosure, i ->
 		driver.manage().window().setSize(metrics.getWindowDimension(location))
 		//
 		TestClosureResult result = tclosure.call()
-		WebUI.closeBrowser()
+		//WebUI.closeBrowser()
+		driver.quit()
 		return result
 	}
 	TestClosureResult rs = cls.call()
