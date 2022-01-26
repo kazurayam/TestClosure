@@ -83,7 +83,6 @@ sourceSets {
     }
 }
 
-
 task groovydoc(type:Groovydoc, overwrite:true) {
     group = 'com.kazurayam'
     source = sourceSets.main.groovy

@@ -5,8 +5,7 @@ import org.openqa.selenium.Dimension
 import com.kazurayam.ks.testclosure.TestClosure
 import com.kazurayam.ks.testclosure.TestClosureCollectionExecutor
 import com.kazurayam.timekeeper.Timekeeper
-import com.kazurayam.ks.webdriverfactory.DriverTypeName
-import com.kazurayam.ks.windowlayout.StackingWindowLayoutMetrics
+import com.kazurayam.browserwindowlayout.StackingWindowLayoutMetrics
 
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import com.kms.katalon.core.configuration.RunConfiguration
@@ -44,8 +43,7 @@ List<TestClosure> tclosures = WebUI.callTestCase(findTestCase(
 TestClosureCollectionExecutor executor =
 	new TestClosureCollectionExecutor.Builder()
 		.numThreads(GlobalVariable.NUM_OF_THREADS)          // numThreads should be equal to the number of CPU Cores
-		.driverTypeName(DriverTypeName.HEADLESS_DRIVER)
-		.userProfiles(["Katalon", "Katalon2", "Katalon3", "Katalon4", "Katalon5", "Katalon6", "Katalon7"])
+		.userProfiles(["Katalon", "Katalon2"])
 		.windowLayoutMetrics(StackingWindowLayoutMetrics.DEFAULT)
 		.build()
 

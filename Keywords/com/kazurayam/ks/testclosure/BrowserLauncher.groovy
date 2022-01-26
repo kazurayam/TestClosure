@@ -22,6 +22,7 @@ public class BrowserLauncher {
 	}
 
 	ChromeDriver launch() {
+		System.setProperty("webdriver.chrome.driver", DriverFactory.getChromeDriverPath())
 		ChromeDriver driver = null
 		ChromeDriverFactory cdFactory = ChromeDriverFactory.newChromeDriverFactory()
 		if (userProfiles.size() > 0) {

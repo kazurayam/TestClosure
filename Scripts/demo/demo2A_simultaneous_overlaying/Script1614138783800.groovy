@@ -4,7 +4,7 @@ import org.openqa.selenium.Dimension
 
 import com.kazurayam.ks.testclosure.TestClosure
 import com.kazurayam.ks.testclosure.TestClosureCollectionExecutor
-import com.kazurayam.ks.windowlayout.StackingWindowLayoutMetrics
+import com.kazurayam.browserwindowlayout.StackingWindowLayoutMetrics
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 
 List<TestClosure> tclosures = WebUI.callTestCase(findTestCase("demo/createTestClosures4Demo"), [:])

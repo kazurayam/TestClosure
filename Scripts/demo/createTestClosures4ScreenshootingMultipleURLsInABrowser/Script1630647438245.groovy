@@ -6,7 +6,7 @@ import java.time.LocalDateTime
 import org.apache.commons.io.FileUtils
 //import org.apache.commons.lang.time.StopWatch
 
-import org.openqa.selenium.WebDriver
+import org.openqa.selenium.chrome.ChromeDriver
 
 import com.kazurayam.ashotwrapper.AShotWrapper
 import com.kazurayam.ashotwrapper.AShotWrapper.Options
@@ -52,7 +52,7 @@ TestObject newTestObjectXPath(String xpath) {
  */
 List<TestClosure> tclosures = new ArrayList<TestClosure>()
 
-Closure shooter = { WebDriver driver, List<Tuple> urlFilePairs ->
+Closure shooter = { ChromeDriver driver, List<Tuple> urlFilePairs ->
 	Objects.requireNonNull(driver)
 	DriverFactory.changeWebDriver(driver)
 	urlFilePairs.each { Tuple pair ->
