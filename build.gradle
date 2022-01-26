@@ -5,8 +5,6 @@
 
 plugins {
   id 'groovy'
-  id 'com.github.johnrengelman.shadow' version '4.0.4'
-  id "com.katalon.gradle-plugin" version "0.0.7"
 }
 
 group = 'com.kazurayam'
@@ -19,7 +17,7 @@ targetCompatibility = '1.8'
 ext {
     AUTO_IMPORTED_JAR_PREFIX = 'AUTOIMPORTED_'
     groovyVersion = '2.4.21'
-    webdriverfactoryVersion = '0.2.2-SNAPSHOT'
+    chromedriverfactoryVersion = '0.6.4'
     ashotVersion = '1.5.4'
     ashotwrapperVersion = '0.1.0'
     junit4ksVersion = '1.6.1'
@@ -38,7 +36,7 @@ configurations {
 
 dependencies {
     myconf group: 'ru.yandex.qatools.ashot', name: 'ashot', version: "${ashotVersion}"
-    myconf group: 'com.kazurayam', name: 'webdriverfactory', version: "${webdriverfactoryVersion}"
+    myconf group: 'com.kazurayam', name: 'chromedriverfactory', version: "${chromedriverfactoryVersion}"
     myconf group: 'com.kazurayam', name: 'ashotwrapper', version: "${ashotwrapperVersion}"
     myconf group: 'com.kazurayam', name: 'junit4ks', version: "${junit4ksVersion}"
     myconf group: 'com.kazurayam', name: 'timekeeper', version: "${timekeeperVersion}"
@@ -61,7 +59,7 @@ task drivers {
                     "**/ashotwrapper*.jar",
                     "**/junit4ks*.jar",
                     "**/timekeeper*.jar",
-                    "**/webdriverfactory*.jar"
+                    "**/chromedriverfactory*.jar"
                     )
                 .rename({ s ->
                     AUTO_IMPORTED_JAR_PREFIX + s
@@ -85,15 +83,6 @@ sourceSets {
     }
 }
 
-shadowJar {
-        exclude 'Temp*.class'
-        exclude 'their/*.class'
-}
-
-katalon {
-    dependencyPrefix = "com.katalon"
-    minimize = false
-}
 
 task groovydoc(type:Groovydoc, overwrite:true) {
     group = 'com.kazurayam'
