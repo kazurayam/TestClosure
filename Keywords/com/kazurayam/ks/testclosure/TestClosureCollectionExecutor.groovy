@@ -11,7 +11,6 @@ import org.openqa.selenium.Point
 
 import com.kazurayam.browserwindowlayout.TilingWindowLayoutMetrics
 import com.kazurayam.browserwindowlayout.WindowLayoutMetrics
-import com.kazurayam.browserwindowlayout.WindowLocation
 
 import com.kazurayam.webdriverfactory.chrome.ChromeDriverFactory
 
@@ -19,7 +18,7 @@ import com.kms.katalon.core.webui.driver.DriverFactory
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 
 import org.apache.commons.lang.time.StopWatch
-import org.openqa.selenium.WebDriver
+import org.openqa.selenium.chrome.ChromeDriver
 
 
 /**
@@ -77,15 +76,14 @@ public class TestClosureCollectionExecutor {
 		Objects.requireNonNull(tc)
 		Objects.requireNonNull(browserLauncher)
 		int index = resolveIndex(this.loadedTestClosures.size())
-		WindowLocation location = new WindowLocation(capacity, index)
 		// the position (x,y) to which browser window should be moved to
-		Point position = metrics.getWindowPosition(location)
+		Point position = metrics.getWindowPosition(index)
 		// the size (width, height) to which browser window should be resized to
-		Dimension dimension = metrics.getWindowDimension(location)
+		Dimension dimension = metrics.getWindowDimension(index)
 		//
 		Closure cls = {
 			// open a browser window for this TestClosure
-			WebDriver driver = browserLauncher.launch()
+			ChromeDriver driver = browserLauncher.launch()
 			// move the browser window to a good position (x,y)
 			driver.manage().window().setPosition(position)
 			// resize the browser window to a good dimension (width, height)
@@ -150,15 +148,11 @@ public class TestClosureCollectionExecutor {
 	public static class Builder {
 		// Required parameters - none
 		// Optional parameters - initialized to default values
-		private WindowLayoutMetrics metrics = new TilingWindowLayoutMetrics.Builder().build()
-		private List<TestClosure> testClosures = new ArrayList<TestClosure>()
 		private int numThreads = 1
+		private WindowLayoutMetrics metrics
+		private List<TestClosure> testClosures = new ArrayList<TestClosure>()
 		private List<String> userProfiles = []
 		Builder() {}
-		Builder windowLayoutMetrics(WindowLayoutMetrics metrics) {
-			this.metrics = metrics
-			return this
-		}
 		Builder numThreads(int numThreads) {
 			if (numThreads <= 0) {
 				throw new IllegalArgumentException("numThreads=${numThreads} must not be less or equal to 0")
@@ -178,8 +172,8 @@ public class TestClosureCollectionExecutor {
 			return this
 		}
 		TestClosureCollectionExecutor build() {
+			this.metrics = new TilingWindowLayoutMetrics.Builder(numThreads).build()
 			return new TestClosureCollectionExecutor(this)
 		}
 	}
-
 }

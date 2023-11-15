@@ -8,7 +8,7 @@ plugins {
 }
 
 group = 'com.kazurayam'
-version = '0.22.1-SNAPSHOT'
+version = '0.23.0-SNAPSHOT'
 
 
 sourceCompatibility = '1.8'
@@ -17,11 +17,12 @@ targetCompatibility = '1.8'
 ext {
     AUTO_IMPORTED_JAR_PREFIX = 'AUTOIMPORTED_'
     groovyVersion = '2.4.21'
-    chromedriverfactoryVersion = '0.6.4'
+    chromedriverfactoryVersion = '0.6.6'
     ashotVersion = '1.5.4'
     ashotwrapperVersion = '0.1.0'
     junit4ksVersion = '1.6.1'
     timekeeperVersion = '0.3.3'
+    browserwindowlayoutVersion = '0.1.0'
 }
 
 repositories {
@@ -40,6 +41,7 @@ dependencies {
     myconf group: 'com.kazurayam', name: 'ashotwrapper', version: "${ashotwrapperVersion}"
     myconf group: 'com.kazurayam', name: 'junit4ks', version: "${junit4ksVersion}"
     myconf group: 'com.kazurayam', name: 'timekeeper', version: "${timekeeperVersion}"
+    myconf group: 'com.kazurayam', name: 'browserwindowlayout', version: "${browserwindowlayoutVersion}"
     generateDocs "org.codehaus.groovy:groovy-all:${groovyVersion}"
 }
 
@@ -59,7 +61,8 @@ task drivers {
                     "**/ashotwrapper*.jar",
                     "**/junit4ks*.jar",
                     "**/timekeeper*.jar",
-                    "**/chromedriverfactory*.jar"
+                    "**/chromedriverfactory*.jar",
+                    "**/browserwindowlayout*.jar"
                     )
                 .rename({ s ->
                     AUTO_IMPORTED_JAR_PREFIX + s
@@ -83,11 +86,10 @@ sourceSets {
     }
 }
 
-
 task groovydoc(type:Groovydoc, overwrite:true) {
     group = 'com.kazurayam'
     source = sourceSets.main.groovy
-    classpath = configurations.compile
+    classpath = configurations.implementation
     groovyClasspath = project.configurations.generateDocs
     include 'com/kazurayam/ks/globalvariable/*'
     exclude '**/*Test.groovy'

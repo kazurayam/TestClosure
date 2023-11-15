@@ -57,7 +57,7 @@ def sub3() {
 	String url = 'https://duckduckgo.com/'
 	WebUI.navigateToUrl(url)
 	WebUI.comment("processing ${url}")
-	TestObject searchText = newTestObjectXPath("//input[@id='search_form_input_homepage']")
+	TestObject searchText = newTestObjectXPath("//input[@id='searchbox_input']")
 	WebUI.verifyElementPresent(searchText, 10)
 	WebUI.sendKeys(searchText, "katalon")
 	WebUI.sendKeys(searchText, Keys.chord(Keys.ENTER))
