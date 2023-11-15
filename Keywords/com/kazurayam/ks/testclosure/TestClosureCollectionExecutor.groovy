@@ -11,7 +11,6 @@ import org.openqa.selenium.Point
 
 import com.kazurayam.browserwindowlayout.TilingWindowLayoutMetrics
 import com.kazurayam.browserwindowlayout.WindowLayoutMetrics
-import com.kazurayam.browserwindowlayout.WindowLocation
 
 import com.kazurayam.webdriverfactory.chrome.ChromeDriverFactory
 
@@ -77,11 +76,10 @@ public class TestClosureCollectionExecutor {
 		Objects.requireNonNull(tc)
 		Objects.requireNonNull(browserLauncher)
 		int index = resolveIndex(this.loadedTestClosures.size())
-		WindowLocation location = new WindowLocation(capacity, index)
 		// the position (x,y) to which browser window should be moved to
-		Point position = metrics.getWindowPosition(location)
+		Point position = metrics.getWindowPosition(index)
 		// the size (width, height) to which browser window should be resized to
-		Dimension dimension = metrics.getWindowDimension(location)
+		Dimension dimension = metrics.getWindowDimension(index)
 		//
 		Closure cls = {
 			// open a browser window for this TestClosure
@@ -150,9 +148,9 @@ public class TestClosureCollectionExecutor {
 	public static class Builder {
 		// Required parameters - none
 		// Optional parameters - initialized to default values
-		private WindowLayoutMetrics metrics = new TilingWindowLayoutMetrics.Builder().build()
-		private List<TestClosure> testClosures = new ArrayList<TestClosure>()
 		private int numThreads = 1
+		private WindowLayoutMetrics metrics = new TilingWindowLayoutMetrics.Builder(numThreads).build()
+		private List<TestClosure> testClosures = new ArrayList<TestClosure>()
 		private List<String> userProfiles = []
 		Builder() {}
 		Builder windowLayoutMetrics(WindowLayoutMetrics metrics) {
@@ -181,5 +179,4 @@ public class TestClosureCollectionExecutor {
 			return new TestClosureCollectionExecutor(this)
 		}
 	}
-
 }

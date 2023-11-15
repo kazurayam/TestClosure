@@ -28,10 +28,10 @@ public class BrowserLauncher {
 		if (userProfiles.size() > 0) {
 			int x = index % userProfiles.size()
 			String profileName = userProfiles.get(x)
-			driver = cdFactory.newChromeDriver(new UserProfile(profileName))
+			driver = cdFactory.newChromeDriver(new UserProfile(profileName)).getDriver()
 		} else {
 			// if userProfiles is empty, then open browser without any profile
-			driver = cdFactory.newChromeDriver()
+			driver = cdFactory.newChromeDriver().getDriver()
 		}
 		return driver
 	}

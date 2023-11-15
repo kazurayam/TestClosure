@@ -4,6 +4,7 @@ import java.time.LocalDateTime
 import java.util.concurrent.Callable
 
 import org.openqa.selenium.chrome.ChromeDriver
+import org.openqa.selenium.WebDriver
 
 /**
  * 
@@ -65,8 +66,8 @@ public class TestClosure implements Callable<TestClosureResult> {
 			throw new IllegalArgumentException("TestClosure requires a Closure with 1 or more parameters. " +
 			"{ WebDriver driver[, xxx...] -> ... }")
 		}
-		if (parameterTypes[0] != ChromeDriver.class) {
-			throw new IllegalArgumentException("TestClosure requires the 1st Closure parameter to be ${ChromeDriver.class.toString()} type")
+		if (parameterTypes[0] != WebDriver.class) {
+			throw new IllegalArgumentException("TestClosure requires the 1st Closure parameter to be ${WebDriver.class.toString()} type")
 		}
 	}
 }
