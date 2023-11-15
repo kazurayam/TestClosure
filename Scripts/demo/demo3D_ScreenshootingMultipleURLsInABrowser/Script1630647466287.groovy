@@ -44,7 +44,7 @@ TestClosureCollectionExecutor executor =
 	new TestClosureCollectionExecutor.Builder()
 		.numThreads(GlobalVariable.NUM_OF_THREADS)          // numThreads should be equal to the number of CPU Cores
 		.userProfiles(["Katalon", "Katalon2"])
-		.windowLayoutMetrics(StackingWindowLayoutMetrics.DEFAULT)
+		.windowLayoutMetrics(new StackingWindowLayoutMetrics.Builder(tclosures.size()).build())
 		.build()
 
 // setup the executor what to do

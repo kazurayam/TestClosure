@@ -149,14 +149,10 @@ public class TestClosureCollectionExecutor {
 		// Required parameters - none
 		// Optional parameters - initialized to default values
 		private int numThreads = 1
-		private WindowLayoutMetrics metrics = new TilingWindowLayoutMetrics.Builder(numThreads).build()
+		private WindowLayoutMetrics metrics
 		private List<TestClosure> testClosures = new ArrayList<TestClosure>()
 		private List<String> userProfiles = []
 		Builder() {}
-		Builder windowLayoutMetrics(WindowLayoutMetrics metrics) {
-			this.metrics = metrics
-			return this
-		}
 		Builder numThreads(int numThreads) {
 			if (numThreads <= 0) {
 				throw new IllegalArgumentException("numThreads=${numThreads} must not be less or equal to 0")
@@ -176,6 +172,7 @@ public class TestClosureCollectionExecutor {
 			return this
 		}
 		TestClosureCollectionExecutor build() {
+			this.metrics = new TilingWindowLayoutMetrics.Builder(numThreads).build()
 			return new TestClosureCollectionExecutor(this)
 		}
 	}

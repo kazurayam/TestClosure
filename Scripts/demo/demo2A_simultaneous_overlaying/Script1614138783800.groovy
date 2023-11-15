@@ -1,6 +1,7 @@
 import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
 
 import org.openqa.selenium.Dimension
+import org.openqa.selenium.Point
 
 import com.kazurayam.ks.testclosure.TestClosure
 import com.kazurayam.ks.testclosure.TestClosureCollectionExecutor
@@ -11,11 +12,12 @@ List<TestClosure> tclosures = WebUI.callTestCase(findTestCase("demo/createTestCl
 
 TestClosureCollectionExecutor executor = 
 	new TestClosureCollectionExecutor.Builder().
-		windowLayoutMetrics(new StackingWindowLayoutMetrics.Builder().
-			windowDimension(new Dimension(1280, 800)).
-			disposition(new Dimension(0,0)).
-			build()).
-		build()
+		windowLayoutMetrics(
+			new StackingWindowLayoutMetrics.Builder(tclosures.size())
+				.windowDimension(new Dimension(1280, 800))
+				.disposition(new Point(0,0))
+				.build()
+		).build()
 
 executor.addTestClosures(tclosures)
 	
