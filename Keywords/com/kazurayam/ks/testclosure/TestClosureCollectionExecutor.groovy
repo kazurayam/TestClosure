@@ -171,6 +171,10 @@ public class TestClosureCollectionExecutor {
 			this.numThreads = userProfiles.size()
 			return this
 		}
+		Builder windowLayoutMetrics(WindowLayoutMetrics metrics) {
+			this.metrics = metrics
+			return this
+		}
 		TestClosureCollectionExecutor build() {
 			this.metrics = new TilingWindowLayoutMetrics.Builder(numThreads).build()
 			return new TestClosureCollectionExecutor(this)
