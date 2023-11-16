@@ -67,6 +67,12 @@ Closure shooter = { ChromeDriver driver, List<Tuple> urlFilePairs ->
 			beforeNavi, afterNavi)
 		WebUI.comment("navigate ${url} took ${navigation.getLastRecordDurationMillis() / 1000} seconds")
 		
+		// click the "Accept All Cookies" button if present
+		TestObject to_acceptAllCookies = newTestObjectXPath("//input[@id='onetrust-accept-btn-handler']")
+		if (WebUI.waitForElementClickable(to_acceptAllCookies, 3)) {
+			WebUI.click(to_acceptAllCookies)
+		}
+		
 		LocalDateTime beforeScreenshot = LocalDateTime.now()
 		Options opt = new Options.Builder().timeout(100).build()
 		AShotWrapper.saveEntirePageImage(driver, opt, file.toFile())

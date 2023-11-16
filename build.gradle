@@ -22,7 +22,7 @@ ext {
     ashotwrapperVersion = '0.1.0'
     junit4ksVersion = '1.6.1'
     timekeeperVersion = '0.3.3'
-    browserwindowlayoutVersion = '0.1.0'
+    browserwindowlayoutVersion = '0.2.0'
 }
 
 repositories {

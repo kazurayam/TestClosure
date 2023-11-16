@@ -168,7 +168,6 @@ public class TestClosureCollectionExecutor {
 				throw new IllegalArgumentException("userProfiles must not be empty")
 			}
 			this.userProfiles = userProfiles
-			this.numThreads = userProfiles.size()
 			return this
 		}
 		Builder windowLayoutMetrics(WindowLayoutMetrics metrics) {
