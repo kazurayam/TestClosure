@@ -5,7 +5,7 @@ import org.openqa.selenium.Dimension
 import com.kazurayam.ks.testclosure.TestClosure
 import com.kazurayam.ks.testclosure.TestClosureCollectionExecutor
 import com.kazurayam.timekeeper.Timekeeper
-import com.kazurayam.browserwindowlayout.StackingWindowLayoutMetrics
+import com.kazurayam.browserwindowlayout.StackingCellLayoutMetrics
 
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import com.kms.katalon.core.configuration.RunConfiguration
@@ -44,7 +44,7 @@ TestClosureCollectionExecutor executor =
 	new TestClosureCollectionExecutor.Builder()
 		.numThreads(GlobalVariable.NUM_OF_THREADS)          // numThreads should be equal to the number of CPU Cores
 		.userProfiles(["Katalon", "Katalon2"])
-		.windowLayoutMetrics(new StackingWindowLayoutMetrics.Builder(GlobalVariable.NUM_OF_THREADS).build())
+		.windowLayoutMetrics(new StackingCellLayoutMetrics.Builder(GlobalVariable.NUM_OF_THREADS).build())
 		.build()
 
 // setup the executor what to do

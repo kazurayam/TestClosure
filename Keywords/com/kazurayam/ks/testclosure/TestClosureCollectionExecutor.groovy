@@ -9,8 +9,8 @@ import java.util.concurrent.TimeUnit
 import org.openqa.selenium.Dimension
 import org.openqa.selenium.Point
 
-import com.kazurayam.browserwindowlayout.TilingWindowLayoutMetrics
-import com.kazurayam.browserwindowlayout.WindowLayoutMetrics
+import com.kazurayam.browserwindowlayout.TilingCellLayoutMetrics
+import com.kazurayam.browserwindowlayout.CellLayoutMetrics
 
 import com.kazurayam.webdriverfactory.chrome.ChromeDriverFactory
 
@@ -30,7 +30,7 @@ public class TestClosureCollectionExecutor {
 	public static final int THREADS_LIMIT = 8
 	private int capacity
 
-	private final WindowLayoutMetrics metrics
+	private final CellLayoutMetrics metrics
 	private final List<Closure> loadedTestClosures
 	private final BrowserLauncher
 
@@ -77,9 +77,9 @@ public class TestClosureCollectionExecutor {
 		Objects.requireNonNull(browserLauncher)
 		int index = resolveIndex(this.loadedTestClosures.size())
 		// the position (x,y) to which browser window should be moved to
-		Point position = metrics.getWindowPosition(index)
+		Point position = metrics.getCellPosition(index)
 		// the size (width, height) to which browser window should be resized to
-		Dimension dimension = metrics.getWindowDimension(index)
+		Dimension dimension = metrics.getCellDimension(index)
 		//
 		Closure cls = {
 			// open a browser window for this TestClosure
@@ -149,7 +149,7 @@ public class TestClosureCollectionExecutor {
 		// Required parameters - none
 		// Optional parameters - initialized to default values
 		private int numThreads = 1
-		private WindowLayoutMetrics metrics
+		private CellLayoutMetrics metrics
 		private List<TestClosure> testClosures = new ArrayList<TestClosure>()
 		private List<String> userProfiles = []
 		Builder() {}
@@ -170,12 +170,12 @@ public class TestClosureCollectionExecutor {
 			this.userProfiles = userProfiles
 			return this
 		}
-		Builder windowLayoutMetrics(WindowLayoutMetrics metrics) {
+		Builder windowLayoutMetrics(CellLayoutMetrics metrics) {
 			this.metrics = metrics
 			return this
 		}
 		TestClosureCollectionExecutor build() {
-			this.metrics = new TilingWindowLayoutMetrics.Builder(numThreads).build()
+			this.metrics = new TilingCellLayoutMetrics.Builder(numThreads).build()
 			return new TestClosureCollectionExecutor(this)
 		}
 	}
