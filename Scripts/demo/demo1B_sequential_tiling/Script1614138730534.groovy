@@ -1,14 +1,12 @@
 import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
 
-import org.openqa.selenium.chrome.ChromeDriver
 import org.openqa.selenium.JavascriptExecutor
+import org.openqa.selenium.WebDriver
 
+import com.kazurayam.browserwindowlayout.TilingCellLayoutMetrics
 import com.kazurayam.ks.testclosure.BrowserLauncher
 import com.kazurayam.ks.testclosure.TestClosure
 import com.kazurayam.ks.testclosure.TestClosureResult
-import com.kazurayam.browserwindowlayout.TilingCellLayoutMetrics
-import com.kazurayam.browserwindowlayout.CellLayoutMetrics
-import com.kms.katalon.core.webui.driver.DriverFactory
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 
 List<TestClosure> tclosures = WebUI.callTestCase(findTestCase("demo/createTestClosures4Demo"), [:])
@@ -19,7 +17,7 @@ println "virtualScreenSize(${metrics.getVirtualScreenSize().getWidth()},${metric
 
 tclosures.eachWithIndex { tclosure, i ->
 	Closure cls = {
-		ChromeDriver driver = new BrowserLauncher.Builder().build().launch()
+		WebDriver driver = new BrowserLauncher.Builder().build().launchChromeDriver()
 		tclosure.setDriver(driver)
 		// move the browser window to a good position (x,y)
 		driver.manage().window().setPosition(metrics.getCellPosition(i))

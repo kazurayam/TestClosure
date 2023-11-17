@@ -1,6 +1,7 @@
 import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
 
 import org.openqa.selenium.Dimension
+import org.openqa.selenium.WebDriver
 import org.openqa.selenium.chrome.ChromeDriver
 
 import com.kazurayam.ks.testclosure.BrowserLauncher
@@ -20,7 +21,7 @@ CellLayoutMetrics metrics =
 
 tclosures.eachWithIndex { tclosure, i ->
 	Closure cls = {
-		ChromeDriver driver = new BrowserLauncher.Builder().build().launch()
+		WebDriver driver = new BrowserLauncher.Builder().build().launchChromeDriver()
 		tclosure.setDriver(driver)
 		// move the browser window to a good position (x,y)
 		driver.manage().window().setPosition(metrics.getCellPosition(i))

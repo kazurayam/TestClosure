@@ -8,7 +8,7 @@ List<TestClosure> tclosures = WebUI.callTestCase(findTestCase("demo/createTestCl
 
 TestClosureCollectionExecutor executor = 
 	new TestClosureCollectionExecutor.Builder()
-		.numThreads(4)
+		.numThreads(tclosures.size())
 		.build()
 
 executor.addTestClosures(tclosures)

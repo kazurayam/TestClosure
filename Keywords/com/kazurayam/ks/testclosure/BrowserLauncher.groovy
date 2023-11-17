@@ -21,7 +21,7 @@ public class BrowserLauncher {
 		this.index = builder.index
 	}
 
-	ChromeDriver launch() {
+	ChromeDriver launchChromeDriver() {
 		System.setProperty("webdriver.chrome.driver", DriverFactory.getChromeDriverPath())
 		ChromeDriver driver = null
 		ChromeDriverFactory cdFactory = ChromeDriverFactory.newChromeDriverFactory()

@@ -8,18 +8,10 @@ import java.util.concurrent.TimeUnit
 
 import org.openqa.selenium.Dimension
 import org.openqa.selenium.Point
+import org.openqa.selenium.WebDriver
 
-import com.kazurayam.browserwindowlayout.TilingCellLayoutMetrics
 import com.kazurayam.browserwindowlayout.CellLayoutMetrics
-
-import com.kazurayam.webdriverfactory.chrome.ChromeDriverFactory
-
-import com.kms.katalon.core.webui.driver.DriverFactory
-import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
-
-import org.apache.commons.lang.time.StopWatch
-import org.openqa.selenium.chrome.ChromeDriver
-
+import com.kazurayam.browserwindowlayout.TilingCellLayoutMetrics
 
 /**
  * 
@@ -83,7 +75,7 @@ public class TestClosureCollectionExecutor {
 		//
 		Closure cls = {
 			// open a browser window for this TestClosure
-			ChromeDriver driver = browserLauncher.launch()
+			WebDriver driver = browserLauncher.launchChromeDriver()
 			// move the browser window to a good position (x,y)
 			driver.manage().window().setPosition(position)
 			// resize the browser window to a good dimension (width, height)

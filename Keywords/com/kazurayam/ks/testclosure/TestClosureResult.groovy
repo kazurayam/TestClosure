@@ -4,6 +4,7 @@ import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.ZonedDateTime
 
+
 public class TestClosureResult {
 
 	private final String name
