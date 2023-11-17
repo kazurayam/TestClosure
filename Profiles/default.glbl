@@ -6,7 +6,12 @@
    <defaultProfile>true</defaultProfile>
    <GlobalVariableEntity>
       <description></description>
-      <initValue>2</initValue>
+      <initValue>1</initValue>
       <name>NUM_OF_THREADS</name>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description></description>
+      <initValue>'1Thread'</initValue>
+      <name>ID</name>
    </GlobalVariableEntity>
 </GlobalVariableEntities>

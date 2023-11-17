@@ -26,3 +26,5 @@ tmp/
 settings/
 
 out.json
+
+test-output/
