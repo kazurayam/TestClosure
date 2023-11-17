@@ -34,6 +34,16 @@
             <requireConfigurationData>false</requireConfigurationData>
             <runConfigurationId>Chrome</runConfigurationId>
          </configuration>
+         <runEnabled>false</runEnabled>
+         <testSuiteEntity>Test Suites/demo/demo3D</testSuiteEntity>
+      </TestSuiteRunConfiguration>
+      <TestSuiteRunConfiguration>
+         <configuration>
+            <groupName>Web Desktop</groupName>
+            <profileName>8Threads</profileName>
+            <requireConfigurationData>false</requireConfigurationData>
+            <runConfigurationId>Chrome</runConfigurationId>
+         </configuration>
          <runEnabled>true</runEnabled>
          <testSuiteEntity>Test Suites/demo/demo3D</testSuiteEntity>
       </TestSuiteRunConfiguration>
