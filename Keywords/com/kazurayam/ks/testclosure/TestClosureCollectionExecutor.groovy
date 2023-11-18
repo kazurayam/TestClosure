@@ -143,7 +143,9 @@ public class TestClosureCollectionExecutor {
 		private CellLayoutMetrics metrics
 		private List<TestClosure> testClosures = new ArrayList<TestClosure>()
 		private List<String> userProfiles = []
+		
 		Builder() {}
+		
 		Builder numThreads(int numThreads) {
 			if (numThreads <= 0) {
 				throw new IllegalArgumentException("numThreads=${numThreads} must not be less or equal to 0")
@@ -154,6 +156,7 @@ public class TestClosureCollectionExecutor {
 			this.numThreads = numThreads
 			return this
 		}
+		
 		Builder userProfiles(List<String> userProfiles) {
 			if (userProfiles.size() == 0) {
 				throw new IllegalArgumentException("userProfiles must not be empty")
@@ -161,10 +164,12 @@ public class TestClosureCollectionExecutor {
 			this.userProfiles = userProfiles
 			return this
 		}
-		Builder windowLayoutMetrics(CellLayoutMetrics metrics) {
+		
+		Builder cellLayoutMetrics(CellLayoutMetrics metrics) {
 			this.metrics = metrics
 			return this
 		}
+		
 		TestClosureCollectionExecutor build() {
 			this.metrics = new TilingCellLayoutMetrics.Builder(numThreads).build()
 			return new TestClosureCollectionExecutor(this)

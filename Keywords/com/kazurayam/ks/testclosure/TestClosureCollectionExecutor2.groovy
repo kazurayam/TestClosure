@@ -58,7 +58,7 @@ public class TestClosureCollectionExecutor2 {
 	public void addTestClosures(List<TestClosure> tclosures) {
 		capacity = (tclosures.size() > getNumThreads()) ? getNumThreads() : tclosures.size()
 		for (int i = 0; i < tclosures.size(); i++) {
-			WebDriver driver = webDriversContainer.get(tclosures.size() % webDriversContainer.size())
+			WebDriver driver = webDriversContainer.get(i % webDriversContainer.size())
 			this.loadTestClosure(tclosures.get(i), driver)
 		}
 	}
@@ -150,6 +150,7 @@ public class TestClosureCollectionExecutor2 {
 		private CellLayoutMetrics metrics
 		private List<TestClosure> testClosures = new ArrayList<TestClosure>()
 		private List<String> userProfiles = []
+		
 		Builder(WebDriversContainer webDriversContainer) {
 			Objects.requireNonNull(webDriversContainer)
 			if (webDriversContainer.size() == 0) {
@@ -157,7 +158,8 @@ public class TestClosureCollectionExecutor2 {
 			}
 			this.webDriversContainer = webDriversContainer
 		}
-		Builder windowLayoutMetrics(CellLayoutMetrics metrics) {
+		
+		Builder cellLayoutMetrics(CellLayoutMetrics metrics) {
 			this.metrics = metrics
 			return this
 		}
