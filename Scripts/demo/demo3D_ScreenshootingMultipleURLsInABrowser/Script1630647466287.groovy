@@ -3,17 +3,13 @@ import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
+import java.time.LocalDateTime
 
 import com.kazurayam.browserwindowlayout.StackingCellLayoutMetrics
 import com.kazurayam.ks.testclosure.BrowserLauncher
 import com.kazurayam.ks.testclosure.TestClosure
-import com.kazurayam.ks.testclosure.TestClosureCollectionExecutor2
-import com.kazurayam.ks.testclosure.WebDriversContainer
-import java.time.LocalDateTime
-
-import com.kazurayam.browserwindowlayout.StackingCellLayoutMetrics
-import com.kazurayam.ks.testclosure.TestClosure
 import com.kazurayam.ks.testclosure.TestClosureCollectionExecutor
+import com.kazurayam.ks.testclosure.WebDriversContainer
 import com.kazurayam.timekeeper.Measurement
 import com.kazurayam.timekeeper.Table
 import com.kazurayam.timekeeper.Timekeeper
@@ -59,8 +55,8 @@ for (int i = 0; i < GlobalVariable.NUM_OF_THREADS; i++) {
 }
 
 // create the executor
-TestClosureCollectionExecutor2 executor =
-	new TestClosureCollectionExecutor2.Builder(wdc)
+TestClosureCollectionExecutor executor =
+	new TestClosureCollectionExecutor.Builder(wdc)
 		.cellLayoutMetrics(
 			new StackingCellLayoutMetrics.Builder(GlobalVariable.NUM_OF_THREADS).build())
 		.build()

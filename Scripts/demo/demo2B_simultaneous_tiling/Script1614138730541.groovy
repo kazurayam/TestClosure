@@ -3,7 +3,7 @@ import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
 import com.kazurayam.browserwindowlayout.TilingCellLayoutMetrics
 import com.kazurayam.ks.testclosure.BrowserLauncher
 import com.kazurayam.ks.testclosure.TestClosure
-import com.kazurayam.ks.testclosure.TestClosureCollectionExecutor2
+import com.kazurayam.ks.testclosure.TestClosureCollectionExecutor
 import com.kazurayam.ks.testclosure.WebDriversContainer
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 
@@ -15,8 +15,8 @@ for (int i = 0; i < tclosures.size(); i++) {
 	wdc.add(launcher.launchChromeDriver());
 }
 
-TestClosureCollectionExecutor2 executor = 
-	new TestClosureCollectionExecutor2.Builder(wdc)
+TestClosureCollectionExecutor executor = 
+	new TestClosureCollectionExecutor.Builder(wdc)
 			.cellLayoutMetrics(
 				new TilingCellLayoutMetrics.Builder(tclosures.size())
 					.build()
