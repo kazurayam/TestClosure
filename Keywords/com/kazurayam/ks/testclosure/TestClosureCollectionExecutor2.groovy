@@ -76,6 +76,7 @@ public class TestClosureCollectionExecutor2 {
 	private void loadTestClosure(TestClosure tc, WebDriver driver) {
 		Objects.requireNonNull(tc)
 		Objects.requireNonNull(driver)
+		//
 		int index = resolveIndex(this.loadedTestClosures.size())
 		// the position (x,y) to which browser window should be moved to
 		Point position = metrics.getCellPosition(index)
@@ -150,7 +151,7 @@ public class TestClosureCollectionExecutor2 {
 		private CellLayoutMetrics metrics
 		private List<TestClosure> testClosures = new ArrayList<TestClosure>()
 		private List<String> userProfiles = []
-		
+
 		Builder(WebDriversContainer webDriversContainer) {
 			Objects.requireNonNull(webDriversContainer)
 			if (webDriversContainer.size() == 0) {
@@ -158,7 +159,7 @@ public class TestClosureCollectionExecutor2 {
 			}
 			this.webDriversContainer = webDriversContainer
 		}
-		
+
 		Builder cellLayoutMetrics(CellLayoutMetrics metrics) {
 			this.metrics = metrics
 			return this

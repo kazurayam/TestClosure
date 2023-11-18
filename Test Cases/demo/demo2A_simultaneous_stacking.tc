@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestCaseEntity>
    <description></description>
-   <name>demo2A_simultaneous_overlaying</name>
+   <name>demo2A_simultaneous_stacking</name>
    <tag></tag>
    <comment></comment>
    <testCaseGuid>27a00886-6757-40c7-96a5-647b35e2cb96</testCaseGuid>

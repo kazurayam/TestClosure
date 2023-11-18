@@ -15,7 +15,7 @@
       <guid>2199b797-3882-4b37-9d7a-fe41abf57293</guid>
       <isReuseDriver>false</isReuseDriver>
       <isRun>true</isRun>
-      <testCaseId>Test Cases/demo/demo2A_simultaneous_overlaying</testCaseId>
+      <testCaseId>Test Cases/demo/demo2A_simultaneous_stacking</testCaseId>
       <usingDataBindingAtTestSuiteLevel>true</usingDataBindingAtTestSuiteLevel>
    </testCaseLink>
 </TestSuiteEntity>
