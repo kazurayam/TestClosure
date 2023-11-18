@@ -9,6 +9,13 @@ import com.kazurayam.ks.testclosure.BrowserLauncher
 import com.kazurayam.ks.testclosure.TestClosure
 import com.kazurayam.ks.testclosure.TestClosureCollectionExecutor2
 import com.kazurayam.ks.testclosure.WebDriversContainer
+import java.time.LocalDateTime
+
+import com.kazurayam.browserwindowlayout.StackingCellLayoutMetrics
+import com.kazurayam.ks.testclosure.TestClosure
+import com.kazurayam.ks.testclosure.TestClosureCollectionExecutor
+import com.kazurayam.timekeeper.Measurement
+import com.kazurayam.timekeeper.Table
 import com.kazurayam.timekeeper.Timekeeper
 import com.kms.katalon.core.configuration.RunConfiguration
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
@@ -35,6 +42,9 @@ import internal.GlobalVariable
  */
 
 Timekeeper tk = new Timekeeper()
+Measurement beginToFinish = new Measurement.Builder(
+	"How long the test took from begining to finish", ["ID"]).build()
+tk.add(new Table.Builder(beginToFinish).noLegend().build())
 
 // load the collection of TestClosures
 List<TestClosure> tclosures = WebUI.callTestCase(findTestCase(
@@ -59,12 +69,16 @@ TestClosureCollectionExecutor2 executor =
 executor.addTestClosures(tclosures)
 	
 // now do the job
+LocalDateTime beforeExecute = LocalDateTime.now()
 executor.execute()
-
 wdc.quitAll()
+
+LocalDateTime afterExecute = LocalDateTime.now()
+beginToFinish.recordDuration(["ID": GlobalVariable.ID], beforeExecute, afterExecute)
 
 // compile a performance report
 Path projectDir = Paths.get(RunConfiguration.getProjectDir())
-Path reportFile = projectDir.resolve("tmp/demo3D_report.md")
+Path testOutput = projectDir.resolve("test-output")
+Path reportFile = testOutput.resolve("demo3D_" + GlobalVariable.ID + "_report.md")
 Files.createDirectories(reportFile.getParent())
 tk.report(reportFile)

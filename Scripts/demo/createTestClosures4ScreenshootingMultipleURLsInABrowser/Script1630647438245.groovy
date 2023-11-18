@@ -125,6 +125,7 @@ tclosures.add(new TestClosure(shooter, [
 	]
 	]))
 
+/*
 tclosures.add(new TestClosure(shooter, [
 	[
 		new Tuple("https://www.katalon.com/", dir.resolve("21_top.png")),
@@ -160,6 +161,7 @@ tclosures.add(new TestClosure(shooter, [
 		new Tuple("https://www.katalon.com/desktop-testing/", dir.resolve("38_desktop-testing.png"))
 	]
 	]))
+*/
 
 // Here you are
 return tclosures

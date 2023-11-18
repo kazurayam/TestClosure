@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <GlobalVariableEntities>
    <description></description>
-   <name>default</name>
+   <name>8Threads</name>
    <tag></tag>
-   <defaultProfile>true</defaultProfile>
+   <defaultProfile>false</defaultProfile>
    <GlobalVariableEntity>
       <description></description>
-      <initValue>1</initValue>
+      <initValue>8</initValue>
       <name>NUM_OF_THREADS</name>
    </GlobalVariableEntity>
    <GlobalVariableEntity>
       <description></description>
-      <initValue>'1Thread'</initValue>
+      <initValue>'8Threads'</initValue>
       <name>ID</name>
    </GlobalVariableEntity>
 </GlobalVariableEntities>
