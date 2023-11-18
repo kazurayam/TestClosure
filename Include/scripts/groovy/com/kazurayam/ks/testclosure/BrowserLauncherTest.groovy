@@ -79,4 +79,15 @@ public class BrowserLauncherTest {
 		assertNotNull(driver)
 		driver.quit()
 	}
+	
+	@Test
+	public void test_launchFirefoxDriver_firefox_default_profile() {
+		BrowserLauncher launcher =
+				new BrowserLauncher.Builder().build()
+		WebDriver driver = launcher.launchFirefoxDriver()
+		Thread.sleep(3000)
+		assertNotNull(driver)
+		driver.quit()
+	}
+
 }

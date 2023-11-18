@@ -18,6 +18,7 @@ build
 .project
 
 tmp/
+test-output/
 
 .cache
 
