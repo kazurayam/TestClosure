@@ -51,7 +51,7 @@ List<TestClosure> tclosures = WebUI.callTestCase(findTestCase(
 	"demo/createTestClosures4ScreenshootingMultipleURLsInABrowser"), ["timekeeper": tk])
 
 BrowserLauncher launcher = 
-	new BrowserLauncher.Builder(["Katalon", "Katalon2"]).build()
+	new BrowserLauncher.Builder(["Katalon"]).build()
 	
 WebDriversContainer wdc = new WebDriversContainer()
 for (int i = 0; i < GlobalVariable.NUM_OF_THREADS; i++) {
