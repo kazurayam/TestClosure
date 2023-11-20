@@ -1,8 +1,10 @@
 package com.kazurayam.ks.testclosure
 
 import org.openqa.selenium.chrome.ChromeDriver
+import org.openqa.selenium.firefox.FirefoxDriver
 
 import com.kazurayam.webdriverfactory.chrome.ChromeDriverFactory
+import com.kazurayam.webdriverfactory.firefox.FirefoxDriverFactory
 import com.kazurayam.webdriverfactory.UserProfile
 import com.kms.katalon.core.webui.driver.DriverFactory
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
@@ -21,7 +23,7 @@ public class BrowserLauncher {
 		this.index = builder.index
 	}
 
-	ChromeDriver launch() {
+	ChromeDriver launchChromeDriver() {
 		System.setProperty("webdriver.chrome.driver", DriverFactory.getChromeDriverPath())
 		ChromeDriver driver = null
 		ChromeDriverFactory cdFactory = ChromeDriverFactory.newChromeDriverFactory()
@@ -32,6 +34,21 @@ public class BrowserLauncher {
 		} else {
 			// if userProfiles is empty, then open browser without any profile
 			driver = cdFactory.newChromeDriver().getDriver()
+		}
+		return driver
+	}
+
+	FirefoxDriver launchFirefoxDriver() {
+		System.setProperty("webdriver.firefox.driver", DriverFactory.getGeckoDriverPath())
+		FirefoxDriver driver = null
+		FirefoxDriverFactory fdFactory = FirefoxDriverFactory.newFirefoxDriverFactory()
+		if (userProfiles.size() > 0) {
+			int x = index % userProfiles.size()
+			String profileName = userProfiles.get(x)
+			driver = fdFactory.newFirefoxDriver(new UserProfile(profileName)).getDriver()
+		} else {
+			// if userProfiles is empty, then open browser without any profile
+			driver = fdFactory.newFirefoxDriver().getDriver()
 		}
 		return driver
 	}

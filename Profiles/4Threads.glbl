@@ -9,4 +9,9 @@
       <initValue>4</initValue>
       <name>NUM_OF_THREADS</name>
    </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description></description>
+      <initValue>'4Threads'</initValue>
+      <name>ID</name>
+   </GlobalVariableEntity>
 </GlobalVariableEntities>

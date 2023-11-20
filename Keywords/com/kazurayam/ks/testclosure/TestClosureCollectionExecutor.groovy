@@ -1,5 +1,25 @@
 package com.kazurayam.ks.testclosure
 
+import static com.kms.katalon.core.checkpoint.CheckpointFactory.findCheckpoint
+import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
+import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
+import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
+import static com.kms.katalon.core.testobject.ObjectRepository.findWindowsObject
+
+import com.kms.katalon.core.annotation.Keyword
+import com.kms.katalon.core.checkpoint.Checkpoint
+import com.kms.katalon.core.cucumber.keyword.CucumberBuiltinKeywords as CucumberKW
+import com.kms.katalon.core.mobile.keyword.MobileBuiltInKeywords as Mobile
+import com.kms.katalon.core.model.FailureHandling
+import com.kms.katalon.core.testcase.TestCase
+import com.kms.katalon.core.testdata.TestData
+import com.kms.katalon.core.testobject.TestObject
+import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
+import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
+import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
+
+import internal.GlobalVariable
+
 import java.util.concurrent.ExecutionException
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
@@ -8,45 +28,27 @@ import java.util.concurrent.TimeUnit
 
 import org.openqa.selenium.Dimension
 import org.openqa.selenium.Point
+import org.openqa.selenium.WebDriver
 
-import com.kazurayam.browserwindowlayout.TilingWindowLayoutMetrics
-import com.kazurayam.browserwindowlayout.WindowLayoutMetrics
+import com.kazurayam.browserwindowlayout.CellLayoutMetrics
+import com.kazurayam.browserwindowlayout.TilingCellLayoutMetrics
 
-import com.kazurayam.webdriverfactory.chrome.ChromeDriverFactory
-
-import com.kms.katalon.core.webui.driver.DriverFactory
-import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
-
-import org.apache.commons.lang.time.StopWatch
-import org.openqa.selenium.chrome.ChromeDriver
-
-
-/**
- * 
- * @author kazurayam
- */
 public class TestClosureCollectionExecutor {
 
-	public static final int THREADS_LIMIT = 8
+	private final CellLayoutMetrics metrics
+	private final List<Closure> loadedTestClosures
 	private int capacity
 
-	private final WindowLayoutMetrics metrics
-	private final List<Closure> loadedTestClosures
-	private final BrowserLauncher
-
-	private final int numThreads
-	private List<String> userProfiles
-
+	private final WebDriversContainer webDriversContainer
 
 	private TestClosureCollectionExecutor(Builder builder) {
 		this.metrics = builder.metrics
 		this.loadedTestClosures = new ArrayList<Closure>()
-		this.numThreads = builder.numThreads
-		this.userProfiles = builder.userProfiles
+		this.webDriversContainer = builder.webDriversContainer
 	}
 
 	public int getNumThreads() {
-		return numThreads
+		return webDriversContainer.size()
 	}
 
 	public int size() {
@@ -54,11 +56,10 @@ public class TestClosureCollectionExecutor {
 	}
 
 	public void addTestClosures(List<TestClosure> tclosures) {
-		capacity = (tclosures.size() > numThreads) ? numThreads : tclosures.size()
+		capacity = (tclosures.size() > getNumThreads()) ? getNumThreads() : tclosures.size()
 		for (int i = 0; i < tclosures.size(); i++) {
-			BrowserLauncher launcher = new BrowserLauncher.Builder(userProfiles)
-					.index(i).build()
-			this.loadTestClosure(tclosures.get(i), launcher)
+			WebDriver driver = webDriversContainer.get(i % webDriversContainer.size())
+			this.loadTestClosure(tclosures.get(i), driver)
 		}
 	}
 
@@ -68,22 +69,22 @@ public class TestClosureCollectionExecutor {
 
 	/**
 	 * start a browser for each TestClosures and setup them ready to invoke
-	 * 
+	 *
 	 * @param seq ID of the Test Closure 0,1,2,3...
 	 * @param tc TestClosure object
 	 */
-	private void loadTestClosure(TestClosure tc, BrowserLauncher browserLauncher) {
+	private void loadTestClosure(TestClosure tc, WebDriver driver) {
 		Objects.requireNonNull(tc)
-		Objects.requireNonNull(browserLauncher)
+		Objects.requireNonNull(driver)
+		//
 		int index = resolveIndex(this.loadedTestClosures.size())
 		// the position (x,y) to which browser window should be moved to
-		Point position = metrics.getWindowPosition(index)
+		Point position = metrics.getCellPosition(index)
 		// the size (width, height) to which browser window should be resized to
-		Dimension dimension = metrics.getWindowDimension(index)
+		Dimension dimension = metrics.getCellDimension(index)
 		//
 		Closure cls = {
-			// open a browser window for this TestClosure
-			ChromeDriver driver = browserLauncher.launch()
+			// a browser window is already opened
 			// move the browser window to a good position (x,y)
 			driver.manage().window().setPosition(position)
 			// resize the browser window to a good dimension (width, height)
@@ -92,8 +93,6 @@ public class TestClosureCollectionExecutor {
 			tc.setDriver(driver)
 			// execute the TestClosure
 			TestClosureResult result = tc.call()
-			// close the browser
-			driver.quit()
 			//
 			return result
 		}
@@ -101,7 +100,7 @@ public class TestClosureCollectionExecutor {
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	public void execute() {
 		int size = loadedTestClosures.size()
@@ -115,7 +114,7 @@ public class TestClosureCollectionExecutor {
 		List<Future<String>> futures = executorService.invokeAll(loadedTestClosures)
 		for (ft in futures) {
 			try {
-				/* calling the get() method while the task is running will 
+				/* calling the get() method while the task is running will
 				 * cause execution to block until the task finishes properly
 				 * executed and the result is available
 				 */
@@ -148,35 +147,27 @@ public class TestClosureCollectionExecutor {
 	public static class Builder {
 		// Required parameters - none
 		// Optional parameters - initialized to default values
-		private int numThreads = 1
-		private WindowLayoutMetrics metrics
+		private WebDriversContainer webDriversContainer
+		private CellLayoutMetrics metrics
 		private List<TestClosure> testClosures = new ArrayList<TestClosure>()
 		private List<String> userProfiles = []
-		Builder() {}
-		Builder numThreads(int numThreads) {
-			if (numThreads <= 0) {
-				throw new IllegalArgumentException("numThreads=${numThreads} must not be less or equal to 0")
+
+		Builder(WebDriversContainer webDriversContainer) {
+			Objects.requireNonNull(webDriversContainer)
+			if (webDriversContainer.size() == 0) {
+				throw new IllegalArgumentException("webDriversContainer.size() returned 0")
 			}
-			if (numThreads > THREADS_LIMIT) {
-				throw new IllegalArgumentException("numThreds=${numThreads} must not be greater than ${THREADS_LIMIT}")
-			}
-			this.numThreads = numThreads
-			return this
+			this.webDriversContainer = webDriversContainer
 		}
-		Builder userProfiles(List<String> userProfiles) {
-			if (userProfiles.size() == 0) {
-				throw new IllegalArgumentException("userProfiles must not be empty")
-			}
-			this.userProfiles = userProfiles
-			this.numThreads = userProfiles.size()
-			return this
-		}
-		Builder windowLayoutMetrics(WindowLayoutMetrics metrics) {
+
+		Builder cellLayoutMetrics(CellLayoutMetrics metrics) {
 			this.metrics = metrics
 			return this
 		}
 		TestClosureCollectionExecutor build() {
-			this.metrics = new TilingWindowLayoutMetrics.Builder(numThreads).build()
+			if (this.metrics == null) {
+				metrics = new TilingCellLayoutMetrics.Builder(webDriversContainer.size()).build()
+			}
 			return new TestClosureCollectionExecutor(this)
 		}
 	}

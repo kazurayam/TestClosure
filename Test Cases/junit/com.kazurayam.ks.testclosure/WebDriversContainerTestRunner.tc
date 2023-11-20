@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestCaseEntity>
    <description></description>
-   <name>demo2A_simultaneous_overlaying</name>
+   <name>WebDriversContainerTestRunner</name>
    <tag></tag>
    <comment></comment>
-   <testCaseGuid>27a00886-6757-40c7-96a5-647b35e2cb96</testCaseGuid>
+   <testCaseGuid>9eb699b8-6477-4688-ac77-d74148b608b2</testCaseGuid>
 </TestCaseEntity>

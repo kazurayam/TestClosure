@@ -14,11 +14,17 @@ import org.openqa.selenium.WebDriver
 @RunWith(JUnit4.class)
 public class TestClosureCollectionExecutorTest {
 
+	WebDriversContainer wdc
 	TestClosureCollectionExecutor executor
 
 	@Before
 	void setup() {
-		executor = new TestClosureCollectionExecutor.Builder().numThreads(3).build()
+		BrowserLauncher launcher = new BrowserLauncher.Builder().build()
+		wdc = new WebDriversContainer()
+		wdc.add(launcher.launchChromeDriver())
+		wdc.add(launcher.launchChromeDriver())
+		wdc.add(launcher.launchChromeDriver())
+		executor = new TestClosureCollectionExecutor.Builder(wdc).build()
 		List<TestClosure> tclosures = new ArrayList<TestClosure>()
 		tclosures.add(new TestClosure({ WebDriver driver, String name ->
 			println "Hello, ${name}!"
@@ -50,5 +56,6 @@ public class TestClosureCollectionExecutorTest {
 	@After
 	void tearDown() {
 		//executor.closeBrowsers()
+		wdc.quitAll()
 	}
 }

@@ -16,42 +16,42 @@ import org.openqa.selenium.WebDriver
 public class BrowserLauncherTest {
 
 	@Test
-	public void test_launch_usig_katalon_keyword() {
+	public void test_launchChromeDriver_usig_katalon_keyword() {
 		BrowserLauncher launcher = new BrowserLauncher.Builder().build()
-		WebDriver driver = launcher.launch()
+		WebDriver driver = launcher.launchChromeDriver()
 		Thread.sleep(3000)
 		assertNotNull(driver)
 		driver.quit()
 	}
 
 	@Test
-	public void test_launch_chrome_default_profile() {
+	public void test_launchChromeDriver_chrome_default_profile() {
 		BrowserLauncher launcher =
 				new BrowserLauncher.Builder()
 				.index(1).build()
-		WebDriver driver = launcher.launch()
+		WebDriver driver = launcher.launchChromeDriver()
 		Thread.sleep(3000)
 		assertNotNull(driver)
 		driver.quit()
 	}
 
 	@Test
-	public void test_launch_chrome_specified_profile_noIndex() {
+	public void test_launchChromeDriver_specified_profile_noIndex() {
 		BrowserLauncher launcher =
-				new BrowserLauncher.Builder(["Katalon", "Katalon_alt"])
+				new BrowserLauncher.Builder(["Katalon", "Katalon2"])
 				.build()
-		WebDriver driver = launcher.launch()
+		WebDriver driver = launcher.launchChromeDriver()
 		Thread.sleep(3000)
 		assertNotNull(driver)
 		driver.quit()
 	}
 
 	@Test
-	public void test_launch_chrome_specified_profile_index0() {
+	public void test_launchChromeDriver_specified_profile_index0() {
 		BrowserLauncher launcher =
-				new BrowserLauncher.Builder(["Katalon", "Katalon_alt"])
+				new BrowserLauncher.Builder(["Katalon", "Katalon2"])
 				.index(0).build()
-		WebDriver driver = launcher.launch()
+		WebDriver driver = launcher.launchChromeDriver()
 		Thread.sleep(3000)
 		assertNotNull(driver)
 		driver.quit()
@@ -59,24 +59,35 @@ public class BrowserLauncherTest {
 
 
 	@Test
-	public void test_launch_chrome_specified_profile_index1() {
+	public void test_launchChromeDriver_specified_profile_index1() {
 		BrowserLauncher launcher =
-				new BrowserLauncher.Builder(["Katalon", "Katalon_alt"])
+				new BrowserLauncher.Builder(["Katalon", "Katalon2"])
 				.index(1).build()
-		WebDriver driver = launcher.launch()
+		WebDriver driver = launcher.launchChromeDriver()
 		Thread.sleep(3000)
 		assertNotNull(driver)
 		driver.quit()
 	}
 
-	
-	public void test_launch_chrome_specified_profile_index2() {
+
+	public void test_launchChromeDriver_specified_profile_index2() {
 		BrowserLauncher launcher =
-				new BrowserLauncher.Builder(["Katalon", "Katalon_alt"])
+				new BrowserLauncher.Builder(["Katalon", "Katalon2"])
 				.index(2).build()
-		WebDriver driver = launcher.launch()
+		WebDriver driver = launcher.launchChromeDriver()
 		Thread.sleep(3000)
 		assertNotNull(driver)
 		driver.quit()
 	}
+	
+	@Test
+	public void test_launchFirefoxDriver_firefox_default_profile() {
+		BrowserLauncher launcher =
+				new BrowserLauncher.Builder().build()
+		WebDriver driver = launcher.launchFirefoxDriver()
+		Thread.sleep(3000)
+		assertNotNull(driver)
+		driver.quit()
+	}
+
 }

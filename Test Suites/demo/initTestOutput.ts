@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestSuiteEntity>
    <description></description>
-   <name>demo2C</name>
+   <name>initTestOutput</name>
    <tag></tag>
    <isRerun>false</isRerun>
    <mailRecipient></mailRecipient>
    <numberOfRerun>0</numberOfRerun>
-   <pageLoadTimeout>30</pageLoadTimeout>
+   <pageLoadTimeout>20</pageLoadTimeout>
    <pageLoadTimeoutDefault>true</pageLoadTimeoutDefault>
    <rerunFailedTestCasesOnly>false</rerunFailedTestCasesOnly>
    <rerunImmediately>false</rerunImmediately>
-   <testSuiteGuid>d1c5c4b2-8476-4e5d-aea6-e1087450d060</testSuiteGuid>
+   <testSuiteGuid>e8da2b29-1c2b-41e0-947f-d488d1c4a799</testSuiteGuid>
    <testCaseLink>
-      <guid>b5a553ea-f0b6-4ec3-9403-ecca45689ea9</guid>
+      <guid>9a651c45-7d7a-47e9-b5ef-2cb227630216</guid>
       <isReuseDriver>false</isReuseDriver>
       <isRun>true</isRun>
-      <testCaseId>Test Cases/demo/demo2C_simultaneous_stacking_screenshots</testCaseId>
+      <testCaseId>Test Cases/demo/initTestOutput</testCaseId>
       <usingDataBindingAtTestSuiteLevel>true</usingDataBindingAtTestSuiteLevel>
    </testCaseLink>
 </TestSuiteEntity>

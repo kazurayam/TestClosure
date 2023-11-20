@@ -1,5 +1,5 @@
 import org.openqa.selenium.Keys
-import org.openqa.selenium.chrome.ChromeDriver
+import org.openqa.selenium.WebDriver
 
 import com.kazurayam.ks.testclosure.TestClosure
 import com.kms.katalon.core.model.FailureHandling
@@ -32,7 +32,7 @@ TestObject newTestObjectCSS(String cssSelector) {
 List<TestClosure> tclosures = new ArrayList<TestClosure>()
 
 // construct closures
-tclosures.add(new TestClosure({ ChromeDriver driver ->
+tclosures.add(new TestClosure({ WebDriver driver ->
 	DriverFactory.changeWebDriver(driver)
 	String url = 'http://demoaut.katalon.com/'
 	WebUI.navigateToUrl(url, FailureHandling.OPTIONAL)
@@ -52,7 +52,7 @@ tclosures.add(new TestClosure({ ChromeDriver driver ->
 	}, [])
 )
 
-tclosures.add(new TestClosure({ ChromeDriver driver ->
+tclosures.add(new TestClosure({ WebDriver driver ->
 	DriverFactory.changeWebDriver(driver)
 	String url = 'https://forum.katalon.com/'
 	WebUI.navigateToUrl(url)
@@ -63,7 +63,7 @@ tclosures.add(new TestClosure({ ChromeDriver driver ->
 	}, [])
 )
 
-tclosures.add(new TestClosure({ ChromeDriver driver ->
+tclosures.add(new TestClosure({ WebDriver driver ->
 	DriverFactory.changeWebDriver(driver)
 	String url = 'https://duckduckgo.com/'
 	WebUI.navigateToUrl(url)

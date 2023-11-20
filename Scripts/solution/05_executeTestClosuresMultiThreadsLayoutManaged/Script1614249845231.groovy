@@ -1,4 +1,4 @@
-import org.openqa.selenium.WebDriver
+import org.openqa.selenium.chrome.ChromeDriver
 
 import com.kazurayam.ks.testclosure.TestClosure
 import com.kazurayam.ks.testclosure.TestClosureCollectionExecutor
@@ -9,7 +9,7 @@ import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 // load the collection of TestClosures
 List<TestClosure> tclosures = new ArrayList<TestClosure>()
 
-Closure closure = { WebDriver driver, String url ->
+Closure closure = { ChromeDriver driver, String url ->
 	DriverFactory.changeWebDriver(driver)
 	WebUI.navigateToUrl(url)
 	WebUI.waitForPageLoad(5)

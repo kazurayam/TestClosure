@@ -1,14 +1,12 @@
 // TestClosure/build.gradle
-
 // $ gradle drivers
-
 
 plugins {
   id 'groovy'
 }
 
 group = 'com.kazurayam'
-version = '0.23.1'
+version = '0.26.1-SNAPSHOT'
 
 
 sourceCompatibility = '1.8'
@@ -22,7 +20,8 @@ ext {
     ashotwrapperVersion = '0.1.0'
     junit4ksVersion = '1.6.1'
     timekeeperVersion = '0.3.3'
-    browserwindowlayoutVersion = '0.1.0'
+    browserwindowlayoutVersion = '0.3.0'
+    unittesthelperVersion = '0.2.4'
 }
 
 repositories {
@@ -42,6 +41,7 @@ dependencies {
     myconf group: 'com.kazurayam', name: 'junit4ks', version: "${junit4ksVersion}"
     myconf group: 'com.kazurayam', name: 'timekeeper', version: "${timekeeperVersion}"
     myconf group: 'com.kazurayam', name: 'browserwindowlayout', version: "${browserwindowlayoutVersion}"
+    myconf group: 'com.kazurayam', name: 'unittest-helper', version: "${unittesthelperVersion}"
     generateDocs "org.codehaus.groovy:groovy-all:${groovyVersion}"
 }
 
@@ -62,7 +62,8 @@ task drivers {
                     "**/junit4ks*.jar",
                     "**/timekeeper*.jar",
                     "**/chromedriverfactory*.jar",
-                    "**/browserwindowlayout*.jar"
+                    "**/browserwindowlayout*.jar",
+                    "**/unittest*.jar"
                     )
                 .rename({ s ->
                     AUTO_IMPORTED_JAR_PREFIX + s

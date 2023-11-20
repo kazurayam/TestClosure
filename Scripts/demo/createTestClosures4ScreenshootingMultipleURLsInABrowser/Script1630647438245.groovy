@@ -6,7 +6,7 @@ import java.time.LocalDateTime
 import org.apache.commons.io.FileUtils
 //import org.apache.commons.lang.time.StopWatch
 
-import org.openqa.selenium.chrome.ChromeDriver
+import org.openqa.selenium.WebDriver
 
 import com.kazurayam.ashotwrapper.AShotWrapper
 import com.kazurayam.ashotwrapper.AShotWrapper.Options
@@ -52,7 +52,7 @@ TestObject newTestObjectXPath(String xpath) {
  */
 List<TestClosure> tclosures = new ArrayList<TestClosure>()
 
-Closure shooter = { ChromeDriver driver, List<Tuple> urlFilePairs ->
+Closure shooter = { WebDriver driver, List<Tuple> urlFilePairs ->
 	Objects.requireNonNull(driver)
 	DriverFactory.changeWebDriver(driver)
 	urlFilePairs.each { Tuple pair ->
@@ -66,6 +66,12 @@ Closure shooter = { ChromeDriver driver, List<Tuple> urlFilePairs ->
 		navigation.recordDuration(["URL": url],
 			beforeNavi, afterNavi)
 		WebUI.comment("navigate ${url} took ${navigation.getLastRecordDurationMillis() / 1000} seconds")
+		
+		// click the "Accept All Cookies" button if present
+		TestObject to_acceptAllCookies = newTestObjectXPath("//input[@id='onetrust-accept-btn-handler']")
+		if (WebUI.waitForElementClickable(to_acceptAllCookies, 3)) {
+			WebUI.click(to_acceptAllCookies)
+		}
 		
 		LocalDateTime beforeScreenshot = LocalDateTime.now()
 		Options opt = new Options.Builder().timeout(100).build()
@@ -103,22 +109,23 @@ tclosures.add(new TestClosure(shooter, [
 
 tclosures.add(new TestClosure(shooter, [
 	[
-		new Tuple("https://www.katalon.com/", dir.resolve("11_top.png")),
-		new Tuple("https://www.katalon.com/katalon-studio", dir.resolve("12_katalon-studio.png")),
-		new Tuple("https://www.katalon.com/testops", dir.resolve("13_testops.png")),
-		new Tuple("https://www.katalon.com/katalon-recorder-ide", dir.resolve("14_katalon-recorder-ide.png"))
+		new Tuple("https://www.modular.com/", dir.resolve("11_mojular.png")),
+		new Tuple("https://www.modular.com/engine", dir.resolve("12_modular_engine.png")),
+		new Tuple("https://www.modular.com/mojo", dir.resolve("13_modular_mojo.png")),
+		new Tuple("https://www.modular.com/blog", dir.resolve("14_modular_blog.png"))
 	]
 	]))
 
 tclosures.add(new TestClosure(shooter, [
 	[
-		new Tuple("https://www.katalon.com/web-testing/", dir.resolve("15_web-testing.png")),
-		new Tuple("https://www.katalon.com/mobile-testing/", dir.resolve("16_mobile-testing.png")),
-		new Tuple("https://www.katalon.com/api-testing/", dir.resolve("17_api-testing.png")),
-		new Tuple("https://www.katalon.com/desktop-testing/", dir.resolve("18_desktop-testing.png"))
+		new Tuple("https://playwright.dev/", dir.resolve("15_playwright.png")),
+		new Tuple("https://playwright.dev/docs/intro", dir.resolve("16_playwright_docs_intro.png")),
+		new Tuple("https://playwright.dev/docs/api/class-playwright", dir.resolve("17_playwright_docs_api.png")),
+		new Tuple("https://playwright.dev/community/welcome", dir.resolve("18_playwritht_community.png"))
 	]
 	]))
 
+/*
 tclosures.add(new TestClosure(shooter, [
 	[
 		new Tuple("https://www.katalon.com/", dir.resolve("21_top.png")),
@@ -154,6 +161,7 @@ tclosures.add(new TestClosure(shooter, [
 		new Tuple("https://www.katalon.com/desktop-testing/", dir.resolve("38_desktop-testing.png"))
 	]
 	]))
+*/
 
 // Here you are
 return tclosures
