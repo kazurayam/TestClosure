@@ -42,6 +42,8 @@ Measurement beginToFinish = new Measurement.Builder(
 	"How long the test took from begining to finish", ["ID"]).build()
 tk.add(new Table.Builder(beginToFinish).noLegend().build())
 
+// start a watch to measure the processing duration
+LocalDateTime beforeExecute = LocalDateTime.now()
 
 
 //============================ prepare TestClosures and Executor ==============
@@ -73,12 +75,12 @@ TestClosureCollectionExecutor executor =
 
 // setup the executor what to do
 executor.addTestClosures(tclosures)
-	
+
 
 
 //================================ mapping stage ==============================
+
 // let's do the job
-LocalDateTime beforeExecute = LocalDateTime.now()
 executor.execute()
 
 // close all browser windows
@@ -87,9 +89,10 @@ wdc.quitAll()
 
 
 //================================ reduce stage ===============================
-
+// stop the watch
 LocalDateTime afterExecute = LocalDateTime.now()
 beginToFinish.recordDuration(["ID": GlobalVariable.ID], beforeExecute, afterExecute)
+
 // compile a performance report
 Path projectDir = Paths.get(RunConfiguration.getProjectDir())
 Path testOutput = projectDir.resolve("test-output")
