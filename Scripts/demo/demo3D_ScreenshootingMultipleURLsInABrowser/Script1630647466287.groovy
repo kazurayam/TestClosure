@@ -5,6 +5,10 @@ import java.nio.file.Path
 import java.nio.file.Paths
 import java.time.LocalDateTime
 
+import org.openqa.selenium.Dimension
+import org.openqa.selenium.Point
+import org.openqa.selenium.WebDriver
+
 import com.kazurayam.browserwindowlayout.StackingCellLayoutMetrics
 import com.kazurayam.ks.testclosure.BrowserLauncher
 import com.kazurayam.ks.testclosure.TestClosure
@@ -20,58 +24,72 @@ import internal.GlobalVariable
 
 
 /**
- * This script processes multiple Web pages simultaniously.
- * This script opens up to 2 browser windows.
- *
- * This script runs quicker than demo2C because it performs less number of opening/closing windows.
- * 
- * For each URL it does the following:
- * 1. open browser window
- * 2. navigate to the URL
- * 3. take screenshot
- * 4. save the image into file
- * 5. close the window
- * 
- * In each window, a browser window opens.
- * In a window, process multiple URLs sequentially without closing the window.
- * 
+ * This script opens multiple browser windows.
+ * The number of windows are given by GlobalVariable
+ * Java Threads are invoked for each browser window.
+ * Each Threds executes a TestClosure.
+ * A TestClsore contains a single Groovy Closure where you can implement anything. 
+ * A closure of this script will repeat for multiple URLs:
+ *     1. navigate to a URL
+ *     2. take a full page screenshot
+ *     3. save the image into file.
+ * This script measures the processing duration and compiles a report in Mardown text format
  */
 
+//============================ init stage ===================================
 Timekeeper tk = new Timekeeper()
 Measurement beginToFinish = new Measurement.Builder(
 	"How long the test took from begining to finish", ["ID"]).build()
 tk.add(new Table.Builder(beginToFinish).noLegend().build())
 
+
+
+//============================ prepare TestClosures and Executor ==============
+
 // load the collection of TestClosures
 List<TestClosure> tclosures = WebUI.callTestCase(findTestCase(
 	"demo/createTestClosures4ScreenshootingMultipleURLsInABrowser"), ["timekeeper": tk])
 
-BrowserLauncher launcher = 
-	new BrowserLauncher.Builder(["Katalon"]).build()
+BrowserLauncher launcher = new BrowserLauncher.Builder(["Katalon"]).build()
 	
+// The number of threads is given by GlobalVariable, we will open the equal number of browser windows 
+
+// open browser windows
 WebDriversContainer wdc = new WebDriversContainer()
 for (int i = 0; i < GlobalVariable.NUM_OF_THREADS; i++) {
-	wdc.add(launcher.launchChromeDriver());
+	WebDriver wd = launcher.launchChromeDriver() 
+	wdc.add(wd);
 }
 
 // create the executor
 TestClosureCollectionExecutor executor =
 	new TestClosureCollectionExecutor.Builder(wdc)
 		.cellLayoutMetrics(
-			new StackingCellLayoutMetrics.Builder(GlobalVariable.NUM_OF_THREADS).build())
+			new StackingCellLayoutMetrics.Builder(GlobalVariable.NUM_OF_THREADS)
+				.cellDimension(new Dimension(1000, 800))
+				.disposition(new Point(80, 80))
+				.build())
 		.build()
 
 // setup the executor what to do
 executor.addTestClosures(tclosures)
 	
-// now do the job
+
+
+//================================ mapping stage ==============================
+// let's do the job
 LocalDateTime beforeExecute = LocalDateTime.now()
 executor.execute()
+
+// close all browser windows
 wdc.quitAll()
+
+
+
+//================================ reduce stage ===============================
 
 LocalDateTime afterExecute = LocalDateTime.now()
 beginToFinish.recordDuration(["ID": GlobalVariable.ID], beforeExecute, afterExecute)
-
 // compile a performance report
 Path projectDir = Paths.get(RunConfiguration.getProjectDir())
 Path testOutput = projectDir.resolve("test-output")

@@ -109,19 +109,19 @@ tclosures.add(new TestClosure(shooter, [
 
 tclosures.add(new TestClosure(shooter, [
 	[
-		new Tuple("https://www.katalon.com/", dir.resolve("11_top.png")),
-		new Tuple("https://www.katalon.com/katalon-studio", dir.resolve("12_katalon-studio.png")),
-		new Tuple("https://www.katalon.com/testops", dir.resolve("13_testops.png")),
-		new Tuple("https://www.katalon.com/katalon-recorder-ide", dir.resolve("14_katalon-recorder-ide.png"))
+		new Tuple("https://www.modular.com/", dir.resolve("11_mojular.png")),
+		new Tuple("https://www.modular.com/engine", dir.resolve("12_modular_engine.png")),
+		new Tuple("https://www.modular.com/mojo", dir.resolve("13_modular_mojo.png")),
+		new Tuple("https://www.modular.com/blog", dir.resolve("14_modular_blog.png"))
 	]
 	]))
 
 tclosures.add(new TestClosure(shooter, [
 	[
-		new Tuple("https://www.katalon.com/web-testing/", dir.resolve("15_web-testing.png")),
-		new Tuple("https://www.katalon.com/mobile-testing/", dir.resolve("16_mobile-testing.png")),
-		new Tuple("https://www.katalon.com/api-testing/", dir.resolve("17_api-testing.png")),
-		new Tuple("https://www.katalon.com/desktop-testing/", dir.resolve("18_desktop-testing.png"))
+		new Tuple("https://playwright.dev/", dir.resolve("15_playwright.png")),
+		new Tuple("https://playwright.dev/docs/intro", dir.resolve("16_playwright_docs_intro.png")),
+		new Tuple("https://playwright.dev/docs/api/class-playwright", dir.resolve("17_playwright_docs_api.png")),
+		new Tuple("https://playwright.dev/community/welcome", dir.resolve("18_playwritht_community.png"))
 	]
 	]))
 
