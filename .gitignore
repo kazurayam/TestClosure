@@ -17,8 +17,8 @@ build
 
 .project
 
-tmp/
-test-output/
+tmp*/
+test-output*/
 
 .cache
 

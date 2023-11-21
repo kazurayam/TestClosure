@@ -42,11 +42,11 @@ Measurement beginToFinish = new Measurement.Builder(
 	"How long the test took from begining to finish", ["ID"]).build()
 tk.add(new Table.Builder(beginToFinish).noLegend().build())
 
-// start a watch to measure the processing duration
+// record the time of start
 LocalDateTime beforeExecute = LocalDateTime.now()
 
 
-//============================ prepare TestClosures and Executor ==============
+// prepare TestClosures and Executor ------------------------------------------
 
 // load the collection of TestClosures
 List<TestClosure> tclosures = WebUI.callTestCase(findTestCase(
@@ -80,17 +80,19 @@ executor.addTestClosures(tclosures)
 
 //================================ mapping stage ==============================
 
-// let's do the job
+// let's do the jobs in parallel threds
 executor.execute()
 
+// jobs done
 // close all browser windows
 wdc.quitAll()
 
 
 
 //================================ reduce stage ===============================
-// stop the watch
+// record the time when the mapping finished
 LocalDateTime afterExecute = LocalDateTime.now()
+// record the duration
 beginToFinish.recordDuration(["ID": GlobalVariable.ID], beforeExecute, afterExecute)
 
 // compile a performance report

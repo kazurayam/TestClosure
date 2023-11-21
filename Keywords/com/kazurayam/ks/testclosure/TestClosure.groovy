@@ -4,7 +4,6 @@ import java.time.LocalDateTime
 import java.util.concurrent.Callable
 
 import org.openqa.selenium.WebDriver
-import org.openqa.selenium.chrome.ChromeDriver
 
 /**
  * 
