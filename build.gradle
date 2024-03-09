@@ -6,7 +6,7 @@ plugins {
 }
 
 group = 'com.kazurayam'
-version = '0.26.1-SNAPSHOT'
+version = '0.27.0-SNAPSHOT'
 
 
 sourceCompatibility = '1.8'
@@ -19,9 +19,9 @@ ext {
     ashotVersion = '1.5.4'
     ashotwrapperVersion = '0.2.2'
     junit4ksVersion = '1.6.1'
-    timekeeperVersion = '0.3.3'
-    browserwindowlayoutVersion = '0.3.0'
-    unittesthelperVersion = '0.2.4'
+    timekeeperVersion = '0.4.0'
+    browserwindowlayoutVersion = '0.3.1'
+    unittesthelperVersion = '0.3.0'
 }
 
 repositories {
