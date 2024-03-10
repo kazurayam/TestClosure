@@ -1,4 +1,4 @@
-package com.kazurayam.ks.testclosure
+package com.kazurayam.ks.browserlauncher
 
 import org.openqa.selenium.chrome.ChromeDriver
 import org.openqa.selenium.firefox.FirefoxDriver

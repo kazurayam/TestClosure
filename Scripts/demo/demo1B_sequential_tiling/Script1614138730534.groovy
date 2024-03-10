@@ -4,9 +4,9 @@ import org.openqa.selenium.JavascriptExecutor
 import org.openqa.selenium.WebDriver
 
 import com.kazurayam.browserwindowlayout.TilingCellLayoutMetrics
-import com.kazurayam.ks.testclosure.BrowserLauncher
-import com.kazurayam.ks.testclosure.TestClosure
-import com.kazurayam.ks.testclosure.TestClosureResult
+import com.kazurayam.ks.browserlauncher.BrowserLauncher
+import com.kazurayam.testclosure.TestClosure
+import com.kazurayam.testclosure.TestClosureResult
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 
 List<TestClosure> tclosures = WebUI.callTestCase(findTestCase("demo/createTestClosures4Demo"), [:])

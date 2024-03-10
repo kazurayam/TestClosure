@@ -10,10 +10,10 @@ import org.openqa.selenium.Point
 import org.openqa.selenium.WebDriver
 
 import com.kazurayam.browserwindowlayout.StackingCellLayoutMetrics
-import com.kazurayam.ks.testclosure.BrowserLauncher
-import com.kazurayam.ks.testclosure.TestClosure
-import com.kazurayam.ks.testclosure.TestClosureCollectionExecutor
-import com.kazurayam.ks.testclosure.WebDriversContainer
+import com.kazurayam.ks.browserlauncher.BrowserLauncher
+import com.kazurayam.testclosure.TestClosure
+import com.kazurayam.testclosure.TestClosureCollectionExecutor
+import com.kazurayam.testclosure.WebDriversContainer
 import com.kazurayam.timekeeper.Measurement
 import com.kazurayam.timekeeper.Table
 import com.kazurayam.timekeeper.Timekeeper
@@ -65,7 +65,7 @@ for (int i = 0; i < GlobalVariable.NUM_OF_THREADS; i++) {
 
 // create the executor
 TestClosureCollectionExecutor executor =
-	new TestClosureCollectionExecutor.Builder(wdc)
+	new TestClosureCollectionExecutor.Builder()
 		.cellLayoutMetrics(
 			new StackingCellLayoutMetrics.Builder(GlobalVariable.NUM_OF_THREADS)
 				.cellDimension(new Dimension(1000, 800))

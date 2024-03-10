@@ -1,4 +1,4 @@
-package com.kazurayam.ks.testclosure
+package com.kazurayam.testclosure
 
 import java.util.concurrent.ExecutionException
 import java.util.concurrent.ExecutorService
@@ -8,18 +8,11 @@ import java.util.concurrent.TimeUnit
 
 import org.openqa.selenium.Dimension
 import org.openqa.selenium.Point
-
-import com.kazurayam.browserwindowlayout.TilingWindowLayoutMetrics
-import com.kazurayam.browserwindowlayout.WindowLayoutMetrics
-import com.kazurayam.browserwindowlayout.WindowLocation
-
-import com.kazurayam.webdriverfactory.chrome.ChromeDriverFactory
-
-import com.kms.katalon.core.webui.driver.DriverFactory
-import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
-
-import org.apache.commons.lang.time.StopWatch
 import org.openqa.selenium.chrome.ChromeDriver
+
+import com.kazurayam.browserwindowlayout.CellLayoutMetrics
+import com.kazurayam.browserwindowlayout.TilingCellLayoutMetrics
+import com.kazurayam.ks.browserlauncher.BrowserLauncher
 
 
 /**
@@ -31,9 +24,8 @@ public class TestClosureCollectionExecutor {
 	public static final int THREADS_LIMIT = 8
 	private int capacity
 
-	private final WindowLayoutMetrics metrics
+	private final CellLayoutMetrics metrics
 	private final List<Closure> loadedTestClosures
-	private final BrowserLauncher
 
 	private final int numThreads
 	private List<String> userProfiles
@@ -77,15 +69,14 @@ public class TestClosureCollectionExecutor {
 		Objects.requireNonNull(tc)
 		Objects.requireNonNull(browserLauncher)
 		int index = resolveIndex(this.loadedTestClosures.size())
-		WindowLocation location = new WindowLocation(capacity, index)
 		// the position (x,y) to which browser window should be moved to
-		Point position = metrics.getWindowPosition(location)
+		Point position = metrics.getCellPosition(index)
 		// the size (width, height) to which browser window should be resized to
-		Dimension dimension = metrics.getWindowDimension(location)
+		Dimension dimension = metrics.getCellDimension(index)
 		//
 		Closure cls = {
 			// open a browser window for this TestClosure
-			ChromeDriver driver = browserLauncher.launch()
+			ChromeDriver driver = browserLauncher.launchChromeDriver()
 			// move the browser window to a good position (x,y)
 			driver.manage().window().setPosition(position)
 			// resize the browser window to a good dimension (width, height)
@@ -118,8 +109,8 @@ public class TestClosureCollectionExecutor {
 		for (ft in futures) {
 			try {
 				/* calling the get() method while the task is running will 
-				 * cause execution to block until the task finishes properly
-				 * executed and the result is available
+				 * cause execution to block until the task finishes properly executed 
+				 * and the result is available
 				 */
 				TestClosureResult result = ft.get()
 				// how to make use of TestClosureResult? ... should study more
@@ -140,7 +131,7 @@ public class TestClosureCollectionExecutor {
 			}
 		} catch (InterruptedException e) {
 			executorService.shutdownNow()
-		}ß
+		}
 	}
 
 
@@ -150,15 +141,18 @@ public class TestClosureCollectionExecutor {
 	public static class Builder {
 		// Required parameters - none
 		// Optional parameters - initialized to default values
-		private WindowLayoutMetrics metrics = new TilingWindowLayoutMetrics.Builder().build()
+		private CellLayoutMetrics metrics;
 		private List<TestClosure> testClosures = new ArrayList<TestClosure>()
 		private int numThreads = 1
 		private List<String> userProfiles = []
+
 		Builder() {}
-		Builder windowLayoutMetrics(WindowLayoutMetrics metrics) {
+
+		Builder cellLayoutMetrics(CellLayoutMetrics metrics) {
 			this.metrics = metrics
 			return this
 		}
+
 		Builder numThreads(int numThreads) {
 			if (numThreads <= 0) {
 				throw new IllegalArgumentException("numThreads=${numThreads} must not be less or equal to 0")
@@ -169,6 +163,7 @@ public class TestClosureCollectionExecutor {
 			this.numThreads = numThreads
 			return this
 		}
+
 		Builder userProfiles(List<String> userProfiles) {
 			if (userProfiles.size() == 0) {
 				throw new IllegalArgumentException("userProfiles must not be empty")
@@ -177,7 +172,9 @@ public class TestClosureCollectionExecutor {
 			this.numThreads = userProfiles.size()
 			return this
 		}
+
 		TestClosureCollectionExecutor build() {
+			metrics = new TilingCellLayoutMetrics.Builder(1, numThreads).build()
 			return new TestClosureCollectionExecutor(this)
 		}
 	}

@@ -6,7 +6,7 @@ plugins {
 }
 
 group = 'com.kazurayam'
-version = '0.27.0-SNAPSHOT'
+version = '0.27.0'
 
 
 sourceCompatibility = '1.8'
@@ -42,6 +42,8 @@ dependencies {
     myconf group: 'com.kazurayam', name: 'timekeeper', version: "${timekeeperVersion}"
     myconf group: 'com.kazurayam', name: 'browserwindowlayout', version: "${browserwindowlayoutVersion}"
     myconf group: 'com.kazurayam', name: 'unittest-helper', version: "${unittesthelperVersion}"
+
+
     generateDocs "org.codehaus.groovy:groovy-all:${groovyVersion}"
 }
 

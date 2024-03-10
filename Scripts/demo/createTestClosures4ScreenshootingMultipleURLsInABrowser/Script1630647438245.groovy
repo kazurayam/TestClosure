@@ -10,7 +10,7 @@ import org.openqa.selenium.WebDriver
 
 import com.kazurayam.ashotwrapper.AShotWrapper
 import com.kazurayam.ashotwrapper.AShotWrapper.Options
-import com.kazurayam.ks.testclosure.TestClosure
+import com.kazurayam.testclosure.TestClosure
 import com.kazurayam.timekeeper.Measurement
 import com.kazurayam.timekeeper.Timekeeper
 import com.kazurayam.timekeeper.Table

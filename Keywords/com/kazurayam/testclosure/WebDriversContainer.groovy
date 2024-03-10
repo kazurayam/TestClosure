@@ -1,4 +1,4 @@
-package com.kazurayam.ks.testclosure
+package com.kazurayam.testclosure
 
 import org.openqa.selenium.WebDriver
 

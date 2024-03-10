@@ -1,8 +1,7 @@
-package com.kazurayam.ks.testclosure
+package com.kazurayam.testclosure
+
 
 import static org.junit.Assert.*
-
-import java.time.LocalDateTime
 
 import org.junit.After
 import org.junit.Before
@@ -10,6 +9,9 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.openqa.selenium.WebDriver
+
+import com.kazurayam.ks.browserlauncher.BrowserLauncher
+import com.kazurayam.testclosure.TestClosure
 
 @RunWith(JUnit4.class)
 public class TestClosureCollectionExecutorTest {
@@ -24,7 +26,9 @@ public class TestClosureCollectionExecutorTest {
 		wdc.add(launcher.launchChromeDriver())
 		wdc.add(launcher.launchChromeDriver())
 		wdc.add(launcher.launchChromeDriver())
-		executor = new TestClosureCollectionExecutor.Builder(wdc).build()
+
+		executor = new TestClosureCollectionExecutor.Builder().numThreads(wdc.size()).build()
+
 		List<TestClosure> tclosures = new ArrayList<TestClosure>()
 		tclosures.add(new TestClosure({ WebDriver driver, String name ->
 			println "Hello, ${name}!"

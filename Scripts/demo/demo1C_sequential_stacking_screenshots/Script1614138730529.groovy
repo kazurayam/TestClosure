@@ -4,9 +4,9 @@ import org.openqa.selenium.Dimension
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.chrome.ChromeDriver
 
-import com.kazurayam.ks.testclosure.BrowserLauncher
-import com.kazurayam.ks.testclosure.TestClosure
-import com.kazurayam.ks.testclosure.TestClosureResult
+import com.kazurayam.ks.browserlauncher.BrowserLauncher
+import com.kazurayam.testclosure.TestClosure
+import com.kazurayam.testclosure.TestClosureResult
 import com.kazurayam.browserwindowlayout.StackingCellLayoutMetrics
 import com.kazurayam.browserwindowlayout.CellLayoutMetrics
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
