@@ -10,7 +10,7 @@ import org.openqa.selenium.WebDriver
 
 import com.kazurayam.ashotwrapper.AShotWrapper
 import com.kazurayam.ashotwrapper.AShotWrapper.Options
-import com.kazurayam.ks.testclosure.TestClosure
+import com.kazurayam.testclosure.TestClosure
 import com.kazurayam.timekeeper.Measurement
 import com.kazurayam.timekeeper.Timekeeper
 import com.kazurayam.timekeeper.Table
@@ -66,12 +66,6 @@ Closure shooter = { WebDriver driver, List<Tuple> urlFilePairs ->
 		navigation.recordDuration(["URL": url],
 			beforeNavi, afterNavi)
 		WebUI.comment("navigate ${url} took ${navigation.getLastRecordDurationMillis() / 1000} seconds")
-		
-		// click the "Accept All Cookies" button if present
-		TestObject to_acceptAllCookies = newTestObjectXPath("//input[@id='onetrust-accept-btn-handler']")
-		if (WebUI.waitForElementClickable(to_acceptAllCookies, 3)) {
-			WebUI.click(to_acceptAllCookies)
-		}
 		
 		LocalDateTime beforeScreenshot = LocalDateTime.now()
 		Options opt = new Options.Builder().timeout(100).build()

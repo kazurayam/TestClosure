@@ -10,10 +10,10 @@ import org.openqa.selenium.Point
 import org.openqa.selenium.WebDriver
 
 import com.kazurayam.browserwindowlayout.StackingCellLayoutMetrics
-import com.kazurayam.ks.testclosure.BrowserLauncher
-import com.kazurayam.ks.testclosure.TestClosure
-import com.kazurayam.ks.testclosure.TestClosureCollectionExecutor
-import com.kazurayam.ks.testclosure.WebDriversContainer
+import com.kazurayam.ks.browserlauncher.BrowserLauncher
+import com.kazurayam.testclosure.TestClosure
+import com.kazurayam.testclosure.TestClosureCollectionExecutor
+import com.kazurayam.testclosure.WebDriversContainer
 import com.kazurayam.timekeeper.Measurement
 import com.kazurayam.timekeeper.Table
 import com.kazurayam.timekeeper.Timekeeper
@@ -42,9 +42,11 @@ Measurement beginToFinish = new Measurement.Builder(
 	"How long the test took from begining to finish", ["ID"]).build()
 tk.add(new Table.Builder(beginToFinish).noLegend().build())
 
+// record the time of start
+LocalDateTime beforeExecute = LocalDateTime.now()
 
 
-//============================ prepare TestClosures and Executor ==============
+// prepare TestClosures and Executor ------------------------------------------
 
 // load the collection of TestClosures
 List<TestClosure> tclosures = WebUI.callTestCase(findTestCase(
@@ -63,7 +65,7 @@ for (int i = 0; i < GlobalVariable.NUM_OF_THREADS; i++) {
 
 // create the executor
 TestClosureCollectionExecutor executor =
-	new TestClosureCollectionExecutor.Builder(wdc)
+	new TestClosureCollectionExecutor.Builder()
 		.cellLayoutMetrics(
 			new StackingCellLayoutMetrics.Builder(GlobalVariable.NUM_OF_THREADS)
 				.cellDimension(new Dimension(1000, 800))
@@ -73,23 +75,26 @@ TestClosureCollectionExecutor executor =
 
 // setup the executor what to do
 executor.addTestClosures(tclosures)
-	
+
 
 
 //================================ mapping stage ==============================
-// let's do the job
-LocalDateTime beforeExecute = LocalDateTime.now()
+
+// let's do the jobs in parallel threds
 executor.execute()
 
+// jobs done
 // close all browser windows
 wdc.quitAll()
 
 
 
 //================================ reduce stage ===============================
-
+// record the time when the mapping finished
 LocalDateTime afterExecute = LocalDateTime.now()
+// record the duration
 beginToFinish.recordDuration(["ID": GlobalVariable.ID], beforeExecute, afterExecute)
+
 // compile a performance report
 Path projectDir = Paths.get(RunConfiguration.getProjectDir())
 Path testOutput = projectDir.resolve("test-output")

@@ -1,20 +1,25 @@
-package com.kazurayam.ks.testclosure
+package com.kazurayam.testclosure
 
 import static org.junit.Assert.*
 
 import org.junit.Before
+import org.junit.BeforeClass
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import org.openqa.selenium.Point
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.chrome.ChromeDriver
 import org.openqa.selenium.firefox.FirefoxDriver
-import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
-import com.kms.katalon.core.webui.driver.DriverFactory
+
+import io.github.bonigarcia.wdm.WebDriverManager
 
 @RunWith(JUnit4.class)
 public class TestClosureTest {
+
+	@BeforeClass
+	static void beforeClass() {
+		WebDriverManager.chromedriver().setup()
+	}
 
 	@Before
 	void setup() {}
@@ -28,11 +33,10 @@ public class TestClosureTest {
 			print "${driver.toString()}"
 		}
 		TestClosure tc = new TestClosure(cl, [])
-		WebUI.openBrowser('')
-		WebDriver driver = DriverFactory.getWebDriver()
+		WebDriver driver = new ChromeDriver()
 		tc.setDriver(driver)
 		tc.call()
-		WebUI.closeBrowser()
+		driver.quit()
 	}
 
 	@Test

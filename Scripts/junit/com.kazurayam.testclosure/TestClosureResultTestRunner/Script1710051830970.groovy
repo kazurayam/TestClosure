@@ -1,5 +1,5 @@
 import static com.kazurayam.junit4ks.JUnitCustomKeywords.runWithJUnitRunner
 
-import com.kazurayam.ks.testclosure.TestClosureResultTest
+import com.kazurayam.testclosure.TestClosureResultTest
 
 runWithJUnitRunner(TestClosureResultTest.class)

@@ -5,7 +5,7 @@ import java.nio.file.Paths
 import org.apache.commons.io.FileUtils
 import org.openqa.selenium.WebDriver
 
-import com.kazurayam.ks.testclosure.TestClosure
+import com.kazurayam.testclosure.TestClosure
 import com.kms.katalon.core.configuration.RunConfiguration
 import com.kms.katalon.core.model.FailureHandling
 import com.kms.katalon.core.testobject.ConditionType

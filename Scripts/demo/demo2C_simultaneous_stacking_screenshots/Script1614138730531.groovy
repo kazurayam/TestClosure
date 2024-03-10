@@ -1,20 +1,13 @@
 import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
 
 import org.openqa.selenium.Dimension
-
-import com.kazurayam.ks.testclosure.TestClosure
-import com.kazurayam.ks.testclosure.TestClosureCollectionExecutor
-import com.kazurayam.browserwindowlayout.StackingCellLayoutMetrics
-import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
-
-import org.openqa.selenium.Dimension
 import org.openqa.selenium.Point
 
 import com.kazurayam.browserwindowlayout.StackingCellLayoutMetrics
-import com.kazurayam.ks.testclosure.BrowserLauncher
-import com.kazurayam.ks.testclosure.TestClosure
-import com.kazurayam.ks.testclosure.TestClosureCollectionExecutor
-import com.kazurayam.ks.testclosure.WebDriversContainer
+import com.kazurayam.ks.browserlauncher.BrowserLauncher
+import com.kazurayam.testclosure.TestClosure
+import com.kazurayam.testclosure.TestClosureCollectionExecutor
+import com.kazurayam.testclosure.WebDriversContainer
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 
 /**
@@ -40,7 +33,7 @@ for (int i = 0; i < tclosures.size(); i++) {
 
 // create the executor
 TestClosureCollectionExecutor executor = 
-	new TestClosureCollectionExecutor.Builder(wdc)
+	new TestClosureCollectionExecutor.Builder()
 			.cellLayoutMetrics(
 				new StackingCellLayoutMetrics.Builder(tclosures.size())
 					.cellDimension(new Dimension(1000, 600))

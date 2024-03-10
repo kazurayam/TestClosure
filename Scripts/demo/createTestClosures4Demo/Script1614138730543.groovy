@@ -1,7 +1,7 @@
 import org.openqa.selenium.Keys
 import org.openqa.selenium.WebDriver
 
-import com.kazurayam.ks.testclosure.TestClosure
+import com.kazurayam.testclosure.TestClosure
 import com.kms.katalon.core.model.FailureHandling
 import com.kms.katalon.core.testobject.ConditionType
 import com.kms.katalon.core.testobject.TestObject
